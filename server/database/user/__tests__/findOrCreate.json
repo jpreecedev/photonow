@@ -6,8 +6,7 @@
       "refreshToken": "TEST REFRESH TOKEN",
       "displayName": "TEST NAME",
       "email": "TEST EMAIL",
-      "username": "TEST USERNAME",
-      "provider": "TEST PROVIDER"
+      "username": "TEST USERNAME"
     }
   ]
 }

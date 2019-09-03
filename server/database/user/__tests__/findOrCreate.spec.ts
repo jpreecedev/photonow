@@ -1,6 +1,6 @@
 import { findOrCreate } from "../../user"
 import { sanitizeData } from "../../test-utils"
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -24,7 +24,7 @@ describe("Find or create user tests", () => {
   })
 
   test("should find the specified user", async () => {
-    const profile: IUser = { id: testData.users[0].id, displayName: "EXISTING NAME" }
+    const profile = <Profile>{ id: testData.users[0].id, displayName: "EXISTING NAME" }
     const accessToken = testData.users[0].accessToken
     const refreshToken = testData.users[0].refreshToken
 
@@ -37,11 +37,10 @@ describe("Find or create user tests", () => {
   })
 
   test("should create a new user", async () => {
-    const profile: IUser = {
+    const profile = <Profile>{
       id: "SOME_OTHER_PROFILE_ID",
       displayName: "SOME DISPLAY NAME",
-      username: "SOME USERNAME",
-      provider: "SOME PROVIDER"
+      username: "SOME USERNAME"
     }
     const accessToken = "SOME ACCESS TOKEN"
     const refreshToken = "SOME REFRESH TOKEN"
@@ -52,7 +51,6 @@ describe("Find or create user tests", () => {
     expect(result.id).toEqual(profile.id)
     expect(result.displayName).toEqual(profile.displayName)
     expect(result.username).toEqual(profile.username)
-    expect(result.provider).toEqual(profile.provider)
     expect(result.accessToken).toEqual(accessToken)
     expect(result.refreshToken).toEqual(refreshToken)
   })

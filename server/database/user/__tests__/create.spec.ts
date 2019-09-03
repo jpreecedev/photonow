@@ -1,6 +1,6 @@
 import { sanitizeData } from "../../test-utils"
 import { createUser } from ".."
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -30,7 +30,13 @@ describe("Create user tests", () => {
     const username = "test username"
     const password = "test password"
 
-    const result = await createUser({ firstName, lastName, email, username, password })
+    const result = await createUser(<User>{
+      firstName,
+      lastName,
+      email,
+      username,
+      password
+    })
 
     expect(result).toBeTruthy()
     expect(result.firstName).toEqual(firstName)
@@ -43,7 +49,7 @@ describe("Create user tests", () => {
   test("should not create a new user and throw an error", async () => {
     const username = testData.users[0].username
 
-    expect(createUser({ username })).rejects.toEqual(
+    expect(createUser(<User>{ username })).rejects.toEqual(
       new Error("Username is already taken")
     )
   })

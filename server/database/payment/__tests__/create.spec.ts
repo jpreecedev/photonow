@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import { createPayment } from ".."
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -24,9 +24,8 @@ describe("Create payment tests", () => {
   })
 
   test("should create a payment", async () => {
-    const newPayment = {
-      customerId: Types.ObjectId("1cfc2370562b178fdfa1be91"),
-      photographerId: Types.ObjectId("1dfd2370562d198fdfa1de91"),
+    const newPayment = <Payment>{
+      orderId: Types.ObjectId("9aaa2370562a178fdfa1ae99"),
       moments: [Types.ObjectId("9ccc2370562b178fdfa1be11")],
       amount: 600,
       paid: true,

@@ -1,6 +1,6 @@
 import { getUser, getUserBy } from "../../user"
 import { sanitizeData } from "../../test-utils"
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -64,9 +64,9 @@ describe("Add or update user tests", () => {
   })
 
   test("should get the specified user by id", async () => {
-    const id = "8a8b8f06cd5"
+    const username = "Test Username"
 
-    const result = await getUserBy({ id })
+    const result = await getUserBy({ username })
 
     expect(result).toBeDefined()
     expect(result.provider).toEqual(testData.users[0].provider)

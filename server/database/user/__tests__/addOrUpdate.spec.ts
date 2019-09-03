@@ -1,6 +1,6 @@
 import { sanitizeData } from "../../test-utils"
 import { addOrUpdate } from ".."
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -24,7 +24,7 @@ describe("Add or update user tests", () => {
   })
 
   test("should create a new user then update it", async () => {
-    const user = {
+    const user = <User>{
       id: "identityId",
       provider: "providerName",
       businessName: "test business name"
@@ -43,7 +43,7 @@ describe("Add or update user tests", () => {
   })
 
   test("should update an existing user", async () => {
-    const updatedUser = {
+    const updatedUser = <User>{
       id: testData.users[0].id,
       selectedPhoto: "UPDATED PHOTO"
     }

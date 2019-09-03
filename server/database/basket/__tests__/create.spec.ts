@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { createOrder } from "../create"
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -18,7 +18,7 @@ describe("Create order tests", () => {
   })
 
   test("should create an order", async () => {
-    const newOrder = <IOrder>{
+    const newOrder = <Order>{
       moments: [
         Types.ObjectId("1aaa9190969b198adaa1ba91"),
         Types.ObjectId("4bcc2370562b178fdfa1be11")

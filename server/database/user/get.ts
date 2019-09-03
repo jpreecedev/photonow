@@ -6,7 +6,7 @@ async function getUser(id: string) {
   }).exec()
 }
 
-async function getUserBy({ username }) {
+async function getUserBy({ username }: { username: string }) {
   return await UserModel.findOne({ username }).exec()
 }
 

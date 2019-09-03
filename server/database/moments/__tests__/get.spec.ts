@@ -1,7 +1,7 @@
 import { getMoment, getMoments } from "../get"
 import { sanitizeData } from "../../test-utils"
 import { Types } from "mongoose"
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 

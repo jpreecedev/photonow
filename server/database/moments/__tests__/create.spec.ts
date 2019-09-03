@@ -1,6 +1,6 @@
 import { createMoment } from ".."
 import { sanitizeData } from "../../test-utils"
-import TestDbHelper from "../../../../../config/jest/mongo-setup"
+import TestDbHelper from "../../../../setup/mongo"
 
 const dbHelper = new TestDbHelper()
 
@@ -23,7 +23,7 @@ describe("Create moment tests", () => {
   })
 
   test("should create a new moment", async () => {
-    const newMoment = {
+    const newMoment = <Moment>{
       filename: "TEST FILE NAME.jpg",
       mimeType: "application/test",
       bucket: "TEST BUCKET NAME",
