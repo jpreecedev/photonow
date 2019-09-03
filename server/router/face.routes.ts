@@ -5,6 +5,7 @@ import { faceRecognition } from "../utils"
 const router = express.Router()
 const upload = multer()
 
+// @ts-ignore
 router.post("/", upload.single("photo"), async (req: FileRequest, res: Response) => {
   const response = await faceRecognition.verifyFace(req.file.buffer)
   if (response) {

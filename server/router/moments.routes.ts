@@ -13,6 +13,7 @@ router.post(
     file => ({ filename: file.originalname }),
     file => `${uuid()}${file.originalname.substring(file.originalname.lastIndexOf("."))}`
   ),
+  // @ts-ignore
   MomentsController.post
 )
 
