@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Splash() {
+const Splash = () => {
   const classes = useStyles();
 
   return (
@@ -76,6 +76,6 @@ function Splash() {
       <div className={classes.spacer}></div>
     </section>
   );
-}
+};
 
 export { Splash };

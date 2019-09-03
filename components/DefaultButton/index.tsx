@@ -18,9 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const DefaultButton: FunctionComponent<DefaultButtonProps> = ({
-  variant,
-  color,
-  size,
+  variant = "contained",
+  color = "primary",
+  size = "medium",
   children,
   ...rest
 }) => {

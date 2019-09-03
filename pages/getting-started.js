@@ -1,7 +1,13 @@
 import React from "react";
+import dynamic from "next/dynamic";
+import { Typography } from "@material-ui/core";
 
 import { Main } from "../layouts/main";
-import { Typography } from "@material-ui/core";
+
+const Webcam = dynamic(
+  import("../components/Webcam").then(instance => instance.Webcam),
+  { ssr: false }
+);
 
 export default () => (
   <Main gap>
@@ -12,5 +18,6 @@ export default () => (
       We need you to upload us a picture of your face so we can find you in a
       crowd.
     </Typography>
+    <Webcam />
   </Main>
 );
