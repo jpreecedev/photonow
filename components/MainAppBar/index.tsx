@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   const rootClasses = clsx(classes.root, {
     [classes.gap]: gap

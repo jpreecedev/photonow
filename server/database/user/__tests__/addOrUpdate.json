@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "id": "TEST ID",
+      "displayName": "TEST DISPLAY NAME",
+      "username": "TEST USER NAME",
+      "selectedPhoto": "TEST SELECTED PHOTO"
+    }
+  ]
+}

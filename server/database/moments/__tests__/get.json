@@ -1,0 +1,25 @@
+{
+  "moments": [
+    {
+      "_id": "9ccc2370562b178fdfa1be11",
+      "photographerId": "3ded5390565b398edea3be93",
+      "filename": "filename2",
+      "resizedLocation": "resizedLocation2",
+      "mimeType": "mimeType2"
+    },
+    {
+      "_id": "9ccc2370562b178fdfa1be12",
+      "photographerId": "3ded5390565b398edea3be93",
+      "filename": "filename3",
+      "resizedLocation": "resizedLocation3",
+      "mimeType": "mimeType3"
+    },
+    {
+      "_id": "9ccc2370562b178fdfa1be13",
+      "photographerId": "3ded5390565b398edea3be93",
+      "filename": "filename4",
+      "resizedLocation": "resizedLocation4",
+      "mimeType": "mimeType4"
+    }
+  ]
+}

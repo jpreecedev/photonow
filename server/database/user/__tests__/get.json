@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": "8a8b8f06cd5",
+      "provider": "providerName",
+      "businessName": "test business name",
+      "address": "nn11nn",
+      "lat": -222.222,
+      "lng": 111.333,
+      "email": "test@test.com",
+      "displayName": "Test Testington",
+      "username": "Test Username",
+      "selectedPhoto": "SOME SELECTED PHOTO"
+    }
+  ]
+}

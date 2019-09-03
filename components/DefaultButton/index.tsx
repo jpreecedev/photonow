@@ -24,7 +24,7 @@ const DefaultButton: FunctionComponent<DefaultButtonProps> = ({
   children,
   ...rest
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <Button

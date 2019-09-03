@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": "1cfc2370562b178fdfa1be91"
+    },
+    {
+      "id": "1dfd2370562d198fdfa1de91"
+    }
+  ],
+  "moments": [
+    {
+      "_id": "9ccc2370562b178fdfa1be11",
+      "filename": "filename2",
+      "resizedLocation": "resizedLocation2",
+      "mimeType": "mimeType2"
+    }
+  ],
+  "payments": [{}]
+}

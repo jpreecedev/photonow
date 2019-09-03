@@ -1,0 +1,47 @@
+{
+  "moments": [
+    {
+      "_id": "9ccc2370562b178fdfa1be11",
+      "filename": "TEST FILE NAME.jpg",
+      "mimeType": "application/test",
+      "bucket": "TEST BUCKET NAME",
+      "contentType": "image/test",
+      "location": "TEST LOCATION",
+      "originalEtag": "TEST ORIGINAL ETAG",
+      "resizedLocation": "RESIZED LOCATION",
+      "resizedEtag": "TEST RESIZED ETAG"
+    },
+    {
+      "_id": "4ccc2370562b178fdfa1be11",
+      "filename": "filename2",
+      "resizedLocation": "resizedLocation2",
+      "mimeType": "mimeType2"
+    },
+    {
+      "_id": "4bcc2370562b178fdfa1be11",
+      "filename": "filename3",
+      "resizedLocation": "resizedLocation3",
+      "mimeType": "mimeType3"
+    }
+  ],
+  "orders": [
+    {
+      "_id": "9aaa2370562a178fdfa1ae99",
+      "customerId": "1cfc2370562b178fdfa1be91",
+      "moments": ["9ccc2370562b178fdfa1be11"],
+      "amount": 100
+    },
+    {
+      "_id": "9ddd2370562d178fdfd1de99",
+      "customerId": "5cfc2370562b178fdfa1be91",
+      "moments": ["4ccc2370562b178fdfa1be11", "4bcc2370562b178fdfa1be11"],
+      "amount": 200
+    },
+    {
+      "_id": "9eee2370562d178fdfd1de99",
+      "customerId": "5cfc2370562b178fdfa1be91",
+      "moments": ["4ccc2370562b178fdfa1be11", "4bcc2370562b178fdfa1be11"],
+      "amount": 400
+    }
+  ]
+}

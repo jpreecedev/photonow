@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Splash = () => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <section className={classes.root}>

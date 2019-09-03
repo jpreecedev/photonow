@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "TEST_FACEBOOK_PROFILE_ID",
+      "accessToken": "TEST ACCESS TOKEN",
+      "refreshToken": "TEST REFRESH TOKEN",
+      "displayName": "TEST NAME",
+      "email": "TEST EMAIL",
+      "username": "TEST USERNAME",
+      "provider": "TEST PROVIDER"
+    }
+  ]
+}
