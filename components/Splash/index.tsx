@@ -1,8 +1,8 @@
 import React from "react";
+import Link from "next/link";
 import Typography from "@material-ui/core/Typography";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-
-import { DefaultButton } from "../DefaultButton";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,14 +68,11 @@ function Splash() {
       >
         Use our face scanning tool to find pictures of yourself in a crowd
       </Typography>
-      <DefaultButton
-        variant="contained"
-        color="primary"
-        size="large"
-        to="/get-started"
-      >
-        Get Started
-      </DefaultButton>
+      <Link href="/getting-started">
+        <Button variant="contained" color="primary" size="large">
+          Get Started
+        </Button>
+      </Link>
       <div className={classes.spacer}></div>
     </section>
   );
