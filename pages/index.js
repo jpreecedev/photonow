@@ -1,5 +1,5 @@
 import React from "react";
 
-import { DefaultLayout } from "../layouts/default";
+import { LandingPage } from "../layouts/landing-page";
 
-export default () => <DefaultLayout></DefaultLayout>;
+export default () => <LandingPage />;

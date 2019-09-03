@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from "react";
 import Head from "next/head";
-import { Container, Box } from "@material-ui/core";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 import { MainAppBar } from "../components/MainAppBar";
-import { Splash } from "../components/Splash";
 
 let theme = createMuiTheme();
 
-interface DefaultLayoutProps {}
+interface BaseProps {
+  gap?: boolean;
+}
 
-const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({ children }) => {
+const Base: FunctionComponent<BaseProps> = ({ gap = false, children }) => {
   return (
     <ThemeProvider theme={responsiveFontSizes(theme)}>
       <Head>
@@ -41,13 +41,10 @@ const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({ children }) => {
           }
         `}
       </style>
-      <MainAppBar />
-      <Splash />
-      <Container>
-        <Box>{children}</Box>
-      </Container>
+      <MainAppBar gap={gap} />
+      {children}
     </ThemeProvider>
   );
 };
 
-export { DefaultLayout };
+export { Base };
