@@ -1,12 +1,12 @@
-import React, { FunctionComponent } from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import React, { FunctionComponent } from "react"
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import Button from "@material-ui/core/Button"
 
 interface DefaultButtonProps {
-  variant?: "text" | "outlined" | "contained";
-  color?: "primary" | "secondary" | "default";
-  size?: "small" | "medium" | "large";
-  [x: string]: any;
+  variant?: "text" | "outlined" | "contained"
+  color?: "primary" | "secondary" | "default"
+  size?: "small" | "medium" | "large"
+  [x: string]: any
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1)
     }
   })
-);
+)
 
 const DefaultButton: FunctionComponent<DefaultButtonProps> = ({
   variant = "contained",
@@ -24,7 +24,7 @@ const DefaultButton: FunctionComponent<DefaultButtonProps> = ({
   children,
   ...rest
 }) => {
-  const classes = useStyles({});
+  const classes = useStyles({})
 
   return (
     <Button
@@ -36,7 +36,7 @@ const DefaultButton: FunctionComponent<DefaultButtonProps> = ({
     >
       {children}
     </Button>
-  );
-};
+  )
+}
 
-export { DefaultButton };
+export { DefaultButton }

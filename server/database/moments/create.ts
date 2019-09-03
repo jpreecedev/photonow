@@ -1,7 +1,7 @@
-import { MomentModel } from "../schema";
+import { MomentModel } from "../schema"
 
-async function create(moment: Moment) {
-  return await new MomentModel(moment).save();
+async function createMoment(moment: Moment) {
+  return await new MomentModel(moment).save()
 }
 
-export { create };
+export { createMoment }

@@ -1,17 +1,17 @@
-import { UserModel } from "../schema";
+import { UserModel } from "../schema"
 
 async function addOrUpdate(user: User) {
   const { ok } = await UserModel.updateOne({ id: user.id }, user, {
     upsert: true,
     setDefaultsOnInsert: true
-  }).exec();
+  }).exec()
 
-  let result: User | null = user;
+  let result: User | null = user
   if (ok) {
-    result = await UserModel.findOne({ id: user.id }).exec();
+    result = await UserModel.findOne({ id: user.id }).exec()
   }
 
-  return result;
+  return result
 }
 
-export { addOrUpdate };
+export { addOrUpdate }

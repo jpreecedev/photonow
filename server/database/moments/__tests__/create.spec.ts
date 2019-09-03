@@ -1,10 +1,10 @@
-import { create } from '..'
-import { sanitizeData } from '../../test-utils'
-import TestDbHelper from '../../../../../config/jest/mongo-setup'
+import { createMoment } from ".."
+import { sanitizeData } from "../../test-utils"
+import TestDbHelper from "../../../../../config/jest/mongo-setup"
 
 const dbHelper = new TestDbHelper()
 
-describe('Create moment tests', () => {
+describe("Create moment tests", () => {
   beforeAll(async () => {
     await dbHelper.start()
   })
@@ -18,23 +18,23 @@ describe('Create moment tests', () => {
   })
 
   beforeEach(async () => {
-    const testData = require('./create.json')
+    const testData = require("./create.json")
     await dbHelper.seed(sanitizeData(testData))
   })
 
-  test('should create a new moment', async () => {
+  test("should create a new moment", async () => {
     const newMoment = {
-      filename: 'TEST FILE NAME.jpg',
-      mimeType: 'application/test',
-      bucket: 'TEST BUCKET NAME',
-      contentType: 'image/test',
-      location: 'TEST LOCATION',
-      originalEtag: 'TEST ORIGINAL ETAG',
-      resizedLocation: 'RESIZED LOCATION',
-      resizedEtag: 'TEST RESIZED ETAG'
+      filename: "TEST FILE NAME.jpg",
+      mimeType: "application/test",
+      bucket: "TEST BUCKET NAME",
+      contentType: "image/test",
+      location: "TEST LOCATION",
+      originalEtag: "TEST ORIGINAL ETAG",
+      resizedLocation: "RESIZED LOCATION",
+      resizedEtag: "TEST RESIZED ETAG"
     }
 
-    const result = await create(newMoment)
+    const result = await createMoment(newMoment)
 
     expect(result.id).not.toBeUndefined()
   })

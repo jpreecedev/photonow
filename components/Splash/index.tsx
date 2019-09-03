@@ -1,8 +1,8 @@
-import React from "react";
-import Link from "next/link";
-import Typography from "@material-ui/core/Typography";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import React from "react"
+import Link from "next/link"
+import Typography from "@material-ui/core/Typography"
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { Button } from "@material-ui/core"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,10 +49,10 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0
     }
   })
-);
+)
 
 const Splash = () => {
-  const classes = useStyles({});
+  const classes = useStyles({})
 
   return (
     <section className={classes.root}>
@@ -60,12 +60,7 @@ const Splash = () => {
       <Typography component="h1" variant="h3" className={classes.title}>
         FIND MY FACE
       </Typography>
-      <Typography
-        align="center"
-        component="p"
-        variant="h4"
-        className={classes.subTitle}
-      >
+      <Typography align="center" component="p" variant="h4" className={classes.subTitle}>
         Use our face scanning tool to find pictures of yourself in a crowd
       </Typography>
       <Link href="/getting-started">
@@ -75,7 +70,7 @@ const Splash = () => {
       </Link>
       <div className={classes.spacer}></div>
     </section>
-  );
-};
+  )
+}
 
-export { Splash };
+export { Splash }

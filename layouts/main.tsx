@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react";
-import { Container } from "@material-ui/core";
+import React, { FunctionComponent } from "react"
+import { Container } from "@material-ui/core"
 
-import { Base } from "./base";
+import { Base } from "./base"
 
 interface MainProps {
-  gap?: boolean;
+  gap?: boolean
 }
 
 const Main: FunctionComponent<MainProps> = ({ gap = false, children }) => {
@@ -12,7 +12,7 @@ const Main: FunctionComponent<MainProps> = ({ gap = false, children }) => {
     <Base gap={gap}>
       <Container>{children}</Container>
     </Base>
-  );
-};
+  )
+}
 
-export { Main };
+export { Main }

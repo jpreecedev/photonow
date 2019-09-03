@@ -1,12 +1,12 @@
-import React from "react";
-import ReactWebcam from "react-webcam";
-import throttle from "lodash.throttle";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/styles";
+import React from "react"
+import ReactWebcam from "react-webcam"
+import throttle from "lodash.throttle"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import { useTheme } from "@material-ui/styles"
 
-import * as server from "../../utils/server";
-import { DefaultButton } from "../DefaultButton";
+import * as server from "../../utils/server"
+import { DefaultButton } from "../DefaultButton"
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -25,77 +25,73 @@ const useStyles = makeStyles(() =>
       position: "relative"
     }
   })
-);
+)
 
 const getVideoConstraints = (padding: number) => {
-  const aspectRatio = 1.777777777777778;
-  const width =
-    window.innerWidth > 1280 + padding ? 1280 : window.innerWidth - padding;
+  const aspectRatio = 1.777777777777778
+  const width = window.innerWidth > 1280 + padding ? 1280 : window.innerWidth - padding
 
   return {
     width,
     height: width / aspectRatio,
     facingMode: "user"
-  };
-};
+  }
+}
 
 const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
-  const byteCharacters = atob(b64Data);
-  const byteArrays = [];
+  const byteCharacters = atob(b64Data)
+  const byteArrays = []
 
   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
+    const slice = byteCharacters.slice(offset, offset + sliceSize)
 
-    const byteNumbers = new Array(slice.length);
+    const byteNumbers = new Array(slice.length)
     for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
+      byteNumbers[i] = slice.charCodeAt(i)
     }
 
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
+    const byteArray = new Uint8Array(byteNumbers)
+    byteArrays.push(byteArray)
   }
 
-  return new Blob(byteArrays, { type: contentType });
-};
+  return new Blob(byteArrays, { type: contentType })
+}
 
 const Webcam = () => {
-  const theme: Theme = useTheme();
-  const classes = useStyles({});
+  const theme: Theme = useTheme()
+  const classes = useStyles({})
 
   const [state, setState] = React.useState({
     loaded: false,
     uploading: false,
     pictures: [],
     windowWidth: window.innerWidth
-  });
+  })
 
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      throttle(
-        () => setState({ ...state, windowWidth: window.innerWidth }),
-        1000
-      )
-    );
-  }, []);
+      throttle(() => setState({ ...state, windowWidth: window.innerWidth }), 1000)
+    )
+  }, [])
 
-  const webcamRef = React.useRef<ReactWebcam>(null);
+  const webcamRef = React.useRef<ReactWebcam>(null)
 
   const capture = React.useCallback(async () => {
     if (webcamRef && webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
+      const imageSrc = webcamRef.current.getScreenshot()
       if (imageSrc) {
-        const split = imageSrc.split(",");
-        const contentType = "image/jpeg";
-        const blob = b64toBlob(split[1], contentType);
-        setState({ ...state, uploading: true });
-        const result = await server.uploadPhotoAsync("/face", "A Face", blob);
-        setState({ ...state, uploading: false, pictures: result });
+        const split = imageSrc.split(",")
+        const contentType = "image/jpeg"
+        const blob = b64toBlob(split[1], contentType)
+        setState({ ...state, uploading: true })
+        const result = await server.uploadPhotoAsync("/face", "A Face", blob)
+        setState({ ...state, uploading: false, pictures: result })
       }
     }
-  }, [webcamRef]);
+  }, [webcamRef])
 
-  const videoConstraints = getVideoConstraints(theme.spacing(4));
+  const videoConstraints = getVideoConstraints(theme.spacing(4))
 
   return (
     <>
@@ -121,7 +117,7 @@ const Webcam = () => {
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export { Webcam };
+export { Webcam }

@@ -1,4 +1,4 @@
-import { model, Model, Schema } from "mongoose";
+import { model, Model, Schema } from "mongoose"
 
 const OrderSchema = new Schema({
   moments: [{ type: Schema.Types.ObjectId, ref: "Moment" }],
@@ -11,8 +11,8 @@ const OrderSchema = new Schema({
   postalCode: String,
   state: String,
   country: String
-});
+})
 
-const OrderModel: Model<Order> = model<Order>("Order", OrderSchema);
+const OrderModel: Model<Order> = model<Order>("Order", OrderSchema)
 
-export { OrderModel };
+export { OrderModel }

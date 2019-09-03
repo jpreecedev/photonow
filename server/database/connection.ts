@@ -1,4 +1,4 @@
-import { connect, connection } from "mongoose";
+import { connect, connection } from "mongoose"
 
 const connectToDatabase = async () =>
   await connect(
@@ -13,6 +13,6 @@ const connectToDatabase = async () =>
       bufferMaxEntries: 0,
       useNewUrlParser: true
     }
-  );
+  )
 
-export { connectToDatabase, connection };
+export { connectToDatabase, connection }

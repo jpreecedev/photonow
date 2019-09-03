@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon",
     "build": "next build && tsc --project tsconfig.server.json",
-    "start": "cross-env NODE_ENV=production node dist/index.js"
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "lint:prettier": "prettier --write '{components,layouts,pages,server,utils}/**/*.{js,jsx,ts,tsx}'"
   },
   "keywords": [],
   "author": "",
@@ -58,6 +59,11 @@
     "@types/uuid": "^3.4.5",
     "cross-env": "^5.2.1",
     "nodemon": "^1.19.2",
+    "prettier": "^1.18.2",
+    "stylelint": "^10.0.1",
+    "stylelint-config-prettier": "^5.1.0",
+    "stylelint-order": "^3.0.0",
+    "stylelint-prettier": "^1.0.6",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
   }

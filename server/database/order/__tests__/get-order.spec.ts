@@ -1,11 +1,11 @@
-import { Types } from 'mongoose'
-import { sanitizeData } from '../../test-utils'
-import { getOrder } from '..'
-import TestDbHelper from '../../../../../config/jest/mongo-setup'
+import { Types } from "mongoose"
+import { sanitizeData } from "../../test-utils"
+import { getOrder } from ".."
+import TestDbHelper from "../../../../../config/jest/mongo-setup"
 
 const dbHelper = new TestDbHelper()
 
-describe('Get order tests', () => {
+describe("Get order tests", () => {
   beforeAll(async () => {
     await dbHelper.start()
   })
@@ -19,12 +19,12 @@ describe('Get order tests', () => {
   })
 
   beforeEach(async () => {
-    const testData = require('./get-order.json')
+    const testData = require("./get-order.json")
     await dbHelper.seed(sanitizeData(testData))
   })
 
-  test('should get the order when order id is supplied', async () => {
-    const orderId = Types.ObjectId('9aaa2370562a178fdfa1ae99')
+  test("should get the order when order id is supplied", async () => {
+    const orderId = Types.ObjectId("9aaa2370562a178fdfa1ae99")
 
     const order = await getOrder(orderId)
 

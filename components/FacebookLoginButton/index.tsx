@@ -1,6 +1,6 @@
-import React from "react";
-import Link from "@material-ui/core/Link";
-import SvgIcon from "@material-ui/core/SvgIcon";
+import React from "react"
+import Link from "@material-ui/core/Link"
+import SvgIcon from "@material-ui/core/SvgIcon"
 
 const FacebookLoginButton = () => {
   return (
@@ -34,7 +34,7 @@ const FacebookLoginButton = () => {
       </SvgIcon>
       Login with Facebook
     </Link>
-  );
-};
+  )
+}
 
-export { FacebookLoginButton };
+export { FacebookLoginButton }

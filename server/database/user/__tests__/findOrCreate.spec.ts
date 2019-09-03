@@ -1,11 +1,11 @@
-import { findOrCreate } from '../../user'
-import { sanitizeData } from '../../test-utils'
-import TestDbHelper from '../../../../../config/jest/mongo-setup'
+import { findOrCreate } from "../../user"
+import { sanitizeData } from "../../test-utils"
+import TestDbHelper from "../../../../../config/jest/mongo-setup"
 
 const dbHelper = new TestDbHelper()
 
-describe('Find or create user tests', () => {
-  const testData = require('./findOrCreate.json')
+describe("Find or create user tests", () => {
+  const testData = require("./findOrCreate.json")
 
   beforeAll(async () => {
     await dbHelper.start()
@@ -23,8 +23,8 @@ describe('Find or create user tests', () => {
     await dbHelper.seed(sanitizeData(testData))
   })
 
-  test('should find the specified user', async () => {
-    const profile: IUser = { id: testData.users[0].id, displayName: 'EXISTING NAME' }
+  test("should find the specified user", async () => {
+    const profile: IUser = { id: testData.users[0].id, displayName: "EXISTING NAME" }
     const accessToken = testData.users[0].accessToken
     const refreshToken = testData.users[0].refreshToken
 
@@ -36,15 +36,15 @@ describe('Find or create user tests', () => {
     expect(result.refreshToken).toEqual(refreshToken)
   })
 
-  test('should create a new user', async () => {
+  test("should create a new user", async () => {
     const profile: IUser = {
-      id: 'SOME_OTHER_PROFILE_ID',
-      displayName: 'SOME DISPLAY NAME',
-      username: 'SOME USERNAME',
-      provider: 'SOME PROVIDER'
+      id: "SOME_OTHER_PROFILE_ID",
+      displayName: "SOME DISPLAY NAME",
+      username: "SOME USERNAME",
+      provider: "SOME PROVIDER"
     }
-    const accessToken = 'SOME ACCESS TOKEN'
-    const refreshToken = 'SOME REFRESH TOKEN'
+    const accessToken = "SOME ACCESS TOKEN"
+    const refreshToken = "SOME REFRESH TOKEN"
 
     const result = await findOrCreate(profile, accessToken, refreshToken)
 

@@ -1,5 +1,5 @@
 import { Response } from "express"
-import { create } from "../database/moments"
+import { createMoment } from "../database/moments"
 import { faceRecognition } from "../utils"
 import { errorHandler } from "../utils"
 
@@ -30,7 +30,7 @@ async function post(req: FileRequest, res: Response) {
       resizedEtag: resizedFile.etag
     }
 
-    const result = await create(moment)
+    const result = await createMoment(moment)
 
     await faceRecognition.addImageToCollection(
       originalFile.bucket,

@@ -1,12 +1,12 @@
-import { Express } from 'express'
-import momentsRouter from './moments.routes'
-import paymentRoutes from './payment.routes'
-import orderRoutes from './order.routes'
-import authRoutes from './auth.routes'
-import tokenRoutes from './token.routes'
-import faceRoutes from './face.routes'
+import { Express } from "express"
+import momentsRouter from "./moments.routes"
+import paymentRoutes from "./payment.routes"
+import orderRoutes from "./order.routes"
+import authRoutes from "./auth.routes"
+import tokenRoutes from "./token.routes"
+import faceRoutes from "./face.routes"
 
-const BASE_API_URL = '/api'
+const BASE_API_URL = "/api"
 
 function Router(app: Express) {
   app.use(`${BASE_API_URL}/moments`, momentsRouter)

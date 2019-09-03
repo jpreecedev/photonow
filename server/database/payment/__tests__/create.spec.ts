@@ -1,11 +1,11 @@
-import { Types } from 'mongoose'
-import { sanitizeData } from '../../test-utils'
-import { create } from '..'
-import TestDbHelper from '../../../../../config/jest/mongo-setup'
+import { Types } from "mongoose"
+import { sanitizeData } from "../../test-utils"
+import { createPayment } from ".."
+import TestDbHelper from "../../../../../config/jest/mongo-setup"
 
 const dbHelper = new TestDbHelper()
 
-describe('Create payment tests', () => {
+describe("Create payment tests", () => {
   beforeAll(async () => {
     await dbHelper.start()
   })
@@ -19,24 +19,24 @@ describe('Create payment tests', () => {
   })
 
   beforeEach(async () => {
-    const testData = require('./create.json')
+    const testData = require("./create.json")
     await dbHelper.seed(sanitizeData(testData))
   })
 
-  test('should create a payment', async () => {
+  test("should create a payment", async () => {
     const newPayment = {
-      customerId: Types.ObjectId('1cfc2370562b178fdfa1be91'),
-      photographerId: Types.ObjectId('1dfd2370562d198fdfa1de91'),
-      moments: [Types.ObjectId('9ccc2370562b178fdfa1be11')],
+      customerId: Types.ObjectId("1cfc2370562b178fdfa1be91"),
+      photographerId: Types.ObjectId("1dfd2370562d198fdfa1de91"),
+      moments: [Types.ObjectId("9ccc2370562b178fdfa1be11")],
       amount: 600,
       paid: true,
-      status: 'succeeded',
-      receipt: 'http://some_url/',
+      status: "succeeded",
+      receipt: "http://some_url/",
       stripeCharge: { cameFromStripe: true },
       purchased: new Date()
     }
 
-    const paymentSaved = await create(newPayment)
+    const paymentSaved = await createPayment(newPayment)
 
     expect(paymentSaved).toBeTruthy()
   })

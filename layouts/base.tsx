@@ -1,14 +1,14 @@
-import React, { FunctionComponent } from "react";
-import Head from "next/head";
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
-import { ThemeProvider } from "@material-ui/styles";
+import React, { FunctionComponent } from "react"
+import Head from "next/head"
+import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles"
+import { ThemeProvider } from "@material-ui/styles"
 
-import { MainAppBar } from "../components/MainAppBar";
+import { MainAppBar } from "../components/MainAppBar"
 
-let theme = createMuiTheme();
+let theme = createMuiTheme()
 
 interface BaseProps {
-  gap?: boolean;
+  gap?: boolean
 }
 
 const Base: FunctionComponent<BaseProps> = ({ gap = false, children }) => {
@@ -44,7 +44,7 @@ const Base: FunctionComponent<BaseProps> = ({ gap = false, children }) => {
       <MainAppBar gap={gap} />
       {children}
     </ThemeProvider>
-  );
-};
+  )
+}
 
-export { Base };
+export { Base }

@@ -1,4 +1,4 @@
-import { model, Model, Schema } from "mongoose";
+import { model, Model, Schema } from "mongoose"
 
 const PaymentSchema = new Schema({
   orderId: { type: Schema.Types.ObjectId, ref: "Order" },
@@ -9,8 +9,8 @@ const PaymentSchema = new Schema({
   receipt: String,
   stripeCharge: Object,
   purchased: Date
-});
+})
 
-const PaymentModel: Model<Payment> = model<Payment>("Payment", PaymentSchema);
+const PaymentModel: Model<Payment> = model<Payment>("Payment", PaymentSchema)
 
-export { PaymentModel };
+export { PaymentModel }

@@ -1,11 +1,11 @@
-import { UserModel } from "../schema";
+import { UserModel } from "../schema"
 
 async function findOrCreate(
   profile: Profile,
   accessToken: string,
   refreshToken: string
 ): Promise<User> {
-  let user = await UserModel.findOne({ id: profile.id });
+  let user = await UserModel.findOne({ id: profile.id })
 
   if (!user) {
     user = await UserModel.create({
@@ -13,10 +13,10 @@ async function findOrCreate(
       id: profile.id,
       accessToken,
       refreshToken
-    });
+    })
   }
 
-  return user;
+  return user
 }
 
-export { findOrCreate };
+export { findOrCreate }

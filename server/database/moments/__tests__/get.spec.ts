@@ -1,12 +1,12 @@
-import { getMoment, getMoments } from '../get'
-import { sanitizeData } from '../../test-utils'
-import { Types } from 'mongoose'
-import TestDbHelper from '../../../../../config/jest/mongo-setup'
+import { getMoment, getMoments } from "../get"
+import { sanitizeData } from "../../test-utils"
+import { Types } from "mongoose"
+import TestDbHelper from "../../../../../config/jest/mongo-setup"
 
 const dbHelper = new TestDbHelper()
 
-describe('Get moment tests', () => {
-  const testData = require('./get.json')
+describe("Get moment tests", () => {
+  const testData = require("./get.json")
 
   beforeAll(async () => {
     await dbHelper.start()
@@ -24,7 +24,7 @@ describe('Get moment tests', () => {
     await dbHelper.seed(sanitizeData(testData))
   })
 
-  test('should get the specified moment', async () => {
+  test("should get the specified moment", async () => {
     const moment = {
       _id: testData.moments[0]._id,
       photographerId: new Types.ObjectId(testData.moments[0].photographerId),
@@ -42,7 +42,7 @@ describe('Get moment tests', () => {
     expect(result.mimeType).toEqual(moment.mimeType)
   })
 
-  test('should get exactly 2 moments', async () => {
+  test("should get exactly 2 moments", async () => {
     const moments = [testData.moments[1]._id, testData.moments[2]._id]
 
     const result = await getMoments(moments)

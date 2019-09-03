@@ -1,11 +1,11 @@
-import { getUser, getUserBy } from '../../user'
-import { sanitizeData } from '../../test-utils'
-import TestDbHelper from '../../../../../config/jest/mongo-setup'
+import { getUser, getUserBy } from "../../user"
+import { sanitizeData } from "../../test-utils"
+import TestDbHelper from "../../../../../config/jest/mongo-setup"
 
 const dbHelper = new TestDbHelper()
 
-describe('Add or update user tests', () => {
-  const testData = require('./get.json')
+describe("Add or update user tests", () => {
+  const testData = require("./get.json")
 
   beforeAll(async () => {
     await dbHelper.start()
@@ -23,7 +23,7 @@ describe('Add or update user tests', () => {
     await dbHelper.seed(sanitizeData(testData))
   })
 
-  test('should get the specified user', async () => {
+  test("should get the specified user", async () => {
     const id = testData.users[0].id
     const user = {
       businessName: testData.users[0].businessName,
@@ -50,8 +50,8 @@ describe('Add or update user tests', () => {
     expect(result.provider).toEqual(user.provider)
   })
 
-  test('should get the specified user by username', async () => {
-    const username = 'Test Username'
+  test("should get the specified user by username", async () => {
+    const username = "Test Username"
 
     const result = await getUserBy({ username })
 
@@ -63,8 +63,8 @@ describe('Add or update user tests', () => {
     expect(result.selectedPhoto).toEqual(testData.users[0].selectedPhoto)
   })
 
-  test('should get the specified user by id', async () => {
-    const id = '8a8b8f06cd5'
+  test("should get the specified user by id", async () => {
+    const id = "8a8b8f06cd5"
 
     const result = await getUserBy({ id })
 
@@ -76,8 +76,8 @@ describe('Add or update user tests', () => {
     expect(result.selectedPhoto).toEqual(testData.users[0].selectedPhoto)
   })
 
-  test('should not get the specified user when username is invalid', async () => {
-    const username = 'Some other username'
+  test("should not get the specified user when username is invalid", async () => {
+    const username = "Some other username"
 
     const result = await getUserBy({ username })
 
