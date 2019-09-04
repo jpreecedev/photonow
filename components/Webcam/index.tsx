@@ -111,11 +111,11 @@ const Webcam = () => {
           onClick={capture}
           type="button"
         >
+          {state.uploading && (
+            <CircularProgress size={24} className={classes.buttonProgress} />
+          )}
           Capture Photo
         </DefaultButton>
-        {state.uploading && (
-          <CircularProgress size={24} className={classes.buttonProgress} />
-        )}
       </div>
     </>
   )
