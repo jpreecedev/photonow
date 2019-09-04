@@ -5,12 +5,13 @@ import { Base } from "./base"
 
 interface MainProps {
   gap?: boolean
+  maxWidth?: false | "xs" | "sm" | "md" | "lg" | "xl"
 }
 
-const Main: FunctionComponent<MainProps> = ({ gap = false, children }) => {
+const Main: FunctionComponent<MainProps> = ({ gap = false, maxWidth, children }) => {
   return (
     <Base gap={gap}>
-      <Container>{children}</Container>
+      <Container maxWidth={maxWidth}>{children}</Container>
     </Base>
   )
 }

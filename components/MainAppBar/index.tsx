@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react"
+import Link from "next/link"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
@@ -51,7 +52,9 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
           <Typography variant="h6" className={classes.title}>
             Find My Face
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">
+            <Link href="/login">Login</Link>
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

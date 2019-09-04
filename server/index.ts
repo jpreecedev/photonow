@@ -28,6 +28,10 @@ nextApp.prepare().then(() => {
     return nextApp.render(req, res, "/getting-started")
   })
 
+  app.get("/login", (req, res) => {
+    return nextApp.render(req, res, "/login")
+  })
+
   app.get("*", (req, res) => {
     return handle(req, res)
   })
