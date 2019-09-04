@@ -1,4 +1,5 @@
 import { Types } from "mongoose"
+import { Order, Moment, Payment } from "../../global"
 
 interface TestData {
   orders?: Order[]

@@ -2,6 +2,7 @@ import { Response } from "express"
 import { Types } from "mongoose"
 import { getOrder } from "../database/order"
 import { errorHandler } from "../utils"
+import { OrderRequest } from "../../global"
 
 async function get(req: OrderRequest, res: Response) {
   try {

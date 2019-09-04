@@ -1,16 +1,17 @@
+require("dotenv").config()
+
 import express from "express"
 import next from "next"
 import cors from "cors"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
+import router from "./router"
 import { connectToDatabase } from "./database/connection"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler()
-
-require("dotenv").config()
 
 nextApp.prepare().then(() => {
   const app = express()
@@ -21,6 +22,8 @@ nextApp.prepare().then(() => {
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(cookieParser())
 
+  router(app)
+
   app.get("/getting-started", (req, res) => {
     return nextApp.render(req, res, "/getting-started")
   })
@@ -28,7 +31,6 @@ nextApp.prepare().then(() => {
   app.get("*", (req, res) => {
     return handle(req, res)
   })
-
   ;(async () => {
     await connectToDatabase()
     console.log("Connected to Mongo")

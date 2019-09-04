@@ -109,6 +109,7 @@ const Webcam = () => {
           disabled={state.uploading}
           className={classes.button}
           onClick={capture}
+          type="button"
         >
           Capture Photo
         </DefaultButton>

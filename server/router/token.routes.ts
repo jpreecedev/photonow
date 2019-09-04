@@ -1,5 +1,6 @@
 import express, { Response } from "express"
 import { authorisation } from "../utils"
+import { UserRequest } from "../../global"
 
 const router = express.Router()
 

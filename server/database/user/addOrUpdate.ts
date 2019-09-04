@@ -1,4 +1,5 @@
 import { UserModel } from "../schema"
+import { User } from "../../../global"
 
 async function addOrUpdate(user: User) {
   const { ok } = await UserModel.updateOne({ id: user.id }, user, {

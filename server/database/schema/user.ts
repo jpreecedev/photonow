@@ -1,4 +1,5 @@
 import { model, Model, Schema } from "mongoose"
+import { User } from "../../../global"
 
 const UserSchema = new Schema({
   id: String,

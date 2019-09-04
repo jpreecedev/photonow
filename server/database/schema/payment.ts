@@ -1,4 +1,5 @@
 import { model, Model, Schema } from "mongoose"
+import { Payment } from "../../../global"
 
 const PaymentSchema = new Schema({
   orderId: { type: Schema.Types.ObjectId, ref: "Order" },

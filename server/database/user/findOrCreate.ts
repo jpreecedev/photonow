@@ -1,4 +1,5 @@
 import { UserModel } from "../schema"
+import { Profile, User } from "../../../global"
 
 async function findOrCreate(
   profile: Profile,

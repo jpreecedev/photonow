@@ -1,4 +1,5 @@
 import { PaymentModel } from "../schema"
+import { Payment } from "../../../global"
 
 async function createPayment(payment: Payment) {
   const result = await new PaymentModel(payment).save()

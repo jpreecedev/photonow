@@ -51,11 +51,11 @@ async function recogniseFromBuffer(image: Buffer) {
           )
 
           const matchSet = new Set()
-          sorted.forEach(match => matchSet.add(match.Face.ExternalImageId))
+          sorted.forEach(match => {
+            matchSet.add(Types.ObjectId(match.Face.ExternalImageId.toString()))
+          })
 
-          const moments = await Promise.all(
-            Array.from(matchSet).map(s => getMoment(Types.ObjectId(s.toString())))
-          )
+          const moments = await Promise.all(Array.from(matchSet).map(getMoment))
 
           moments.forEach(
             moment => (moment.amount = Number.parseInt(process.env.DEFAULT_MOMENT_PRICE))
@@ -152,10 +152,10 @@ async function addImageToCollection(
   const collectionIds = hasCollections ? collections.CollectionIds : []
   const hasCollection = collectionIds.find(c => c === collectionName)
 
-  // rekognition.deleteCollection(
-  //   { CollectionId: process.env.FACE_RECOGNITION_COLLECTION_NAME },
-  //   () => {}
-  // )
+  rekognition.deleteCollection(
+    { CollectionId: process.env.FACE_RECOGNITION_COLLECTION_NAME },
+    () => {}
+  )
 
   if (!hasCollection) {
     await createCollection(collectionName)

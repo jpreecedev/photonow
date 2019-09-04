@@ -4,6 +4,7 @@ import multerS3 from "multer-s3-transform"
 import sharp, { Sharp } from "sharp"
 import { join } from "path"
 import { Request, Response, NextFunction } from "express"
+import { MulterFile } from "../../global"
 
 const BUCKET = process.env.AWS_BUCKET
 const watermark = join(__dirname, "../../static/watermark.png")

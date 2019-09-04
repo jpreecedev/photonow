@@ -1,4 +1,5 @@
 import { model, Model, Schema } from "mongoose"
+import { Moment } from "../../../global"
 
 const MomentSchema = new Schema({
   photographerId: { type: Schema.Types.ObjectId, ref: "User" },

@@ -2,6 +2,7 @@ import express, { Response, Request, NextFunction } from "express"
 import passport from "passport"
 import jwt from "jsonwebtoken"
 import { addOrUpdate, getUserBy } from "../database/user"
+import { UserRequest, User } from "../../global"
 
 const router = express.Router()
 

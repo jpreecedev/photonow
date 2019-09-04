@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
-import FaceIcon from "@material-ui/icons/FaceTwoTone"
+import FaceIcon from "@material-ui/icons/Face"
 import clsx from "clsx"
 
 interface MainAppBarProps {
@@ -17,11 +17,11 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1
     },
-    gap: {
-      marginBottom: theme.spacing(4)
-    },
     menuButton: {
       marginRight: theme.spacing(2)
+    },
+    gap: {
+      marginBottom: theme.spacing(4)
     },
     title: {
       flexGrow: 1

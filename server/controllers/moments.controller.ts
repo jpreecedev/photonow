@@ -1,7 +1,7 @@
 import { Response } from "express"
 import { createMoment } from "../database/moments"
-import { faceRecognition } from "../utils"
-import { errorHandler } from "../utils"
+import { errorHandler, faceRecognition } from "../utils"
+import { FileRequest, Moment } from "../../global"
 
 async function post(req: FileRequest, res: Response) {
   try {

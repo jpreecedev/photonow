@@ -1,4 +1,5 @@
 import { UserModel } from "../schema"
+import { User } from "../../../global"
 
 async function createUser({
   firstName,
