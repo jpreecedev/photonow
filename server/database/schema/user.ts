@@ -16,7 +16,8 @@ const UserSchema = new Schema({
   firstName: String,
   lastName: String,
   displayName: String,
-  selectedPhoto: String
+  selectedPhoto: String,
+  profile: { id: String, displayName: String, username: String, email: String }
 })
 
 const UserModel: Model<User> = model<User>("User", UserSchema)

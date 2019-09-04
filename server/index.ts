@@ -7,6 +7,7 @@ import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import router from "./router"
 import { connectToDatabase } from "./database/connection"
+import { applyMiddleware } from "./utils/authorisation"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
@@ -23,6 +24,7 @@ nextApp.prepare().then(() => {
   app.use(cookieParser())
 
   router(app)
+  applyMiddleware()
 
   app.get("/getting-started", (req, res) => {
     return nextApp.render(req, res, "/getting-started")

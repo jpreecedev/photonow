@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get(
   "/:orderId",
-  authorisation.basic,
+  authorisation.isAuthenticated,
   // @ts-ignore
   OrderController.get
 )

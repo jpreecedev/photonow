@@ -53,7 +53,9 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
             Find My Face
           </Typography>
           <Button color="inherit">
-            <Link href="/login">Login</Link>
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
           </Button>
         </Toolbar>
       </AppBar>

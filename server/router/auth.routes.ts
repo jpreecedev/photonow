@@ -1,88 +1,39 @@
-import express, { Response, Request, NextFunction } from "express"
-import passport from "passport"
-import jwt from "jsonwebtoken"
-import { addOrUpdate, getUserBy } from "../database/user"
-import { UserRequest, User } from "../../global"
+import express, { Response } from "express"
+import { to } from "await-to-js"
+import {
+  check,
+  promisifiedPassportAuthentication,
+  promisifiedPassportLogin
+} from "../utils/authorisation"
+import { LogInRequest } from "../../global"
 
 const router = express.Router()
 
-router.get(
-  "/facebook",
-  passport.authenticate("facebook", {
-    scope: ["public_profile", "user_photos"]
-  })
-)
+router.post("/api/auth", check, async (req: LogInRequest, res: Response) => {
+  console.log(`LOGIN | requester: ${req.body.email}`)
 
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", { failureRedirect: "/login-failed" }),
-  (req: UserRequest, res: Response) => {
-    if (req.user.selectedPhoto) {
-      return res.redirect("/profile")
-    }
+  let [err, user] = await to(promisifiedPassportAuthentication(req, res))
 
-    req.user
-
-    return res.redirect("/upload")
+  if (err) {
+    console.error(err)
+    return res.status(500).json({ success: false, message: "Authentication error!" })
   }
-)
+  if (!user) {
+    // all failed logins default to the same error message
+    return res.status(401).json({ success: false, message: "Wrong credentials!" })
+  }
 
-router.post("/login", (req: Request, res: Response, next: NextFunction) =>
-  passport.authenticate("login", (err, user, info) => {
-    if (err) {
-      console.log(err)
-      return res.status(500).send(err)
-    }
-    if (info) {
-      return res.status(500).send(info)
-    }
+  ;[err] = await to(promisifiedPassportLogin(req, user))
 
-    req.logIn(user, async err => {
-      const dbUser = await getUserBy({ username: user.username })
-      const token = jwt.sign({ id: user.username }, process.env.JWT_SECRET || "")
-      res.status(200).send({
-        auth: true,
-        token,
-        message: "Logged in."
-      })
-    })
-  })(req, res, next)
-)
+  if (err) {
+    console.error(err)
+    return res.status(500).json({ success: false, message: "Authentication error!" })
+  }
 
-router.post("/register", (req: Request, res: Response, next: NextFunction) =>
-  passport.authenticate("register", (err, user, info) => {
-    if (err) {
-      console.log(err)
-      return res.status(500).send(err)
-    }
-    if (info) {
-      return res.status(500).send(info)
-    }
-
-    req.logIn(user, async err => {
-      if (err) {
-        console.log(err)
-        return res.sendStatus(500)
-      }
-
-      try {
-        const user = await getUserBy({ username: req.body.email })
-
-        await addOrUpdate(<User>{
-          id: user.id,
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email
-        })
-
-        return res.sendStatus(200)
-      } catch (error) {
-        console.log(error)
-
-        return res.sendStatus(500)
-      }
-    })
-  })(req, res, next)
-)
+  return res.status(200).json({
+    success: true,
+    data: { profile: { ...user.profile, id: user._id } }
+  })
+})
 
 export default router

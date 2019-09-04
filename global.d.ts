@@ -32,6 +32,7 @@ export interface User extends Document {
   lastName?: string
   displayName?: string
   selectedPhoto?: string
+  profile?: Profile
 }
 
 export interface Order extends Document {
@@ -62,6 +63,10 @@ export interface UserRequest extends Request {
   user: User
 }
 
+export interface UserAuthorisationRequest extends Request {
+  user: AuthorisationUser
+}
+
 export interface FileRequest extends Request {
   file: UploadedFile
   user: User
@@ -75,6 +80,19 @@ export interface OrderRequest extends Request {
 
 export interface AuthenticatedRequest extends Request {
   (isAuthenticated: Function): boolean
+}
+
+export interface AuthorisationUser {
+  data: AuthorisationData
+}
+
+export interface AuthorisationData {
+  tokens: Token[]
+  _id: Types.ObjectId
+}
+
+export interface Token {
+  kind: string
 }
 
 export interface Profile {
@@ -102,4 +120,19 @@ export interface TransformedFile {
   location: string
   etag: string
   key: string
+}
+
+export interface LogInRequestCallback {
+  err: any
+  user: User
+  info: any
+}
+
+export interface LogInRequest extends Request {
+  logIn(user: User, callback: (err: any, user: User, info: any) => void): void
+}
+
+export interface LogOutRequest {
+  logout(): void
+  session: { destroy: (err: any) => void }
 }

@@ -1,7 +1,7 @@
-import React from "react"
+import React, { FormEvent } from "react"
+import { Field, reduxForm } from "redux-form"
 import { Typography } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import { makeStyles } from "@material-ui/core/styles"
@@ -9,6 +9,8 @@ import Paper from "@material-ui/core/Paper"
 
 import { Main } from "../layouts/main"
 import { FacebookLoginButton } from "../components/FacebookLoginButton"
+import { renderTextField } from "../components/FormTextField"
+import * as server from "../utils/server"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -39,6 +41,13 @@ const useStyles = makeStyles(theme => ({
 
 const Login = () => {
   const classes = useStyles({})
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const response = await server.postAsync("/auth", null)
+    debugger
+  }
+
   return (
     <Main gap maxWidth="sm">
       <main className={classes.layout}>
@@ -51,11 +60,12 @@ const Login = () => {
           </Typography>
           <form
             method="post"
-            action="/api/auth/login"
+            action="/api/auth"
             className={classes.form}
+            onSubmit={onSubmit}
             noValidate
           >
-            <TextField
+            <Field
               variant="outlined"
               margin="normal"
               required
@@ -65,8 +75,9 @@ const Login = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              component={renderTextField}
             />
-            <TextField
+            <Field
               variant="outlined"
               margin="normal"
               required
@@ -76,6 +87,7 @@ const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              component={renderTextField}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -98,4 +110,6 @@ const Login = () => {
   )
 }
 
-export default Login
+export default reduxForm({
+  form: "loginForm"
+})(Login)
