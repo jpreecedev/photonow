@@ -9,7 +9,7 @@ import { LogInRequest } from "../../global"
 
 const router = express.Router()
 
-router.post("/api/auth", check, async (req: LogInRequest, res: Response) => {
+router.post("/", check, async (req: LogInRequest, res: Response) => {
   console.log(`LOGIN | requester: ${req.body.email}`)
 
   let [err, user] = await to(promisifiedPassportAuthentication(req, res))

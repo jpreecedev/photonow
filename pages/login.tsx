@@ -1,16 +1,12 @@
-import React, { FormEvent } from "react"
-import { Field, reduxForm } from "redux-form"
+import React, { FormEvent, FunctionComponent } from "react"
+import { connect } from "react-redux"
 import { Typography } from "@material-ui/core"
-import Button from "@material-ui/core/Button"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
 import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 
-import { Main } from "../layouts/main"
-import { FacebookLoginButton } from "../components/FacebookLoginButton"
-import { renderTextField } from "../components/FormTextField"
 import * as server from "../utils/server"
+import { Main } from "../layouts/main"
+import { LoginForm } from "../components/LoginForm"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -39,12 +35,20 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Login = () => {
+interface LoginProps {
+  loginForm: any
+}
+
+const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   const classes = useStyles({})
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const response = await server.postAsync("/auth", null)
+
+    const response = await server.postAsync("/auth", {
+      email: loginForm.values.email,
+      password: loginForm.values.password
+    })
     debugger
   }
 
@@ -65,44 +69,7 @@ const Login = () => {
             onSubmit={onSubmit}
             noValidate
           >
-            <Field
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              component={renderTextField}
-            />
-            <Field
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              component={renderTextField}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <FacebookLoginButton />
+            <LoginForm />
           </form>
         </Paper>
       </main>
@@ -110,6 +77,7 @@ const Login = () => {
   )
 }
 
-export default reduxForm({
-  form: "loginForm"
-})(Login)
+export default connect(state => ({
+  // @ts-ignore
+  loginForm: state.form.loginForm
+}))(Login)

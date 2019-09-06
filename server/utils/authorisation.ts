@@ -41,8 +41,6 @@ const isAuthorised = (
 }
 
 const check = (req: UserRequest, res: Response, next: NextFunction) => {
-  console.log("Boop")
-
   if (req.user) {
     return res.status(500).send("You are already signed in!")
   }

@@ -1,5 +1,3 @@
-import { getItem } from "./localStorage"
-
 function getServerApiUrl() {
   return process.env.SERVER_API_URL
 }
@@ -8,53 +6,59 @@ async function callFetchAsync(
   url: string,
   method: "GET" | "PUT" | "POST" | "DELETE",
   body: object = {},
-  headers = {}
+  headers = {},
+  token: string = null
 ) {
-  const options = {
-    headers: new Headers({
-      "Content-Type": "application/json",
-      ...headers
-    }),
-    body: ""
+  try {
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        ...headers
+      }),
+      body: ""
+    }
+
+    if (body) {
+      options.body = JSON.stringify(body)
+    }
+
+    if (token) {
+      options.headers.append("Authorization", `Bearer ${token}`)
+    }
+
+    const response = await fetch(`${getServerApiUrl()}${url}`, {
+      method,
+      ...options
+    })
+
+    if (response.status !== 200) {
+      throw new Error(
+        `Request failed with status code ${response.status}.  ${await response.text()}`
+      )
+    }
+
+    return await response.json()
+  } catch (err) {
+    console.error(err)
+
+    return undefined
   }
-
-  if (body) {
-    options.body = JSON.stringify(body)
-  }
-
-  const token = getItem("jwtoken")
-  if (token) {
-    options.headers.append("Authorization", `Bearer ${token}`)
-  }
-
-  const response = await fetch(`${getServerApiUrl()}${url}`, {
-    method,
-    ...options
-  })
-
-  if (response.status !== 200) {
-    throw new Error(
-      `Request failed with status code ${response.status}.  ${await response.text()}`
-    )
-  }
-
-  return await response.json()
 }
 
-function getAsync(url: string) {
-  return callFetchAsync(url, "GET")
+function getAsync(url: string, token?: string) {
+  return callFetchAsync(url, "GET", null, null, token)
 }
 
-function postAsync(url: string, body: any) {
-  return callFetchAsync(url, "POST", body)
+function postAsync(url: string, body: any, token?: string) {
+  return callFetchAsync(url, "POST", body, null, token)
 }
 
-function putAsync(url: string, body: any) {
-  return callFetchAsync(url, "PUT", body)
+function putAsync(url: string, body: any, token?: string) {
+  return callFetchAsync(url, "PUT", body, null, token)
 }
 
-function deleteAsync(url: string, body: any) {
-  return callFetchAsync(url, "DELETE", body)
+function deleteAsync(url: string, body: any, token?: string) {
+  return callFetchAsync(url, "DELETE", body, null, token)
 }
 
 async function uploadPhotoAsync(apiUrl: string, filename: string, blob: Blob) {
