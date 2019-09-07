@@ -1,9 +1,9 @@
-import * as Actions from '../actions'
+import * as Actions from "../actions"
 
 const DEFAULT_STATE = []
 
 function basketReducer(state, action) {
-  if (typeof state === 'undefined') {
+  if (typeof state === "undefined") {
     return DEFAULT_STATE
   }
 

@@ -53,7 +53,7 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const response = await server.postAsync("/auth", {
+    const response = await server.postAsync("/auth/register", {
       firstName: registerForm.values.firstName,
       lastName: registerForm.values.lastName,
       email: registerForm.values.email,

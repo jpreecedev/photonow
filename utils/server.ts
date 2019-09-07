@@ -6,8 +6,7 @@ async function callFetchAsync(
   url: string,
   method: "GET" | "PUT" | "POST" | "DELETE",
   body: object = {},
-  headers = {},
-  token: string = null
+  headers = {}
 ) {
   try {
     const options = {
@@ -20,10 +19,6 @@ async function callFetchAsync(
 
     if (body) {
       options.body = JSON.stringify(body)
-    }
-
-    if (token) {
-      options.headers.append("Authorization", `Bearer ${token}`)
     }
 
     const response = await fetch(`${getServerApiUrl()}${url}`, {
@@ -45,20 +40,20 @@ async function callFetchAsync(
   }
 }
 
-function getAsync(url: string, token?: string) {
-  return callFetchAsync(url, "GET", null, null, token)
+function getAsync(url: string) {
+  return callFetchAsync(url, "GET", null, null)
 }
 
-function postAsync(url: string, body: any, token?: string) {
-  return callFetchAsync(url, "POST", body, null, token)
+function postAsync(url: string, body: any) {
+  return callFetchAsync(url, "POST", body, null)
 }
 
-function putAsync(url: string, body: any, token?: string) {
-  return callFetchAsync(url, "PUT", body, null, token)
+function putAsync(url: string, body: any) {
+  return callFetchAsync(url, "PUT", body, null)
 }
 
-function deleteAsync(url: string, body: any, token?: string) {
-  return callFetchAsync(url, "DELETE", body, null, token)
+function deleteAsync(url: string, body: any) {
+  return callFetchAsync(url, "DELETE", body, null)
 }
 
 async function uploadPhotoAsync(apiUrl: string, filename: string, blob: Blob) {

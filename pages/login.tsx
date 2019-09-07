@@ -45,7 +45,7 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const response = await server.postAsync("/auth", {
+    const response = await server.postAsync("/auth/login", {
       email: loginForm.values.email,
       password: loginForm.values.password
     })

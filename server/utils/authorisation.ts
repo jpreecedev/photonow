@@ -3,17 +3,17 @@ import bcrypt from "bcrypt"
 import passport from "passport"
 import { Strategy as LocalStrategy } from "passport-local"
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth"
+import passportJWT from "passport-jwt"
+import jwt from "jsonwebtoken"
 import { to } from "await-to-js"
-import { LogInRequest, LogOutRequest, User, UserRequest } from "../../global"
+import { LogOutRequest, User, UserRequest } from "../../global"
 
-import {
-  AuthorisationUser,
-  AuthenticatedRequest,
-  UserAuthorisationRequest,
-  Token
-} from "../../global"
+import { AuthenticatedRequest, UserAuthorisationRequest, Token } from "../../global"
 import { UserModel } from "../database/schema"
 import { errorHandler, authorisation } from "../utils"
+
+const saltRounds = 10
+const JWTStrategy = passportJWT.Strategy
 
 const isAuthenticated = (
   req: AuthenticatedRequest,
@@ -51,12 +51,27 @@ const verifyPassword = (candidate: string, actual: string) => {
   return bcrypt.compare(candidate, actual)
 }
 
+const hashPassword = async (password: String) => {
+  return new Promise(async (resolve, reject) => {
+    if (!password) {
+      return reject(null)
+    }
+    try {
+      let salt = await bcrypt.genSalt(saltRounds)
+      let hash = await bcrypt.hash(password, salt)
+      return resolve(hash)
+    } catch (err) {
+      return reject(err)
+    }
+  })
+}
+
 const promisifiedPassportAuthentication = (
   req: Request,
   res: Response
 ): Promise<User> => {
   return new Promise((resolve, reject) => {
-    passport.authenticate("local", (err, user: User, info) => {
+    passport.authenticate("local", { session: false }, (err, user: User, info) => {
       if (err) {
         return reject(err)
       }
@@ -65,13 +80,18 @@ const promisifiedPassportAuthentication = (
   })
 }
 
-const promisifiedPassportLogin = (req: LogInRequest, user: User): Promise<User> => {
+const promisifiedPassportLogin = (req: Request, user: User): Promise<string> => {
   return new Promise((resolve, reject) => {
-    req.logIn(user, (err, user, info) => {
+    req.login(user, { session: false }, err => {
       if (err) {
         return reject(err)
       }
-      return resolve(user)
+
+      return resolve(
+        jwt.sign({ data: user }, process.env.JWT_SECRET, {
+          expiresIn: 604800
+        })
+      )
     })
   })
 }
@@ -89,9 +109,9 @@ const promisifiedPassportLogout = (req: LogOutRequest) => {
 }
 
 const applyMiddleware = () => {
-  passport.serializeUser((user: AuthorisationUser, done) => done(null, user.data._id))
+  passport.serializeUser((user: User, done) => done(null, user._id))
 
-  passport.deserializeUser(async (id, done) => {
+  passport.deserializeUser(async (id: string, done) => {
     try {
       const user = await UserModel.findById(id).exec()
       return done(null, user)
@@ -100,6 +120,22 @@ const applyMiddleware = () => {
       return done(err, null)
     }
   })
+
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: (req: Request) => req.cookies.jwt,
+        secretOrKey: process.env.JWT_SECRET
+      },
+      async (jwtPayload, cb) => {
+        const [err, user] = await to(UserModel.findById(jwtPayload.id).exec())
+        if (err) {
+          return cb(err)
+        }
+        return cb(null, user)
+      }
+    )
+  )
 
   passport.use(
     new LocalStrategy(
@@ -273,6 +309,7 @@ export {
   isAuthenticated,
   isAuthorised,
   verifyPassword,
+  hashPassword,
   applyMiddleware,
   promisifiedPassportAuthentication,
   promisifiedPassportLogin,

@@ -122,17 +122,19 @@ export interface TransformedFile {
   key: string
 }
 
+export interface LogInRequest extends Request {
+  logIn(user: User, callback: (err: any, user: User, info: any) => void): void
+}
+
 export interface LogInRequestCallback {
   err: any
   user: User
   info: any
 }
 
-export interface LogInRequest extends Request {
-  logIn(user: User, callback: (err: any, user: User, info: any) => void): void
-}
-
 export interface LogOutRequest {
   logout(): void
   session: { destroy: (err: any) => void }
 }
+
+export interface RegisterRequest extends Request {}
