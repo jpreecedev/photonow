@@ -5,7 +5,7 @@ async function getUserById(id: Types.ObjectId) {
   return await UserModel.findById(id).exec()
 }
 
-async function getUserBy({ email }: { email: string }) {
+async function getUserBy(email: string) {
   return await UserModel.findOne({ email }).exec()
 }
 

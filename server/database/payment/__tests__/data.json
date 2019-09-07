@@ -1,0 +1,45 @@
+{
+  "moments": [
+    {
+      "_id": "5d73d69ef390eea3b2bfa4df",
+      "photographerId": "5d73d17b2efd821fa43c17b6",
+      "filename": "Sample File Name",
+      "mimeType": "Sample Customer",
+      "bucket": "sample@sample.com",
+      "contentType": "1 Sample Street",
+      "location": "Sample Area",
+      "originalEtag": "Sample City",
+      "resizedLocation": "TT1 1TT",
+      "resizedEtag": "Sample State",
+      "amount": 222
+    },
+    {
+      "_id": "5d73d6d317fde1fec95d6d1f",
+      "photographerId": "5d73d17b2efd821fa43c17b6",
+      "filename": "Sample 2 File Name",
+      "mimeType": "Sample 2 Customer",
+      "bucket": "sample2@sample2.com",
+      "contentType": "1 Sample 2 Street",
+      "location": "Sample 2 Area",
+      "originalEtag": "Sample 2 City",
+      "resizedLocation": "TT1 1TT",
+      "resizedEtag": "Sample 2 State",
+      "amount": 333
+    }
+  ],
+  "orders": [
+    {
+      "_id": "5d73d89ebed5d85791961f23",
+      "moments": ["5d73d69ef390eea3b2bfa4df", "5d73d6d317fde1fec95d6d1f"],
+      "amount": 555,
+      "name": "Test Customer",
+      "email": "test@test.com",
+      "addressLine1": "Test Line 1",
+      "addressLine2": "Test Line 2",
+      "city": "Test City",
+      "postalCode": "TT1 1TT",
+      "state": "Test State",
+      "country": "Test Country"
+    }
+  ]
+}

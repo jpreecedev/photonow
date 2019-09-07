@@ -21,11 +21,9 @@ export interface User extends Document {
   email?: string
   password?: string
   businessName?: string
-  address?: string
   firstName?: string
   lastName?: string
   displayName?: string
-  selectedPhoto?: string
 }
 
 export interface Order extends Document {

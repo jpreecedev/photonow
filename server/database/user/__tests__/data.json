@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "_id": "5d73dda9309496a8d3ad0886",
+      "email": "test@test.com",
+      "password": "password-test-123",
+      "businessName": "Test Business Name",
+      "firstName": "Test First Name",
+      "lastName": "Test Last Name",
+      "displayName": "Test Display Name"
+    }
+  ]
+}

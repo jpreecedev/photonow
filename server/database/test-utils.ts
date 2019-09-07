@@ -1,10 +1,11 @@
 import { Types } from "mongoose"
-import { Order, Moment, Payment } from "../../global"
+import { Order, Moment, Payment, User } from "../../global"
 
 interface TestData {
   orders?: Order[]
   moments?: Moment[]
   payments?: Payment[]
+  users?: User[]
 }
 
 function sanitizeData(testData: TestData) {
@@ -16,6 +17,12 @@ function sanitizeData(testData: TestData) {
           moment = Types.ObjectId(moment)
         })
       }
+    })
+  }
+
+  if (testData.users && testData.users.length) {
+    testData.users.forEach(user => {
+      user._id = Types.ObjectId(user._id)
     })
   }
 
