@@ -3,7 +3,7 @@ import Stripe from "stripe"
 import { Types } from "mongoose"
 
 import { createPayment } from "../database/payment"
-import { createOrder } from "../database/basket"
+import { createOrder } from "../database/order"
 import { getMoments } from "../database/moments"
 import { errorHandler } from "../utils"
 import { Moment, UserRequest, Order, Payment } from "../../global"

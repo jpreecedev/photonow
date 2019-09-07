@@ -13,7 +13,7 @@ const router = express.Router()
 
 router.post("/login", check, async (req: LogInRequest, res: Response) => {
   const { email, password } = req.body
-  const [err, user] = await to(getUserBy({ email }))
+  const [err, user] = await to(getUserBy(email))
 
   if (err || !user) {
     console.error("Unable to find user")
