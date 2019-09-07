@@ -27,7 +27,6 @@ describe("Add or update user tests", () => {
   test("should create a new user then update it", async () => {
     const user = <User>{
       id: "identityId",
-      provider: "providerName",
       businessName: "test business name"
     }
 

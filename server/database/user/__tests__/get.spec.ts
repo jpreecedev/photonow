@@ -27,10 +27,7 @@ describe("Add or update user tests", () => {
     const id = testData.users[0].id
     const user = {
       businessName: testData.users[0].businessName,
-      lat: testData.users[0].lat,
-      lng: testData.users[0].lng,
       address: testData.users[0].address,
-      provider: testData.users[0].provider,
       email: testData.users[0].email,
       displayName: testData.users[0].displayName,
       selectedPhoto: testData.users[0].selectedPhoto
@@ -39,13 +36,10 @@ describe("Add or update user tests", () => {
     const result = await getUser(id)
 
     expect(result.businessName).toEqual(user.businessName)
-    expect(result.lat).toEqual(user.lat)
-    expect(result.lng).toEqual(user.lng)
     expect(result.address).toEqual(user.address)
     expect(result.email).toEqual(user.email)
     expect(result.displayName).toEqual(user.displayName)
     expect(result.selectedPhoto).toEqual(user.selectedPhoto)
-    expect(result.provider).toEqual(user.provider)
   })
 
   test("should get the specified user by email", async () => {
@@ -54,7 +48,6 @@ describe("Add or update user tests", () => {
     const result = await getUserBy({ email })
 
     expect(result).toBeDefined()
-    expect(result.provider).toEqual(testData.users[0].provider)
     expect(result.businessName).toEqual(testData.users[0].businessName)
     expect(result.address).toEqual(testData.users[0].address)
     expect(result.email).toEqual(testData.users[0].email)
@@ -67,7 +60,6 @@ describe("Add or update user tests", () => {
     const result = await getUserBy({ email })
 
     expect(result).toBeDefined()
-    expect(result.provider).toEqual(testData.users[0].provider)
     expect(result.businessName).toEqual(testData.users[0].businessName)
     expect(result.address).toEqual(testData.users[0].address)
     expect(result.email).toEqual(testData.users[0].email)

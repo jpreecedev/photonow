@@ -20,13 +20,8 @@ export interface User extends Document {
   id: string
   email?: string
   password?: string
-  accessToken?: string
-  refreshToken?: string
-  provider?: string
   businessName?: string
   address?: string
-  lat?: number
-  lng?: number
   firstName?: string
   lastName?: string
   displayName?: string

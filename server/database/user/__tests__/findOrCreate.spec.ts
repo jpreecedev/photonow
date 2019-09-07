@@ -26,15 +26,11 @@ describe("Find or create user tests", () => {
 
   test("should find the specified user", async () => {
     const profile = <Profile>{ id: testData.users[0].id, displayName: "EXISTING NAME" }
-    const accessToken = testData.users[0].accessToken
-    const refreshToken = testData.users[0].refreshToken
 
-    const result = await findOrCreate(profile, accessToken, refreshToken)
+    const result = await findOrCreate(profile)
 
     expect(result).not.toBeUndefined()
     expect(result.id).toEqual(profile.id)
-    expect(result.accessToken).toEqual(accessToken)
-    expect(result.refreshToken).toEqual(refreshToken)
   })
 
   test("should create a new user", async () => {
@@ -42,16 +38,11 @@ describe("Find or create user tests", () => {
       id: "SOME_OTHER_PROFILE_ID",
       displayName: "SOME DISPLAY NAME"
     }
-    const accessToken = "SOME ACCESS TOKEN"
-    const refreshToken = "SOME REFRESH TOKEN"
-
-    const result = await findOrCreate(profile, accessToken, refreshToken)
+    const result = await findOrCreate(profile)
 
     expect(result).not.toBeUndefined()
     expect(result.id).toEqual(profile.id)
     expect(result.displayName).toEqual(profile.displayName)
     expect(result.email).toEqual(profile.email)
-    expect(result.accessToken).toEqual(accessToken)
-    expect(result.refreshToken).toEqual(refreshToken)
   })
 })

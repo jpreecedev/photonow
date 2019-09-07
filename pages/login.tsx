@@ -64,11 +64,11 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   return (
     <Main gap maxWidth="sm">
       <main className={classes.layout}>
-        <div>
+        <aside>
           {Object.keys(errors).map(error => (
             <p key={errors[error]}>{errors[error]}</p>
           ))}
-        </div>
+        </aside>
         <Paper className={classes.paper} elevation={2}>
           <Typography component="h2" variant="h4" gutterBottom>
             Login
