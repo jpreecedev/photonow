@@ -105,20 +105,4 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
     })
 })
 
-router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: "profile email"
-  })
-)
-router.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/login"
-  }),
-  (req, res) => {
-    res.redirect("/upload")
-  }
-)
-
 export default router

@@ -10,8 +10,6 @@ import Grid from "@material-ui/core/Grid"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { LoginForm } from "../components/LoginForm"
-import { FacebookLoginButton } from "../components/FacebookLoginButton"
-import { GoogleLoginButton } from "../components/GoogleLoginButton"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -87,9 +85,6 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
           >
             <LoginForm />
           </form>
-
-          <FacebookLoginButton />
-          <GoogleLoginButton />
 
           <Grid container justify="flex-end">
             <Grid item>
