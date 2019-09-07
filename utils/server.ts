@@ -23,6 +23,7 @@ async function callFetchAsync(
 
     const response = await fetch(`${getServerApiUrl()}${url}`, {
       method,
+      credentials: "same-origin",
       ...options
     })
 

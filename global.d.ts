@@ -63,10 +63,6 @@ export interface UserRequest extends Request {
   user: User
 }
 
-export interface UserAuthorisationRequest extends Request {
-  user: AuthorisationUser
-}
-
 export interface FileRequest extends Request {
   file: UploadedFile
   user: User
@@ -76,23 +72,6 @@ export interface OrderRequest extends Request {
   user: User
   file: UploadedFile
   params: OrderParams
-}
-
-export interface AuthenticatedRequest extends Request {
-  (isAuthenticated: Function): boolean
-}
-
-export interface AuthorisationUser {
-  data: AuthorisationData
-}
-
-export interface AuthorisationData {
-  tokens: Token[]
-  _id: Types.ObjectId
-}
-
-export interface Token {
-  kind: string
 }
 
 export interface Profile {
@@ -138,3 +117,9 @@ export interface LogOutRequest {
 }
 
 export interface RegisterRequest extends Request {}
+
+export interface JWTPayload {
+  data: User
+  iat: Number
+  exp: Number
+}

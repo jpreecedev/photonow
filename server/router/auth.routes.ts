@@ -12,8 +12,6 @@ import { LogInRequest, RegisterRequest, User } from "../../global"
 const router = express.Router()
 
 router.post("/login", check, async (req: LogInRequest, res: Response) => {
-  console.log(`LOGIN | requester: ${req.body.email}`)
-
   const [err, user] = await to(promisifiedPassportAuthentication(req, res))
 
   if (err) {
@@ -32,11 +30,23 @@ router.post("/login", check, async (req: LogInRequest, res: Response) => {
     return res.status(500).json({ success: false, message: "Authentication error!" })
   }
 
-  res.cookie("jwt", token, { httpOnly: true, secure: true })
-
-  return res.status(200).json({
-    success: true
-  })
+  return res
+    .status(200)
+    .cookie("jwt", token, {
+      httpOnly: true,
+      secure:
+        process.env.NODE_ENV == `production` && process.env.SERVER_URL.includes("https")
+          ? true
+          : false,
+      maxAge: Date.now() + 60 * 60 * 1000 * 4,
+      domain:
+        process.env.NODE_ENV == `production`
+          ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
+          : "localhost"
+    })
+    .json({
+      success: true
+    })
 })
 
 router.post("/register", check, async (req: RegisterRequest, res: Response) => {
@@ -76,11 +86,23 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
     return res.status(500).json({ success: false, message: "Authentication error!" })
   }
 
-  res.cookie("jwt", token, { httpOnly: true, secure: true })
-
-  return res.status(200).json({
-    success: true
-  })
+  return res
+    .status(200)
+    .cookie("jwt", token, {
+      httpOnly: true,
+      secure:
+        process.env.NODE_ENV == `production` && process.env.SERVER_URL.includes("https")
+          ? true
+          : false,
+      maxAge: Date.now() + 60 * 60 * 1000 * 4,
+      domain:
+        process.env.NODE_ENV == `production`
+          ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
+          : "localhost"
+    })
+    .json({
+      success: true
+    })
 })
 
 export default router

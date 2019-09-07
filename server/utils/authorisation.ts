@@ -6,39 +6,15 @@ import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth"
 import passportJWT from "passport-jwt"
 import jwt from "jsonwebtoken"
 import { to } from "await-to-js"
-import { LogOutRequest, User, UserRequest } from "../../global"
+import { LogOutRequest, User, UserRequest, JWTPayload } from "../../global"
 
-import { AuthenticatedRequest, UserAuthorisationRequest, Token } from "../../global"
 import { UserModel } from "../database/schema"
 import { errorHandler, authorisation } from "../utils"
 
 const saltRounds = 10
 const JWTStrategy = passportJWT.Strategy
 
-const isAuthenticated = (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-  return res.redirect("/login")
-}
-
-const isAuthorised = (
-  req: UserAuthorisationRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  const provider = req.path.split("/").slice(-1)[0]
-  const token = req.user.data.tokens.find((token: Token) => token.kind === provider)
-  if (token) {
-    return next()
-  }
-
-  res.redirect(`/auth/${provider}`)
-}
+const isAuthenticated = passport.authenticate("jwt", { session: false })
 
 const check = (req: UserRequest, res: Response, next: NextFunction) => {
   if (req.user) {
@@ -127,8 +103,9 @@ const applyMiddleware = () => {
         jwtFromRequest: (req: Request) => req.cookies.jwt,
         secretOrKey: process.env.JWT_SECRET
       },
-      async (jwtPayload, cb) => {
-        const [err, user] = await to(UserModel.findById(jwtPayload.id).exec())
+      async (jwtPayload: JWTPayload, cb) => {
+        const [err, user] = await to(UserModel.findById(jwtPayload.data._id).exec())
+
         if (err) {
           return cb(err)
         }
@@ -307,7 +284,6 @@ const applyMiddleware = () => {
 
 export {
   isAuthenticated,
-  isAuthorised,
   verifyPassword,
   hashPassword,
   applyMiddleware,
