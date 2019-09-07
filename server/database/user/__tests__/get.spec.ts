@@ -2,7 +2,7 @@ import { getUser, getUserBy } from "../../user"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Add or update user tests", () => {
   const testData = require("./get.json")

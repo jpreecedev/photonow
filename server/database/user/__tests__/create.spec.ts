@@ -3,7 +3,7 @@ import { createUser } from ".."
 import TestDbHelper from "../../../../setup/mongo"
 import { User } from "../../../../global"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Create user tests", () => {
   const testData = require("./create.json")

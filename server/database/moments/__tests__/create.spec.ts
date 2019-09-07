@@ -1,8 +1,9 @@
 import { createMoment } from ".."
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
+import { Moment } from "../../../../global"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Create moment tests", () => {
   beforeAll(async () => {

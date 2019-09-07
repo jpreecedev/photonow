@@ -1,5 +1,4 @@
 import express, { Response } from "express"
-import passport from "passport"
 import { to } from "await-to-js"
 import {
   check,

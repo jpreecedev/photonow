@@ -3,7 +3,7 @@ import { sanitizeData } from "../../test-utils"
 import { Types } from "mongoose"
 import TestDbHelper from "../../../../setup/mongo"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Get moment tests", () => {
   const testData = require("./get.json")

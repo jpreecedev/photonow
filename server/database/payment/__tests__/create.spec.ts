@@ -2,8 +2,9 @@ import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import { createPayment } from ".."
 import TestDbHelper from "../../../../setup/mongo"
+import { Payment } from "../../../../global"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Create payment tests", () => {
   beforeAll(async () => {

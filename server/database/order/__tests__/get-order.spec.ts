@@ -3,7 +3,7 @@ import { sanitizeData } from "../../test-utils"
 import { getOrder } from ".."
 import TestDbHelper from "../../../../setup/mongo"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Get order tests", () => {
   beforeAll(async () => {

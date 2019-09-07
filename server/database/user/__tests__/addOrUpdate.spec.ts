@@ -1,8 +1,9 @@
 import { sanitizeData } from "../../test-utils"
 import { addOrUpdate } from ".."
 import TestDbHelper from "../../../../setup/mongo"
+import { User } from "../../../../global"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Add or update user tests", () => {
   const testData = require("./addOrUpdate.json")

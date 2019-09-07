@@ -1,8 +1,9 @@
 import { Types } from "mongoose"
 import { createOrder } from "../create"
 import TestDbHelper from "../../../../setup/mongo"
+import { Order } from "../../../../global"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Create order tests", () => {
   beforeAll(async () => {

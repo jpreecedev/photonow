@@ -3,7 +3,7 @@ import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
 import { Profile } from "../../../../global"
 
-const dbHelper = new TestDbHelper()
+const dbHelper = TestDbHelper()
 
 describe("Find or create user tests", () => {
   const testData = require("./findOrCreate.json")
