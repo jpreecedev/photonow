@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper"
 
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
-import { LoginForm } from "../components/LoginForm"
+import { RegisterForm } from "../components/RegisterForm"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -35,19 +35,29 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-interface LoginProps {
-  loginForm: { values: { email: string; password: string } }
+interface RegisterProps {
+  registerForm: {
+    values: {
+      firstName: string
+      lastName: string
+      email: string
+      password: string
+      passwordConfirmation: string
+    }
+  }
 }
 
-const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
+const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
   const classes = useStyles({})
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const response = await server.postAsync("/auth", {
-      email: loginForm.values.email,
-      password: loginForm.values.password
+      firstName: registerForm.values.firstName,
+      lastName: registerForm.values.lastName,
+      email: registerForm.values.email,
+      password: registerForm.values.password
     })
     debugger
   }
@@ -57,10 +67,10 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={2}>
           <Typography component="h2" variant="h4" gutterBottom>
-            Login
+            Register
           </Typography>
           <Typography component="p" gutterBottom>
-            Log in to your account dashboard
+            Sign up for a new account
           </Typography>
           <form
             method="post"
@@ -69,7 +79,7 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
             onSubmit={onSubmit}
             noValidate
           >
-            <LoginForm />
+            <RegisterForm />
           </form>
         </Paper>
       </main>
@@ -79,5 +89,5 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
 
 export default connect(state => ({
   // @ts-ignore
-  loginForm: state.form.loginForm
-}))(Login)
+  registerForm: state.form.registerForm
+}))(Register)

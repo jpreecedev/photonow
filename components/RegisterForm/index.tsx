@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button"
 import Grid from "@material-ui/core/Grid"
 
 import { renderTextField } from "../FormTextField"
-import { FacebookLoginButton } from "../FacebookLoginButton"
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -14,9 +13,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-interface LoginProps {}
+interface RegisterProps {}
 
-const LoginForm: FunctionComponent<LoginProps> = () => {
+const RegisterForm: FunctionComponent<RegisterProps> = () => {
   const classes = useStyles({})
 
   return (
@@ -26,11 +25,33 @@ const LoginForm: FunctionComponent<LoginProps> = () => {
         margin="normal"
         required
         fullWidth
+        id="firstName"
+        label="First Name"
+        name="firstName"
+        autoComplete="fname"
+        autoFocus
+        component={renderTextField}
+      />
+      <Field
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="lastName"
+        label="Last Name"
+        name="lastName"
+        autoComplete="lname"
+        component={renderTextField}
+      />
+      <Field
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
         id="email"
         label="Email Address"
         name="email"
         autoComplete="email"
-        autoFocus
         component={renderTextField}
       />
       <Field
@@ -42,24 +63,22 @@ const LoginForm: FunctionComponent<LoginProps> = () => {
         label="Password"
         type="password"
         id="password"
-        autoComplete="current-password"
+        autoComplete="new-password"
         component={renderTextField}
       />
       <Button
         type="submit"
         fullWidth
-        variant="outlined"
+        variant="contained"
         color="primary"
         className={classes.submit}
       >
-        Sign In
+        Register
       </Button>
-      <FacebookLoginButton />
-
       <Grid container justify="flex-end">
         <Grid item>
-          <Link href="/register">
-            <a>Don't already have an account?</a>
+          <Link href="/login">
+            <a>Already have an account? Sign in</a>
           </Link>
         </Grid>
       </Grid>
@@ -67,8 +86,8 @@ const LoginForm: FunctionComponent<LoginProps> = () => {
   )
 }
 
-const ReduxLoginForm = reduxForm({
-  form: "loginForm"
-})(LoginForm)
+const ReduxRegisterForm = reduxForm({
+  form: "registerForm"
+})(RegisterForm)
 
-export { ReduxLoginForm as LoginForm }
+export { ReduxRegisterForm as RegisterForm }
