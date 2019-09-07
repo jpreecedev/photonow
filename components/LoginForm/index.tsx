@@ -1,16 +1,13 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm } from "redux-form"
-import Link from "next/link"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
-import Grid from "@material-ui/core/Grid"
 
 import { renderTextField } from "../FormTextField"
-import { FacebookLoginButton } from "../FacebookLoginButton"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    marginTop: theme.spacing(2)
   }
 }))
 
@@ -54,15 +51,6 @@ const LoginForm: FunctionComponent<LoginProps> = () => {
       >
         Sign In
       </Button>
-      <FacebookLoginButton />
-
-      <Grid container justify="flex-end">
-        <Grid item>
-          <Link href="/register">
-            <a>Don't already have an account?</a>
-          </Link>
-        </Grid>
-      </Grid>
     </>
   )
 }

@@ -1,12 +1,12 @@
 import React from "react"
 import Link from "@material-ui/core/Link"
-import SvgIcon from "@material-ui/core/SvgIcon"
 import { makeStyles } from "@material-ui/core/styles"
+import SvgIcon from "@material-ui/core/SvgIcon"
 import { Theme } from "@material-ui/core"
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
-    backgroundColor: "#4267b2",
+    backgroundColor: "#DD4B39",
     color: "white",
     letterSpacing: "0.25px",
     width: "100%",
@@ -25,23 +25,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const FacebookLoginButton = () => {
+const GoogleLoginButton = () => {
   const classes = useStyles({})
 
   return (
-    <Link className={classes.button} href="/api/auth/facebook">
-      <SvgIcon
-        viewBox="0 0 24 24"
-        width="48"
-        height="48"
-        fill="#000000"
-        style={{ marginRight: "8px" }}
-      >
-        <path d="M17.525,9H14V7c0-1.032,0.084-1.682,1.563-1.682h1.868v-3.18C16.522,2.044,15.608,1.998,14.693,2 C11.98,2,10,3.657,10,6.699V9H7v4l3-0.001V22h4v-9.003l3.066-0.001L17.525,9z" />
+    <Link className={classes.button} href="/api/auth/google">
+      <SvgIcon viewBox="0 0 488 512" style={{ marginRight: "8px" }}>
+        <path
+          fill="currentColor"
+          d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
+        />
       </SvgIcon>
-      Login with Facebook
+      Login with Google
     </Link>
   )
 }
 
-export { FacebookLoginButton }
+export { GoogleLoginButton }

@@ -109,11 +109,6 @@ export interface LogInRequestCallback {
   info: any
 }
 
-export interface LogOutRequest {
-  logout(): void
-  session: { destroy: (err: any) => void }
-}
-
 export interface RegisterRequest extends Request {}
 
 export interface JWTPayload {

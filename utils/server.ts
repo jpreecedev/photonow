@@ -8,25 +8,32 @@ async function callFetchAsync(
   body: object = {},
   headers = {}
 ) {
-  const options = {
-    headers: new Headers({
-      "Content-Type": "application/json",
-      ...headers
-    }),
-    body: ""
+  try {
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        ...headers
+      }),
+      body: ""
+    }
+
+    if (body) {
+      options.body = JSON.stringify(body)
+    }
+
+    const response = await fetch(`${getServerApiUrl()}${url}`, {
+      method,
+      credentials: "same-origin",
+      ...options
+    })
+
+    return await response.json()
+  } catch (err) {
+    return {
+      success: false,
+      message: err
+    }
   }
-
-  if (body) {
-    options.body = JSON.stringify(body)
-  }
-
-  const response = await fetch(`${getServerApiUrl()}${url}`, {
-    method,
-    credentials: "same-origin",
-    ...options
-  })
-
-  return await response.json()
 }
 
 function getAsync(url: string) {

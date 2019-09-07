@@ -1,4 +1,5 @@
 import express, { Response } from "express"
+import passport from "passport"
 import { to } from "await-to-js"
 import {
   check,
@@ -103,5 +104,21 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
       success: true
     })
 })
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: "profile email"
+  })
+)
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login"
+  }),
+  (req, res) => {
+    res.redirect("/upload")
+  }
+)
 
 export default router

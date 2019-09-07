@@ -1,13 +1,17 @@
 import React, { FormEvent, FunctionComponent } from "react"
 import { connect } from "react-redux"
 import Router from "next/router"
+import Link from "next/link"
 import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
+import Grid from "@material-ui/core/Grid"
 
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { LoginForm } from "../components/LoginForm"
+import { FacebookLoginButton } from "../components/FacebookLoginButton"
+import { GoogleLoginButton } from "../components/GoogleLoginButton"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -83,6 +87,17 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
           >
             <LoginForm />
           </form>
+
+          <FacebookLoginButton />
+          <GoogleLoginButton />
+
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/register">
+                <a>Don't already have an account?</a>
+              </Link>
+            </Grid>
+          </Grid>
         </Paper>
       </main>
     </Main>
