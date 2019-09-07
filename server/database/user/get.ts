@@ -1,13 +1,12 @@
 import { UserModel } from "../schema"
+import { Types } from "mongoose"
 
-async function getUser(id: string) {
-  return await UserModel.findOne({
-    id
-  }).exec()
+async function getUserById(id: Types.ObjectId) {
+  return await UserModel.findById(id).exec()
 }
 
 async function getUserBy({ email }: { email: string }) {
   return await UserModel.findOne({ email }).exec()
 }
 
-export { getUser, getUserBy }
+export { getUserById, getUserBy }

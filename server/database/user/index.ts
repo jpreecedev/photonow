@@ -1,6 +1,4 @@
-import { addOrUpdate } from "./addOrUpdate"
-import { getUser, getUserBy } from "./get"
-import { findOrCreate } from "./findOrCreate"
+import { getUserById, getUserBy } from "./get"
 import { createUser } from "./create"
 
-export { addOrUpdate, getUser, getUserBy, findOrCreate, createUser }
+export { getUserById, getUserBy, createUser }

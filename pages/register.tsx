@@ -1,7 +1,8 @@
 import React, { FormEvent, FunctionComponent } from "react"
 import { connect } from "react-redux"
 import Router from "next/router"
-import { Typography } from "@material-ui/core"
+import Typography from "@material-ui/core/Typography"
+import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 
@@ -19,9 +20,6 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       padding: theme.spacing(3)
@@ -78,12 +76,19 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
           ))}
         </aside>
         <Paper className={classes.paper} elevation={2}>
-          <Typography component="h2" variant="h4" gutterBottom>
-            Register
-          </Typography>
-          <Typography component="p" gutterBottom>
-            Sign up for a new account
-          </Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+          >
+            <Typography component="h2" variant="h4" gutterBottom>
+              Register
+            </Typography>
+            <Typography component="p" gutterBottom>
+              Sign up for a new account
+            </Typography>
+          </Box>
           <form
             method="post"
             action="/api/auth"

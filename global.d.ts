@@ -26,7 +26,6 @@ export interface User extends Document {
   lastName?: string
   displayName?: string
   selectedPhoto?: string
-  profile?: Profile
 }
 
 export interface Order extends Document {
@@ -66,12 +65,6 @@ export interface OrderRequest extends Request {
   user: User
   file: UploadedFile
   params: OrderParams
-}
-
-export interface Profile {
-  id: string
-  displayName: string
-  email: string
 }
 
 export interface UploadedFile {

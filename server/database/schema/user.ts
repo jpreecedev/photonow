@@ -2,7 +2,6 @@ import { model, Model, Schema } from "mongoose"
 import { User } from "../../../global"
 
 const UserSchema = new Schema({
-  id: String,
   email: String,
   password: String,
   businessName: String,
@@ -10,8 +9,7 @@ const UserSchema = new Schema({
   firstName: String,
   lastName: String,
   displayName: String,
-  selectedPhoto: String,
-  profile: { id: String, displayName: String, email: String }
+  selectedPhoto: String
 })
 
 const UserModel: Model<User> = model<User>("User", UserSchema)

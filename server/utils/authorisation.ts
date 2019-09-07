@@ -8,7 +8,7 @@ import { User, UserRequest, JWTPayload } from "../../global"
 
 import { UserModel } from "../database/schema"
 import { errorHandler } from "../utils"
-import { getUser } from "../database/user"
+import { getUserById } from "../database/user"
 
 const saltRounds = 10
 const JWTStrategy = passportJWT.Strategy
@@ -58,7 +58,8 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
         return res.redirect("/login")
       }
 
-      req.user = await getUser(decodedToken.data._id)
+      req.user = await getUserById(decodedToken.data._id)
+
       next()
     }
   )
