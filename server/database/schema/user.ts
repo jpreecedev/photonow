@@ -3,7 +3,7 @@ import { User } from "../../../global"
 
 const UserSchema = new Schema({
   id: String,
-  username: String,
+  email: String,
   password: String,
   accessToken: String,
   refreshToken: String,
@@ -12,12 +12,11 @@ const UserSchema = new Schema({
   address: String,
   lat: Number,
   lng: Number,
-  email: String,
   firstName: String,
   lastName: String,
   displayName: String,
   selectedPhoto: String,
-  profile: { id: String, displayName: String, username: String, email: String }
+  profile: { id: String, displayName: String, email: String }
 })
 
 const UserModel: Model<User> = model<User>("User", UserSchema)

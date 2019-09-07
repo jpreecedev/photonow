@@ -3,30 +3,32 @@ import { to } from "await-to-js"
 import {
   check,
   hashPassword,
-  promisifiedPassportAuthentication,
-  promisifiedPassportLogin
+  promisifiedPassportLogin,
+  verifyPassword
 } from "../utils/authorisation"
-import { createUser } from "../database/user"
+import { createUser, getUserBy } from "../database/user"
 import { LogInRequest, RegisterRequest, User } from "../../global"
 
 const router = express.Router()
 
 router.post("/login", check, async (req: LogInRequest, res: Response) => {
-  const [err, user] = await to(promisifiedPassportAuthentication(req, res))
+  const { email, password } = req.body
+  const [err, user] = await to(getUserBy({ email }))
 
-  if (err) {
-    console.error(err)
+  if (err || !user) {
+    console.error("Unable to find user")
     return res.status(500).json({ success: false, message: "Authentication error!" })
   }
-  if (!user) {
-    // all failed logins default to the same error message
-    return res.status(401).json({ success: false, message: "Wrong credentials!" })
+
+  if (!(await verifyPassword(password, user.password))) {
+    console.error("Passwords do not match")
+    return res.status(500).json({ success: false, message: "Authentication error!" })
   }
 
   const [loginErr, token] = await to(promisifiedPassportLogin(req, user))
 
   if (loginErr) {
-    console.error(loginErr)
+    console.error("Log in error", loginErr)
     return res.status(500).json({ success: false, message: "Authentication error!" })
   }
 
@@ -63,16 +65,13 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
       firstName,
       lastName,
       email,
-      password: await hashPassword(password),
-      username: email
+      password: await hashPassword(password)
     })
   )
 
   if (err) {
     if (err.code == 11000) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Username is already in use" })
+      return res.status(500).json({ success: false, message: "Email is already taken" })
     } else {
       console.error(err)
       return res.status(500).json({ success: false, message: "Server error" })

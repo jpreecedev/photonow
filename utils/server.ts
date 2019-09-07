@@ -8,53 +8,41 @@ async function callFetchAsync(
   body: object = {},
   headers = {}
 ) {
-  try {
-    const options = {
-      headers: new Headers({
-        "Content-Type": "application/json",
-        ...headers
-      }),
-      body: ""
-    }
-
-    if (body) {
-      options.body = JSON.stringify(body)
-    }
-
-    const response = await fetch(`${getServerApiUrl()}${url}`, {
-      method,
-      credentials: "same-origin",
-      ...options
-    })
-
-    if (response.status !== 200) {
-      throw new Error(
-        `Request failed with status code ${response.status}.  ${await response.text()}`
-      )
-    }
-
-    return await response.json()
-  } catch (err) {
-    console.error(err)
-
-    return undefined
+  const options = {
+    headers: new Headers({
+      "Content-Type": "application/json",
+      ...headers
+    }),
+    body: ""
   }
+
+  if (body) {
+    options.body = JSON.stringify(body)
+  }
+
+  const response = await fetch(`${getServerApiUrl()}${url}`, {
+    method,
+    credentials: "same-origin",
+    ...options
+  })
+
+  return await response.json()
 }
 
 function getAsync(url: string) {
-  return callFetchAsync(url, "GET", null, null)
+  return callFetchAsync(url, "GET")
 }
 
 function postAsync(url: string, body: any) {
-  return callFetchAsync(url, "POST", body, null)
+  return callFetchAsync(url, "POST", body)
 }
 
 function putAsync(url: string, body: any) {
-  return callFetchAsync(url, "PUT", body, null)
+  return callFetchAsync(url, "PUT", body)
 }
 
 function deleteAsync(url: string, body: any) {
-  return callFetchAsync(url, "DELETE", body, null)
+  return callFetchAsync(url, "DELETE", body)
 }
 
 async function uploadPhotoAsync(apiUrl: string, filename: string, blob: Blob) {

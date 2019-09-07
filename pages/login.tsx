@@ -1,5 +1,6 @@
 import React, { FormEvent, FunctionComponent } from "react"
 import { connect } from "react-redux"
+import Router from "next/router"
 import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
@@ -41,20 +42,31 @@ interface LoginProps {
 
 const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   const classes = useStyles({})
+  const [errors, setErrors] = React.useState({})
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const response = await server.postAsync("/auth/login", {
+    const { success, message } = await server.postAsync("/auth/login", {
       email: loginForm.values.email,
       password: loginForm.values.password
     })
-    debugger
+
+    if (success) {
+      return await Router.push("/upload")
+    }
+
+    setErrors({ ...errors, global: message })
   }
 
   return (
     <Main gap maxWidth="sm">
       <main className={classes.layout}>
+        <div>
+          {Object.keys(errors).map(error => (
+            <p key={errors[error]}>{errors[error]}</p>
+          ))}
+        </div>
         <Paper className={classes.paper} elevation={2}>
           <Typography component="h2" variant="h4" gutterBottom>
             Login

@@ -33,7 +33,6 @@ describe("Add or update user tests", () => {
       provider: testData.users[0].provider,
       email: testData.users[0].email,
       displayName: testData.users[0].displayName,
-      username: testData.users[0].username,
       selectedPhoto: testData.users[0].selectedPhoto
     }
 
@@ -45,41 +44,40 @@ describe("Add or update user tests", () => {
     expect(result.address).toEqual(user.address)
     expect(result.email).toEqual(user.email)
     expect(result.displayName).toEqual(user.displayName)
-    expect(result.username).toEqual(user.username)
     expect(result.selectedPhoto).toEqual(user.selectedPhoto)
     expect(result.provider).toEqual(user.provider)
   })
 
-  test("should get the specified user by username", async () => {
-    const username = "Test Username"
+  test("should get the specified user by email", async () => {
+    const email = "test@test.com"
 
-    const result = await getUserBy({ username })
+    const result = await getUserBy({ email })
 
     expect(result).toBeDefined()
     expect(result.provider).toEqual(testData.users[0].provider)
     expect(result.businessName).toEqual(testData.users[0].businessName)
     expect(result.address).toEqual(testData.users[0].address)
-    expect(result.username).toEqual(testData.users[0].username)
+    expect(result.email).toEqual(testData.users[0].email)
     expect(result.selectedPhoto).toEqual(testData.users[0].selectedPhoto)
   })
 
   test("should get the specified user by id", async () => {
-    const username = "Test Username"
+    const email = "test@test.com"
 
-    const result = await getUserBy({ username })
+    const result = await getUserBy({ email })
 
     expect(result).toBeDefined()
     expect(result.provider).toEqual(testData.users[0].provider)
     expect(result.businessName).toEqual(testData.users[0].businessName)
     expect(result.address).toEqual(testData.users[0].address)
-    expect(result.username).toEqual(testData.users[0].username)
+    expect(result.email).toEqual(testData.users[0].email)
     expect(result.selectedPhoto).toEqual(testData.users[0].selectedPhoto)
   })
 
-  test("should not get the specified user when username is invalid", async () => {
-    const username = "Some other username"
+  test("should not get the specified user when email is invalid", async () => {
+    const email = "Some other email"
 
-    const result = await getUserBy({ username })
+    const result = await getUserBy({ email })
 
     expect(result).toBeFalsy()
   })

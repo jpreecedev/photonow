@@ -5,8 +5,7 @@
       "accessToken": "TEST ACCESS TOKEN",
       "refreshToken": "TEST REFRESH TOKEN",
       "displayName": "TEST NAME",
-      "email": "TEST EMAIL",
-      "username": "TEST USERNAME"
+      "email": "TEST EMAIL"
     }
   ]
 }

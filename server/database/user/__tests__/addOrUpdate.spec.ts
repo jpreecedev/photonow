@@ -53,7 +53,7 @@ describe("Add or update user tests", () => {
     expect(result).toBeDefined()
     expect(result.id).toEqual(testData.users[0].id)
     expect(result.displayName).toEqual(testData.users[0].displayName)
-    expect(result.username).toEqual(testData.users[0].username)
+    expect(result.email).toEqual(testData.users[0].email)
     expect(result.selectedPhoto).toEqual(updatedUser.selectedPhoto)
   })
 })

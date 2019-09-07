@@ -3,7 +3,7 @@
     {
       "id": "TEST ID",
       "displayName": "TEST DISPLAY NAME",
-      "username": "TEST USER NAME",
+      "email": "test@test.com",
       "selectedPhoto": "TEST SELECTED PHOTO"
     }
   ]

@@ -1,6 +1,7 @@
 import { findOrCreate } from "../../user"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
+import { Profile } from "../../../../global"
 
 const dbHelper = new TestDbHelper()
 
@@ -39,8 +40,7 @@ describe("Find or create user tests", () => {
   test("should create a new user", async () => {
     const profile = <Profile>{
       id: "SOME_OTHER_PROFILE_ID",
-      displayName: "SOME DISPLAY NAME",
-      username: "SOME USERNAME"
+      displayName: "SOME DISPLAY NAME"
     }
     const accessToken = "SOME ACCESS TOKEN"
     const refreshToken = "SOME REFRESH TOKEN"
@@ -50,7 +50,7 @@ describe("Find or create user tests", () => {
     expect(result).not.toBeUndefined()
     expect(result.id).toEqual(profile.id)
     expect(result.displayName).toEqual(profile.displayName)
-    expect(result.username).toEqual(profile.username)
+    expect(result.email).toEqual(profile.email)
     expect(result.accessToken).toEqual(accessToken)
     expect(result.refreshToken).toEqual(refreshToken)
   })

@@ -1,6 +1,7 @@
 import { sanitizeData } from "../../test-utils"
 import { createUser } from ".."
 import TestDbHelper from "../../../../setup/mongo"
+import { User } from "../../../../global"
 
 const dbHelper = new TestDbHelper()
 
@@ -27,14 +28,12 @@ describe("Create user tests", () => {
     const firstName = "test firstName"
     const lastName = "test lastName"
     const email = "test@email.com"
-    const username = "test username"
     const password = "test password"
 
     const result = await createUser(<User>{
       firstName,
       lastName,
       email,
-      username,
       password
     })
 
@@ -42,15 +41,14 @@ describe("Create user tests", () => {
     expect(result.firstName).toEqual(firstName)
     expect(result.lastName).toEqual(lastName)
     expect(result.email).toEqual(email)
-    expect(result.username).toEqual(username)
     expect(result.password).toEqual(password)
   })
 
   test("should not create a new user and throw an error", async () => {
-    const username = testData.users[0].username
+    const email = testData.users[0].email
 
-    expect(createUser(<User>{ username })).rejects.toEqual(
-      new Error("Username is already taken")
+    expect(createUser(<User>{ email })).rejects.toEqual(
+      new Error("Email is already in use")
     )
   })
 })

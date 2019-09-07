@@ -18,7 +18,7 @@ export interface Moment extends Document {
 
 export interface User extends Document {
   id: string
-  username?: string
+  email?: string
   password?: string
   accessToken?: string
   refreshToken?: string
@@ -27,7 +27,6 @@ export interface User extends Document {
   address?: string
   lat?: number
   lng?: number
-  email?: string
   firstName?: string
   lastName?: string
   displayName?: string
@@ -77,7 +76,6 @@ export interface OrderRequest extends Request {
 export interface Profile {
   id: string
   displayName: string
-  username: string
   email: string
 }
 
@@ -120,6 +118,6 @@ export interface RegisterRequest extends Request {}
 
 export interface JWTPayload {
   data: User
-  iat: Number
-  exp: Number
+  iat: number
+  exp: number
 }

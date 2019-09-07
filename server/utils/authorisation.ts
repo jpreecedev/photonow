@@ -1,7 +1,6 @@
 import { Response, NextFunction, Request } from "express"
 import bcrypt from "bcrypt"
 import passport from "passport"
-import { Strategy as LocalStrategy } from "passport-local"
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth"
 import passportJWT from "passport-jwt"
 import jwt from "jsonwebtoken"
@@ -9,12 +8,11 @@ import { to } from "await-to-js"
 import { LogOutRequest, User, UserRequest, JWTPayload } from "../../global"
 
 import { UserModel } from "../database/schema"
-import { errorHandler, authorisation } from "../utils"
+import { errorHandler } from "../utils"
+import { getUser } from "../database/user"
 
 const saltRounds = 10
 const JWTStrategy = passportJWT.Strategy
-
-const isAuthenticated = passport.authenticate("jwt", { session: false })
 
 const check = (req: UserRequest, res: Response, next: NextFunction) => {
   if (req.user) {
@@ -23,8 +21,8 @@ const check = (req: UserRequest, res: Response, next: NextFunction) => {
   return next()
 }
 
-const verifyPassword = (candidate: string, actual: string) => {
-  return bcrypt.compare(candidate, actual)
+const verifyPassword = async (candidate: string, actual: string) => {
+  return await bcrypt.compare(candidate, actual)
 }
 
 const hashPassword = async (password: String) => {
@@ -42,18 +40,29 @@ const hashPassword = async (password: String) => {
   })
 }
 
-const promisifiedPassportAuthentication = (
-  req: Request,
-  res: Response
-): Promise<User> => {
-  return new Promise((resolve, reject) => {
-    passport.authenticate("local", { session: false }, (err, user: User, info) => {
+const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
+  req.user = null
+
+  if (!req.cookies.jwt) {
+    return res.redirect("/login")
+  }
+
+  jwt.verify(
+    req.cookies.jwt,
+    process.env.JWT_SECRET,
+    async (err: Error, decodedToken: JWTPayload) => {
       if (err) {
-        return reject(err)
+        return next(err)
       }
-      return resolve(user)
-    })(req, res)
-  })
+
+      if (decodedToken.exp <= Date.now() / 1000) {
+        return res.redirect("/login")
+      }
+
+      req.user = await getUser(decodedToken.data._id)
+      next()
+    }
+  )
 }
 
 const promisifiedPassportLogin = (req: Request, user: User): Promise<string> => {
@@ -110,43 +119,6 @@ const applyMiddleware = () => {
           return cb(err)
         }
         return cb(null, user)
-      }
-    )
-  )
-
-  passport.use(
-    new LocalStrategy(
-      {
-        usernameField: "email"
-      },
-      async (email, password, done) => {
-        let [error, user] = await to(
-          UserModel.findOne({
-            email: email.toLowerCase()
-          }).exec()
-        )
-
-        if (error) {
-          return done(error)
-        }
-
-        if (!user) {
-          return done(`Email ${email} not found.`)
-        }
-
-        let [err, matched] = await to(
-          authorisation.verifyPassword(password, user.password)
-        )
-
-        if (err) {
-          return done(err)
-        }
-
-        if (matched) {
-          return done(null, user)
-        }
-
-        return done("Invalid credentials.")
       }
     )
   )
@@ -287,7 +259,6 @@ export {
   verifyPassword,
   hashPassword,
   applyMiddleware,
-  promisifiedPassportAuthentication,
   promisifiedPassportLogin,
   promisifiedPassportLogout,
   check
