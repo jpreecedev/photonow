@@ -29,26 +29,6 @@ nextApp.prepare().then(() => {
   router(app)
   applyMiddleware()
 
-  app.get("/getting-started", (req, res) => {
-    return nextApp.render(req, res, "/getting-started")
-  })
-
-  app.get("/login", (req, res) => {
-    return nextApp.render(req, res, "/login")
-  })
-
-  app.get("/register", (req, res) => {
-    return nextApp.render(req, res, "/register")
-  })
-
-  app.get("/upload", isAuthenticated, (req, res) => {
-    return nextApp.render(req, res, "/upload")
-  })
-
-  app.get("/select-your-pictures", (req, res) => {
-    return nextApp.render(req, res, "/select-your-pictures")
-  })
-
   app.get("*", (req, res) => {
     return handle(req, res)
   })

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { Elements, StripeProvider } from "react-stripe-elements"
 import Head from "next/head"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography"
 import { CheckoutForm } from "../components/CheckoutForm"
 import { Main } from "../layouts/main"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center"
   },
-
   paper: {
     marginTop: theme.spacing(8),
     padding: theme.spacing(2),

@@ -7,9 +7,13 @@ import { OrderRequest } from "../../global"
 async function get(req: OrderRequest, res: Response) {
   try {
     const { orderId } = req.params
+
     const order = await getOrder(Types.ObjectId(orderId))
 
-    return res.status(200).json(order)
+    return res.status(200).json({
+      success: true,
+      data: order
+    })
   } catch (e) {
     errorHandler.handle(e)
     return res.status(500).send(e)

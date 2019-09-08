@@ -5,7 +5,7 @@ function getServerApiUrl() {
 const callFetchAsync = async (
   url: string,
   method: "GET" | "PUT" | "POST" | "DELETE",
-  body: object = {},
+  body: BodyInit = undefined,
   headers = {}
 ) => {
   try {
@@ -14,7 +14,7 @@ const callFetchAsync = async (
         "Content-Type": "application/json",
         ...headers
       }),
-      body: ""
+      body
     }
 
     if (body) {
