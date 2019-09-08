@@ -31,6 +31,8 @@ const picturesReducer = (state: PictureItem[], action: PicturesActionTypes) => {
         }
         return item
       })
+    case Actions.pictures.CLEAR_BASKET:
+      return DEFAULT_STATE
     default:
       return state
   }

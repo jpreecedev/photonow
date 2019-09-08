@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import Router from "next/router"
-import { connect } from "react-redux"
+import { connect, DispatchProp } from "react-redux"
 import { FormState } from "redux-form"
 import { injectStripe, ReactStripeElements } from "react-stripe-elements"
 import { makeStyles, Theme } from "@material-ui/core/styles"
@@ -12,6 +12,7 @@ import { PaymentForm } from "../PaymentForm"
 import { Review } from "../Review"
 import { AppState, PictureItem } from "../../global"
 import * as server from "../../utils/server"
+import { actions } from "../../store"
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttons: {
@@ -38,8 +39,8 @@ interface CheckoutFormProps {
 }
 
 const CheckoutForm: FunctionComponent<
-  ReactStripeElements.InjectedStripeProps & CheckoutFormProps
-> = ({ stripe, addressForm, paymentForm, pictures }) => {
+  ReactStripeElements.InjectedStripeProps & CheckoutFormProps & DispatchProp<any>
+> = ({ stripe, addressForm, paymentForm, pictures, dispatch }) => {
   const [processing, setProcessing] = React.useState(false)
   const classes = useStyles({})
 
@@ -76,6 +77,7 @@ const CheckoutForm: FunctionComponent<
       })
 
       if (success) {
+        dispatch(actions.pictures.clearBasket())
         Router.push(redirectUrl)
         return
       }
