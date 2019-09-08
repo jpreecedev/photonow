@@ -7,11 +7,13 @@ import CardContent from "@material-ui/core/CardContent"
 import CardMedia from "@material-ui/core/CardMedia"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
+import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 
-import { AppState } from "../store/types"
+import { AppState, PictureItem } from "../store/types"
 import { Main } from "../layouts/main"
+import { actions } from "../store"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -57,43 +59,59 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function SelectYourPictures({ pictures }) {
+const SelectYourPictures = ({ pictures, dispatch }) => {
   const classes = useStyles({})
 
   return (
     <Main gap>
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={2}>
-          <Typography component="h1" variant="h4" align="center">
-            Choose your pictures
-          </Typography>
-          <Typography component="p" gutterBottom>
-            Please review your pictures and add any you would like to purchase to your basket
-          </Typography>
+          <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+            <Typography component="h1" variant="h4" align="center">
+              Choose your pictures
+            </Typography>
+            <Typography component="p" gutterBottom>
+              Please review your pictures and add any you would like to purchase to your basket
+            </Typography>
+          </Box>
           <Grid container spacing={4}>
-            {pictures &&
-              pictures.map(picture => (
-                <Grid item key={picture.url} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={picture.url}
-                      title={picture.label}
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography>
-                        Your picture is available for purchase for only &pound;
-                        {Number.parseInt(process.env.DEFAULT_MOMENT_PRICE) / 100}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
+            {pictures.map((picture: PictureItem) => (
+              <Grid item key={picture.url} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={picture.url}
+                    title={picture.label}
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography>
+                      Your picture is available for purchase for only &pound;
+                      {Number.parseInt(process.env.DEFAULT_MOMENT_PRICE) / 100}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    {!picture.addedToBasket && (
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => dispatch(actions.pictures.addToBasket(picture))}
+                      >
                         Add to basket
                       </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
+                    )}
+                    {picture.addedToBasket && (
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
+                      >
+                        Remove from basket
+                      </Button>
+                    )}
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
         </Paper>
       </main>

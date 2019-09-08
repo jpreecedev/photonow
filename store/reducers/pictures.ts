@@ -11,6 +11,26 @@ const picturesReducer = (state: PictureItem[], action: PicturesActionTypes) => {
   switch (action.type) {
     case Actions.pictures.ADD_PICTURE:
       return [...state, action.payload]
+    case Actions.pictures.ADD_TO_BASKET:
+      return state.map(item => {
+        if (item.momentId === action.payload.momentId) {
+          return {
+            ...item,
+            addedToBasket: true
+          }
+        }
+        return item
+      })
+    case Actions.pictures.REMOVE_FROM_BASKET:
+      return state.map(item => {
+        if (item.momentId === action.payload.momentId) {
+          return {
+            ...item,
+            addedToBasket: false
+          }
+        }
+        return item
+      })
     default:
       return state
   }

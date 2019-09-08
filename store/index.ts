@@ -4,11 +4,10 @@ import { reducer as formReducer } from "redux-form"
 import { composeWithDevTools } from "redux-devtools-extension"
 
 import * as actions from "./actions"
-import { basketReducer, picturesReducer } from "./reducers"
+import { picturesReducer } from "./reducers"
 import { AppState } from "./types"
 
 const rootReducer = combineReducers({
-  basket: basketReducer,
   pictures: picturesReducer,
   form: formReducer
 })
@@ -34,15 +33,10 @@ const saveState = (state: AppState) => {
 }
 
 const initialiseStore = (initialState: AppState = loadState()) => {
-  const store = createStore(
-    rootReducer,
-    initialState,
-    composeWithDevTools(applyMiddleware(thunk))
-  )
+  const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk)))
 
   store.subscribe(() => {
     saveState(<AppState>{
-      basket: store.getState().basket,
       pictures: store.getState().pictures
     })
   })

@@ -7,7 +7,7 @@ import { Typography } from "@material-ui/core"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { actions } from "../store"
-import { BasketItem } from "../store/types"
+import { PictureItem } from "../store/types"
 
 const Webcam = dynamic(import("../components/Webcam").then(instance => instance.Webcam), {
   ssr: false
@@ -18,9 +18,9 @@ const GettingStarted = ({ dispatch }) => {
 
   const processImage = async (blob: Blob) => {
     setUploading(true)
-    const { success, data } = await server.uploadPhotoAsync<BasketItem[]>("/face", "A Face", blob)
+    const { success, data } = await server.uploadPhotoAsync<PictureItem[]>("/face", "A Face", blob)
     if (success) {
-      data.forEach(moment => dispatch(actions.basket.addToBasket(moment)))
+      data.forEach(picture => dispatch(actions.pictures.addPicture(picture)))
       Router.push("/select-your-pictures")
     }
     setUploading(false)
