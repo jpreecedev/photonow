@@ -1,12 +1,16 @@
-import React from "react"
+import React, { FunctionComponent } from "react"
 import ReactWebcam from "react-webcam"
 import throttle from "lodash.throttle"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import { useTheme } from "@material-ui/styles"
 
-import * as server from "../../utils/server"
 import { DefaultButton } from "../DefaultButton"
+
+interface WebcamProps {
+  onCapture: (blob: Blob) => void
+  isUploading: boolean
+}
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -57,7 +61,7 @@ const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
   return new Blob(byteArrays, { type: contentType })
 }
 
-const Webcam = () => {
+const Webcam: FunctionComponent<WebcamProps> = ({ onCapture, isUploading }) => {
   const theme: Theme = useTheme()
   const classes = useStyles({})
 
@@ -75,6 +79,10 @@ const Webcam = () => {
     )
   }, [])
 
+  React.useEffect(() => {
+    setState({ ...state, uploading: isUploading })
+  }, [isUploading])
+
   const webcamRef = React.useRef<ReactWebcam>(null)
 
   const capture = React.useCallback(async () => {
@@ -84,9 +92,7 @@ const Webcam = () => {
         const split = imageSrc.split(",")
         const contentType = "image/jpeg"
         const blob = b64toBlob(split[1], contentType)
-        setState({ ...state, uploading: true })
-        const result = await server.uploadPhotoAsync("/face", "A Face", blob)
-        setState({ ...state, uploading: false, pictures: result })
+        onCapture(blob)
       }
     }
   }, [webcamRef])

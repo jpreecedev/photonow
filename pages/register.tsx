@@ -1,5 +1,6 @@
 import React, { FormEvent, FunctionComponent } from "react"
 import { connect } from "react-redux"
+import { InjectedFormProps, FormState } from "redux-form"
 import Router from "next/router"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
@@ -9,6 +10,7 @@ import Paper from "@material-ui/core/Paper"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { RegisterForm } from "../components/RegisterForm"
+import { AppState } from "../store/types"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -34,16 +36,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-interface RegisterProps {
-  registerForm: {
-    values: {
-      firstName: string
-      lastName: string
-      email: string
-      password: string
-      passwordConfirmation: string
-    }
-  }
+interface RegisterProps extends InjectedFormProps {
+  registerForm: FormState
 }
 
 const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
@@ -104,7 +98,6 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
   )
 }
 
-export default connect(state => ({
-  // @ts-ignore
+export default connect((state: AppState) => ({
   registerForm: state.form.registerForm
 }))(Register)

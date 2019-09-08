@@ -1,21 +1,42 @@
 import React from "react"
+import { connect } from "react-redux"
 import dynamic from "next/dynamic"
+import Router from "next/router"
 import { Typography } from "@material-ui/core"
 
+import * as server from "../utils/server"
 import { Main } from "../layouts/main"
+import { actions } from "../store"
+import { BasketItem } from "../store/types"
 
 const Webcam = dynamic(import("../components/Webcam").then(instance => instance.Webcam), {
   ssr: false
 })
 
-export default () => (
-  <Main gap>
-    <Typography component="h2" variant="h4" gutterBottom>
-      Upload your face
-    </Typography>
-    <Typography component="p" gutterBottom>
-      We need you to upload us a picture of your face so we can find you in a crowd.
-    </Typography>
-    <Webcam />
-  </Main>
-)
+const GettingStarted = ({ dispatch }) => {
+  const [uploading, setUploading] = React.useState(false)
+
+  const processImage = async (blob: Blob) => {
+    setUploading(true)
+    const { success, data } = await server.uploadPhotoAsync<BasketItem[]>("/face", "A Face", blob)
+    if (success) {
+      data.forEach(moment => dispatch(actions.basket.addToBasket(moment)))
+      Router.push("/select-your-pictures")
+    }
+    setUploading(false)
+  }
+
+  return (
+    <Main gap>
+      <Typography component="h2" variant="h4" gutterBottom>
+        Upload your face
+      </Typography>
+      <Typography component="p" gutterBottom>
+        We need you to upload us a picture of your face so we can find you in a crowd.
+      </Typography>
+      <Webcam onCapture={processImage} isUploading={uploading} />
+    </Main>
+  )
+}
+
+export default connect()(GettingStarted)

@@ -45,6 +45,10 @@ nextApp.prepare().then(() => {
     return nextApp.render(req, res, "/upload")
   })
 
+  app.get("/select-your-pictures", (req, res) => {
+    return nextApp.render(req, res, "/select-your-pictures")
+  })
+
   app.get("*", (req, res) => {
     return handle(req, res)
   })

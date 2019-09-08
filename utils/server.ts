@@ -2,12 +2,12 @@ function getServerApiUrl() {
   return process.env.SERVER_API_URL
 }
 
-async function callFetchAsync(
+const callFetchAsync = async (
   url: string,
   method: "GET" | "PUT" | "POST" | "DELETE",
   body: object = {},
   headers = {}
-) {
+) => {
   try {
     const options = {
       headers: new Headers({
@@ -36,23 +36,27 @@ async function callFetchAsync(
   }
 }
 
-function getAsync(url: string) {
+const getAsync = (url: string) => {
   return callFetchAsync(url, "GET")
 }
 
-function postAsync(url: string, body: any) {
+const postAsync = (url: string, body: any) => {
   return callFetchAsync(url, "POST", body)
 }
 
-function putAsync(url: string, body: any) {
+const putAsync = (url: string, body: any) => {
   return callFetchAsync(url, "PUT", body)
 }
 
-function deleteAsync(url: string, body: any) {
+const deleteAsync = (url: string, body: any) => {
   return callFetchAsync(url, "DELETE", body)
 }
 
-async function uploadPhotoAsync(apiUrl: string, filename: string, blob: Blob) {
+const uploadPhotoAsync = async <T>(
+  apiUrl: string,
+  filename: string,
+  blob: Blob
+): Promise<{ success: boolean; data: T }> => {
   const formData = new FormData()
   formData.append("photo", blob, filename)
 
@@ -69,7 +73,8 @@ async function uploadPhotoAsync(apiUrl: string, filename: string, blob: Blob) {
     )
   }
 
-  return response.json()
+  const { success, data } = await response.json()
+  return { success, data }
 }
 
 export { getAsync, postAsync, putAsync, deleteAsync, uploadPhotoAsync, getServerApiUrl }

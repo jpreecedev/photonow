@@ -1,5 +1,6 @@
 import React, { FormEvent, FunctionComponent } from "react"
 import { connect } from "react-redux"
+import { InjectedFormProps, FormState } from "redux-form"
 import Router from "next/router"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
@@ -11,6 +12,7 @@ import Grid from "@material-ui/core/Grid"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { LoginForm } from "../components/LoginForm"
+import { AppState } from "../store/types"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -36,8 +38,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-interface LoginProps {
-  loginForm: { values: { email: string; password: string } }
+interface LoginProps extends InjectedFormProps {
+  loginForm: FormState
 }
 
 const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
@@ -104,7 +106,6 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   )
 }
 
-export default connect(state => ({
-  // @ts-ignore
+export default connect((state: AppState) => ({
   loginForm: state.form.loginForm
 }))(Login)

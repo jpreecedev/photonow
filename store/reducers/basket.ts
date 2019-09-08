@@ -1,8 +1,9 @@
 import * as Actions from "../actions"
+import { BasketItem, BasketActionTypes } from "../types"
 
 const DEFAULT_STATE = []
 
-function basketReducer(state, action) {
+const basketReducer = (state: BasketItem[], action: BasketActionTypes) => {
   if (typeof state === "undefined") {
     return DEFAULT_STATE
   }
@@ -11,7 +12,7 @@ function basketReducer(state, action) {
     case Actions.basket.ADD_TO_BASKET:
       return [...state, action.payload]
     case Actions.basket.REMOVE_FROM_BASKET:
-      return state.filter(item => item.moment.momentId !== action.payload.moment.momentId)
+      return state.filter(item => item.momentId !== action.payload.momentId)
     default:
       return state
   }

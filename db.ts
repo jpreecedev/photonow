@@ -7,7 +7,6 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
   useNewUrlParser: true
 })
 
-// @ts-ignore
 // UserModel.deleteMany({}).then((err, res) => console.log(err))
 
 // UserModel.find({}).exec((err, users) => {
