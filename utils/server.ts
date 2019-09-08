@@ -68,9 +68,7 @@ const uploadPhotoAsync = async <T>(
   const response = await fetch(`${getServerApiUrl()}${apiUrl}`, options)
 
   if (response.status !== 200) {
-    throw new Error(
-      `Request failed with status code ${response.status}.  ${await response.text()}`
-    )
+    throw new Error(`Request failed with status code ${response.status}.  ${await response.text()}`)
   }
 
   const { success, data } = await response.json()

@@ -68,8 +68,7 @@ function SelectYourPictures({ pictures }) {
             Choose your pictures
           </Typography>
           <Typography component="p" gutterBottom>
-            Please review your pictures and add any you would like to purchase to your
-            basket
+            Please review your pictures and add any you would like to purchase to your basket
           </Typography>
           <Grid container spacing={4}>
             {pictures &&
@@ -102,6 +101,4 @@ function SelectYourPictures({ pictures }) {
   )
 }
 
-export default connect((state: AppState) => ({ pictures: state.pictures }))(
-  SelectYourPictures
-)
+export default connect((state: AppState) => ({ pictures: state.pictures }))(SelectYourPictures)

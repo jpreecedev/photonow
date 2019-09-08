@@ -24,10 +24,7 @@ const upload = (
     metadata: (
       _req: Request,
       file: { originalname: string },
-      cb: (
-        error: any,
-        callback: (file: { originalname: string }) => { filename: string }
-      ) => any
+      cb: (error: any, callback: (file: { originalname: string }) => { filename: string }) => any
     ) => {
       cb(null, setMetadata(file))
     },

@@ -117,9 +117,7 @@ const Webcam: FunctionComponent<WebcamProps> = ({ onCapture, isUploading }) => {
           onClick={capture}
           type="button"
         >
-          {state.uploading && (
-            <CircularProgress size={24} className={classes.buttonProgress} />
-          )}
+          {state.uploading && <CircularProgress size={24} className={classes.buttonProgress} />}
           Capture Photo
         </DefaultButton>
       </div>

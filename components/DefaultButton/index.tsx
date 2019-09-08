@@ -27,13 +27,7 @@ const DefaultButton: FunctionComponent<DefaultButtonProps> = ({
   const classes = useStyles({})
 
   return (
-    <Button
-      variant={variant}
-      color={color}
-      size={size}
-      className={classes.button}
-      {...rest}
-    >
+    <Button variant={variant} color={color} size={size} className={classes.button} {...rest}>
       {children}
     </Button>
   )

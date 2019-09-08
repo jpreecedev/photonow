@@ -46,9 +46,7 @@ async function recogniseFromBuffer(image: Buffer) {
         }
 
         if (data.FaceMatches && data.FaceMatches.length > 0 && data.FaceMatches[0].Face) {
-          const sorted = data.FaceMatches.sort(
-            (a, b) => b.Face.Confidence - a.Face.Confidence
-          )
+          const sorted = data.FaceMatches.sort((a, b) => b.Face.Confidence - a.Face.Confidence)
 
           const matchSet = new Set()
           sorted.forEach(match => {
@@ -117,11 +115,7 @@ async function verifyFace(image: Buffer) {
   })
 }
 
-async function addImageToCollection(
-  bucket: string,
-  momentId: string,
-  s3Filename: string
-) {
+async function addImageToCollection(bucket: string, momentId: string, s3Filename: string) {
   return new Promise((resolve, reject) => {
     const collectionName = process.env.FACE_RECOGNITION_COLLECTION_NAME || ""
 

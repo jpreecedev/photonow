@@ -28,13 +28,10 @@ async function post(req: UserRequest, res: Response) {
       country
     } = billingDetails
 
-    const momentIds: Types.ObjectId[] = moments.reduce(
-      (acc: Types.ObjectId[], current: Moment) => {
-        acc.push(current._id)
-        return acc
-      },
-      []
-    )
+    const momentIds: Types.ObjectId[] = moments.reduce((acc: Types.ObjectId[], current: Moment) => {
+      acc.push(current._id)
+      return acc
+    }, [])
 
     const amount = calculateOrderAmount(await getMoments(momentIds))
 

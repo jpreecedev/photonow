@@ -41,12 +41,7 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
     <div className={rootClasses}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <FaceIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>

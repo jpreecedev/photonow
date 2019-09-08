@@ -42,13 +42,7 @@ const LoginForm: FunctionComponent<LoginProps> = () => {
         autoComplete="current-password"
         component={renderTextField}
       />
-      <Button
-        type="submit"
-        fullWidth
-        variant="outlined"
-        color="primary"
-        className={classes.submit}
-      >
+      <Button type="submit" fullWidth variant="outlined" color="primary" className={classes.submit}>
         Sign In
       </Button>
     </>
