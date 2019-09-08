@@ -5,6 +5,7 @@ import { FormState } from "redux-form"
 import { injectStripe, ReactStripeElements } from "react-stripe-elements"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 import { AddressForm } from "../AddressForm"
 import { PaymentForm } from "../PaymentForm"
@@ -20,6 +21,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1)
+  },
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12
   }
 }))
 
@@ -32,40 +40,47 @@ interface CheckoutFormProps {
 const CheckoutForm: FunctionComponent<
   ReactStripeElements.InjectedStripeProps & CheckoutFormProps
 > = ({ stripe, addressForm, paymentForm, pictures }) => {
+  const [processing, setProcessing] = React.useState(false)
   const classes = useStyles({})
 
   const handleOrder = async () => {
-    const billingDetails = {
-      name: paymentForm.values.cardName,
-      email: addressForm.values.emailAddress,
-      addressLine1: addressForm.values.address1,
-      addressLine2: addressForm.values.address2,
-      city: addressForm.values.city,
-      postalCode: addressForm.values.postalCode,
-      state: addressForm.values.state,
-      country: addressForm.values.country
-    }
+    setProcessing(true)
 
-    const { token } = await stripe.createToken({
-      type: "card",
-      name: billingDetails.name,
-      address_line1: billingDetails.addressLine1,
-      address_line2: billingDetails.addressLine2,
-      address_city: billingDetails.city,
-      address_state: billingDetails.state,
-      address_zip: billingDetails.postalCode,
-      address_country: billingDetails.country
-    })
+    try {
+      const billingDetails = {
+        name: paymentForm.values.cardName,
+        email: addressForm.values.emailAddress,
+        addressLine1: addressForm.values.address1,
+        addressLine2: addressForm.values.address2,
+        city: addressForm.values.city,
+        postalCode: addressForm.values.postalCode,
+        state: addressForm.values.state,
+        country: addressForm.values.country
+      }
 
-    const { success, redirectUrl } = await server.postAsync("/payment", {
-      tokenId: token.id,
-      billingDetails,
-      moments: pictures
-    })
+      const { token } = await stripe.createToken({
+        type: "card",
+        name: billingDetails.name,
+        address_line1: billingDetails.addressLine1,
+        address_line2: billingDetails.addressLine2,
+        address_city: billingDetails.city,
+        address_state: billingDetails.state,
+        address_zip: billingDetails.postalCode,
+        address_country: billingDetails.country
+      })
 
-    if (success) {
-      Router.push(redirectUrl)
-      return
+      const { success, redirectUrl } = await server.postAsync("/payment", {
+        tokenId: token.id,
+        billingDetails,
+        pictures: pictures.filter(picture => picture.addedToBasket)
+      })
+
+      if (success) {
+        Router.push(redirectUrl)
+        return
+      }
+    } finally {
+      setProcessing(false)
     }
   }
 
@@ -79,11 +94,13 @@ const CheckoutForm: FunctionComponent<
           Cancel
         </Button>
         <Button
+          disabled={processing}
           variant="contained"
           color="primary"
           onClick={handleOrder}
           className={classes.button}
         >
+          {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
           Place order
         </Button>
       </div>

@@ -17,7 +17,6 @@ const useStyles = makeStyles(() =>
     button: {
       marginLeft: 0
     },
-
     buttonProgress: {
       position: "absolute",
       top: "50%",

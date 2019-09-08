@@ -6,9 +6,15 @@ import { createPayment } from "../database/payment"
 import { createOrder } from "../database/order"
 import { getMoments } from "../database/moments"
 import { errorHandler } from "../utils"
-import { Moment, UserRequest, Order, Payment } from "../../global"
+import { Moment, UserRequest, Order, Payment, PictureItem } from "../../global"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
+
+interface PaymentRequest {
+  tokenId: string
+  billingDetails: Order
+  pictures: PictureItem[]
+}
 
 function calculateOrderAmount(moments: Moment[]) {
   return moments.length * Number.parseInt(process.env.DEFAULT_MOMENT_PRICE, 10)
@@ -16,7 +22,7 @@ function calculateOrderAmount(moments: Moment[]) {
 
 async function post(req: UserRequest, res: Response) {
   try {
-    const { tokenId, billingDetails, moments } = req.body
+    const { tokenId, billingDetails, pictures } = <PaymentRequest>req.body
     const {
       name,
       email,
@@ -28,10 +34,13 @@ async function post(req: UserRequest, res: Response) {
       country
     } = billingDetails
 
-    const momentIds: Types.ObjectId[] = moments.reduce((acc: Types.ObjectId[], current: Moment) => {
-      acc.push(current._id)
-      return acc
-    }, [])
+    const momentIds: Types.ObjectId[] = pictures.reduce(
+      (acc: Types.ObjectId[], current: PictureItem) => {
+        acc.push(Types.ObjectId(current.momentId))
+        return acc
+      },
+      []
+    )
 
     const amount = calculateOrderAmount(await getMoments(momentIds))
 
