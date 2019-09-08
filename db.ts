@@ -10,9 +10,9 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 // @ts-ignore
 // UserModel.deleteMany({}).then((err, res) => console.log(err))
 
-UserModel.find({}).exec((err, users) => {
-  users.forEach(u => console.log(u))
-})
+// UserModel.find({}).exec((err, users) => {
+//   users.forEach(u => console.log(u))
+// })
 
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 
