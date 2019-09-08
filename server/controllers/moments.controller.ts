@@ -38,9 +38,7 @@ async function post(req: FileRequest, res: Response) {
       originalFile.key
     )
 
-    return res.status(200).send({
-      location: result.location
-    })
+    return res.status(200).send({ success: true, message: "Upload complete" })
   } catch (e) {
     errorHandler.handle(e)
     return res.status(500).send(e)

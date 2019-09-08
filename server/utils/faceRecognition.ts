@@ -152,10 +152,10 @@ async function addImageToCollection(
   const collectionIds = hasCollections ? collections.CollectionIds : []
   const hasCollection = collectionIds.find(c => c === collectionName)
 
-  rekognition.deleteCollection(
-    { CollectionId: process.env.FACE_RECOGNITION_COLLECTION_NAME },
-    () => {}
-  )
+  // rekognition.deleteCollection(
+  //   { CollectionId: process.env.FACE_RECOGNITION_COLLECTION_NAME },
+  //   () => {}
+  // )
 
   if (!hasCollection) {
     await createCollection(collectionName)
