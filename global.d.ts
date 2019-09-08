@@ -139,3 +139,8 @@ export type AppState = ReturnType<
     AnyAction
   >
 >
+
+export interface Country {
+  label: string
+  value: string
+}

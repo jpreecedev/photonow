@@ -1,5 +1,5 @@
-import React from "react"
-import { connect } from "react-redux"
+import React, { FunctionComponent } from "react"
+import { connect, DispatchProp } from "react-redux"
 import Link from "next/link"
 import Button from "@material-ui/core/Button"
 import Card from "@material-ui/core/Card"
@@ -60,7 +60,14 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const SelectYourPictures = ({ pictures, dispatch }) => {
+interface SelectYourPicturesProps {
+  pictures: PictureItem[]
+}
+
+const SelectYourPictures: FunctionComponent<DispatchProp<any> & SelectYourPicturesProps> = ({
+  pictures,
+  dispatch
+}) => {
   const classes = useStyles({})
 
   const addedToBasket = pictures.reduce(

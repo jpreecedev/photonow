@@ -1,5 +1,5 @@
-import React from "react"
-import { connect } from "react-redux"
+import React, { FunctionComponent } from "react"
+import { connect, DispatchProp } from "react-redux"
 import dynamic from "next/dynamic"
 import Router from "next/router"
 import { Typography } from "@material-ui/core"
@@ -13,7 +13,7 @@ const Webcam = dynamic(import("../components/Webcam").then(instance => instance.
   ssr: false
 })
 
-const GettingStarted = ({ dispatch }) => {
+const GettingStarted: FunctionComponent<DispatchProp<any>> = ({ dispatch }) => {
   const [uploading, setUploading] = React.useState(false)
 
   const processImage = async (blob: Blob) => {
@@ -28,7 +28,7 @@ const GettingStarted = ({ dispatch }) => {
 
   return (
     <Main gap>
-      <Typography component="h2" variant="h4" gutterBottom>
+      <Typography component="h1" variant="h4" gutterBottom>
         Upload your face
       </Typography>
       <Typography component="p" gutterBottom>

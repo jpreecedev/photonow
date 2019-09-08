@@ -71,7 +71,7 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
         </aside>
         <Paper className={classes.paper} elevation={2}>
           <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-            <Typography component="h2" variant="h4" gutterBottom>
+            <Typography component="h1" variant="h4" gutterBottom>
               Register
             </Typography>
             <Typography component="p" gutterBottom>
