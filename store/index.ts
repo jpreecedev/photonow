@@ -5,7 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension"
 
 import * as actions from "./actions"
 import { picturesReducer } from "./reducers"
-import { AppState } from "./types"
+import { AppState } from "../global"
 
 const rootReducer = combineReducers({
   pictures: picturesReducer,

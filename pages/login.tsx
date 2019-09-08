@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { LoginForm } from "../components/LoginForm"
-import { AppState } from "../store/types"
+import { AppState } from "../global"
 
 const useStyles = makeStyles(theme => ({
   layout: {

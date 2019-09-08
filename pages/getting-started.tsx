@@ -7,7 +7,7 @@ import { Typography } from "@material-ui/core"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { actions } from "../store"
-import { PictureItem } from "../store/types"
+import { PictureItem } from "../global"
 
 const Webcam = dynamic(import("../components/Webcam").then(instance => instance.Webcam), {
   ssr: false

@@ -1,4 +1,4 @@
-import { PictureItem } from "../types"
+import { PictureItem } from "../../global"
 
 export const ADD_PICTURE = "ADD_PICTURE"
 export const ADD_TO_BASKET = "ADD_TO_BASKET"

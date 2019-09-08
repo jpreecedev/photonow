@@ -1,5 +1,7 @@
 import { Request, NextFunction, Express } from "express"
 import { Document, Types } from "mongoose"
+import { Reducer, AnyAction } from "redux"
+import { FormStateMap } from "redux-form"
 
 declare module "multer-s3-transform"
 
@@ -102,3 +104,38 @@ export interface JWTPayload {
   iat: number
   exp: number
 }
+
+export interface PictureItem {
+  momentId: string
+  label: string
+  url: string
+  price: number
+  addedToBasket: boolean
+}
+
+export interface AddPictureAction {
+  type: string
+  payload: PictureItem
+}
+
+export interface RemovePictureAction {
+  type: string
+  payload: PictureItem
+}
+
+export interface AddPictureAction {
+  type: string
+  payload: PictureItem
+}
+
+export type PicturesActionTypes = AddPictureAction | RemovePictureAction
+
+export type AppState = ReturnType<
+  Reducer<
+    {
+      pictures: PictureItem[]
+      form: FormStateMap
+    },
+    AnyAction
+  >
+>

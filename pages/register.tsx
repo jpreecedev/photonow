@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper"
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { RegisterForm } from "../components/RegisterForm"
-import { AppState } from "../store/types"
+import { AppState } from "../global"
 
 const useStyles = makeStyles(theme => ({
   layout: {

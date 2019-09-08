@@ -1,39 +1,49 @@
 import React, { FunctionComponent } from "react"
-import Link from "next/link"
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { connect } from "react-redux"
+import Router from "next/router"
+import clsx from "clsx"
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
-import FaceIcon from "@material-ui/icons/Face"
-import clsx from "clsx"
+import Typography from "@material-ui/core/Typography"
+import Badge from "@material-ui/core/Badge"
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
 
-interface MainAppBarProps {
-  gap?: boolean
-}
+import { AppState, PictureItem } from "../../global"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
+    grow: {
       flexGrow: 1
-    },
-    menuButton: {
-      marginRight: theme.spacing(2)
     },
     gap: {
       marginBottom: theme.spacing(4)
     },
     title: {
-      flexGrow: 1
+      display: "block"
+    },
+    section: {
+      display: "flex"
     }
   })
 )
 
-const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
+interface MainAppBarProps {
+  gap?: boolean
+  pictures: PictureItem[]
+}
+
+const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures }) => {
   const classes = useStyles({})
 
-  const rootClasses = clsx(classes.root, {
+  const addedToBasket = pictures.reduce(
+    (acc, current) => (current.addedToBasket ? (acc += 1) : acc),
+    0
+  )
+
+  const rootClasses = clsx(classes.grow, {
     [classes.gap]: gap
   })
 
@@ -41,21 +51,39 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
     <div className={rootClasses}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <FaceIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography className={classes.title} variant="h6" noWrap>
             Find My Face
           </Typography>
-          <Button color="inherit">
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
-          </Button>
+          <div className={classes.grow} />
+          <div className={classes.section}>
+            <IconButton
+              aria-label="Basket"
+              color="inherit"
+              onClick={() => {
+                Router.push("/checkout")
+              }}
+            >
+              <Badge badgeContent={addedToBasket} color="secondary">
+                <ShoppingBasket />
+              </Badge>
+            </IconButton>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              onClick={() => {
+                Router.push("/login")
+              }}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
     </div>
   )
 }
 
-export { MainAppBar }
+const ConnectedMainAppBar = connect((state: AppState) => ({ pictures: state.pictures }))(MainAppBar)
+
+export { ConnectedMainAppBar as MainAppBar }

@@ -1,5 +1,5 @@
 import * as Actions from "../actions"
-import { PicturesActionTypes, PictureItem } from "../types"
+import { PicturesActionTypes, PictureItem } from "../../global"
 
 const DEFAULT_STATE = []
 

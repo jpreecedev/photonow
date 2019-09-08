@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import Link from "next/link"
 import Button from "@material-ui/core/Button"
 import Card from "@material-ui/core/Card"
 import CardActions from "@material-ui/core/CardActions"
@@ -11,7 +12,7 @@ import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
 
-import { AppState, PictureItem } from "../store/types"
+import { AppState, PictureItem } from "../global"
 import { Main } from "../layouts/main"
 import { actions } from "../store"
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(8),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      padding: `${theme.spacing(8)}px ${theme.spacing(6)}px`
+      padding: `${theme.spacing(6)}px ${theme.spacing(4)}px`
     }
   },
   icon: {
@@ -62,11 +63,22 @@ const useStyles = makeStyles(theme => ({
 const SelectYourPictures = ({ pictures, dispatch }) => {
   const classes = useStyles({})
 
+  const addedToBasket = pictures.reduce(
+    (acc, current) => (current.addedToBasket ? (acc += 1) : acc),
+    0
+  )
+
   return (
     <Main gap>
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={2}>
-          <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+            mb={3}
+          >
             <Typography component="h1" variant="h4" align="center">
               Choose your pictures
             </Typography>
@@ -113,6 +125,13 @@ const SelectYourPictures = ({ pictures, dispatch }) => {
               </Grid>
             ))}
           </Grid>
+          <Box display="flex" justifyContent="flex-end" mt={3}>
+            <Link href="/checkout">
+              <Button size="large" color="primary" variant="contained" disabled={!addedToBasket}>
+                Proceed to checkout
+              </Button>
+            </Link>
+          </Box>
         </Paper>
       </main>
     </Main>
