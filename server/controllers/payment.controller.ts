@@ -6,7 +6,7 @@ import { createPayment } from "../database/payment"
 import { createOrder } from "../database/order"
 import { getMoments } from "../database/moments"
 import { errorHandler } from "../utils"
-import { Moment, UserRequest, Order, Payment, PictureItem } from "../../global"
+import { Moment, UserRequest, Order, Payment, PictureItem, ClientResponse } from "../../global"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
@@ -78,16 +78,22 @@ async function post(req: UserRequest, res: Response) {
     })
 
     if (paymentSaved) {
-      return res.status(200).json({
+      return res.status(200).json(<ClientResponse<string>>{
         success: true,
-        redirectUrl: `/order-confirmation/${order._id}`
+        data: `/order-confirmation/${order._id}`
       })
     }
 
-    return res.status(500).send({})
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "Payment was not created"
+    })
   } catch (e) {
     errorHandler.handle(e)
-    return res.status(500).send(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
   }
 }
 

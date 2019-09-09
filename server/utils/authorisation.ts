@@ -4,7 +4,7 @@ import passport from "passport"
 import passportJWT from "passport-jwt"
 import jwt from "jsonwebtoken"
 import { to } from "await-to-js"
-import { User, UserRequest, JWTPayload } from "../../global"
+import { User, UserRequest, JWTPayload, ClientResponse } from "../../global"
 
 import { UserModel } from "../database/schema"
 import { errorHandler } from "../utils"
@@ -15,7 +15,9 @@ const JWTStrategy = passportJWT.Strategy
 
 const check = (req: UserRequest, res: Response, next: NextFunction) => {
   if (req.user) {
-    return res.status(500).send("You are already signed in!")
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "You are already signed in!" })
   }
   return next()
 }

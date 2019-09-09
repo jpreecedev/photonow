@@ -70,7 +70,7 @@ const CheckoutForm: FunctionComponent<
         address_country: billingDetails.country
       })
 
-      const { success, redirectUrl } = await server.postAsync("/payment", {
+      const { success, data } = await server.postAsync<string>("/payment", {
         tokenId: token.id,
         billingDetails,
         pictures: pictures.filter(picture => picture.addedToBasket)
@@ -78,7 +78,7 @@ const CheckoutForm: FunctionComponent<
 
       if (success) {
         dispatch(actions.pictures.clearBasket())
-        Router.push(redirectUrl)
+        Router.push(data)
         return
       }
     } finally {

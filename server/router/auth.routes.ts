@@ -7,7 +7,7 @@ import {
   verifyPassword
 } from "../utils/authorisation"
 import { createUser, getUserBy } from "../database/user"
-import { LogInRequest, RegisterRequest, User } from "../../global"
+import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
 
 const router = express.Router()
 
@@ -17,19 +17,25 @@ router.post("/login", check, async (req: LogInRequest, res: Response) => {
 
   if (err || !user) {
     console.error("Unable to find user")
-    return res.status(500).json({ success: false, message: "Authentication error!" })
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
   if (!(await verifyPassword(password, user.password))) {
     console.error("Passwords do not match")
-    return res.status(500).json({ success: false, message: "Authentication error!" })
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
   const [loginErr, token] = await to(promisifiedPassportLogin(req, user))
 
   if (loginErr) {
     console.error("Log in error", loginErr)
-    return res.status(500).json({ success: false, message: "Authentication error!" })
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
   return res
@@ -46,8 +52,9 @@ router.post("/login", check, async (req: LogInRequest, res: Response) => {
           ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
           : "localhost"
     })
-    .json({
-      success: true
+    .json(<ClientResponse<object>>{
+      success: true,
+      data: null
     })
 })
 
@@ -55,9 +62,16 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
   const { firstName, lastName, email, password } = req.body
 
   if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(email)) {
-    return res.status(500).send("Enter a valid email address.")
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Enter a valid email address." })
   } else if (password.length < 5 || password.length > 20) {
-    return res.status(500).send("Password must be between 5 and a 20 characters.")
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{
+        success: false,
+        data: "Password must be between 5 and a 20 characters."
+      })
   }
 
   let [err, user] = await to(
@@ -71,10 +85,12 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
 
   if (err) {
     if (err.code == 11000) {
-      return res.status(500).json({ success: false, message: "Email is already taken" })
+      return res
+        .status(500)
+        .json(<ClientResponse<string>>{ success: false, data: "Email is already taken" })
     } else {
       console.error(err)
-      return res.status(500).json({ success: false, message: "Server error" })
+      return res.status(500).json(<ClientResponse<string>>{ success: false, data: "Server error" })
     }
   }
 
@@ -82,7 +98,9 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
 
   if (loginErr) {
     console.error(loginErr)
-    return res.status(500).json({ success: false, message: "Authentication error!" })
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
   return res
@@ -99,8 +117,9 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
           ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
           : "localhost"
     })
-    .json({
-      success: true
+    .json(<ClientResponse<string>>{
+      success: true,
+      data: null
     })
 })
 

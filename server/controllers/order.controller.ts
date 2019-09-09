@@ -2,7 +2,7 @@ import { Response } from "express"
 import { Types } from "mongoose"
 import { getOrder } from "../database/order"
 import { errorHandler } from "../utils"
-import { OrderRequest } from "../../global"
+import { OrderRequest, ClientResponse, Order } from "../../global"
 
 async function get(req: OrderRequest, res: Response) {
   try {
@@ -10,13 +10,16 @@ async function get(req: OrderRequest, res: Response) {
 
     const order = await getOrder(Types.ObjectId(orderId))
 
-    return res.status(200).json({
+    return res.status(200).json(<ClientResponse<Order>>{
       success: true,
       data: order
     })
   } catch (e) {
     errorHandler.handle(e)
-    return res.status(500).send(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
   }
 }
 

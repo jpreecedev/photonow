@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react"
 import { Field, reduxForm } from "redux-form"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
+import Box from "@material-ui/core/Box"
 
 import { renderTextField } from "../FormTextField"
 
@@ -42,9 +43,18 @@ const LoginForm: FunctionComponent<LoginProps> = () => {
         autoComplete="current-password"
         component={renderTextField}
       />
-      <Button type="submit" fullWidth variant="outlined" color="primary" className={classes.submit}>
-        Sign In
-      </Button>
+
+      <Box mb={6}>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        >
+          Sign In
+        </Button>
+      </Box>
     </>
   )
 }

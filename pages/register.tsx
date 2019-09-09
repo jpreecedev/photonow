@@ -2,10 +2,12 @@ import React, { FormEvent, FunctionComponent } from "react"
 import { connect } from "react-redux"
 import { InjectedFormProps, FormState } from "redux-form"
 import Router from "next/router"
+import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
 import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
+import Grid from "@material-ui/core/Grid"
 
 import * as server from "../utils/server"
 import { Main } from "../layouts/main"
@@ -47,7 +49,7 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { success, message } = await server.postAsync("/auth/register", {
+    const { success, data } = await server.postAsync<string>("/auth/register", {
       firstName: registerForm.values.firstName,
       lastName: registerForm.values.lastName,
       email: registerForm.values.email,
@@ -58,7 +60,7 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
       return await Router.push("/upload")
     }
 
-    setErrors({ ...errors, global: message })
+    setErrors({ ...errors, global: data })
   }
 
   return (
@@ -87,6 +89,13 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
           >
             <RegisterForm />
           </form>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/login">
+                <a>Already have an account? Sign in</a>
+              </Link>
+            </Grid>
+          </Grid>
         </Paper>
       </main>
     </Main>

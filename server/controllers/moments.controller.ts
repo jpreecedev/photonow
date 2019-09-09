@@ -1,7 +1,7 @@
 import { Response } from "express"
 import { createMoment } from "../database/moments"
 import { errorHandler, faceRecognition } from "../utils"
-import { FileRequest, Moment } from "../../global"
+import { FileRequest, Moment, ClientResponse } from "../../global"
 
 async function post(req: FileRequest, res: Response) {
   try {
@@ -38,10 +38,13 @@ async function post(req: FileRequest, res: Response) {
       originalFile.key
     )
 
-    return res.status(200).send({ success: true, message: "Upload complete" })
+    return res.status(200).json(<ClientResponse<string>>{ success: true, data: "Upload complete" })
   } catch (e) {
     errorHandler.handle(e)
-    return res.status(500).send(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
   }
 }
 

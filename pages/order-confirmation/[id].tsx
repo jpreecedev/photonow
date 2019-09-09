@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton"
 import CloudDownload from "@material-ui/icons/CloudDownload"
 
 import * as server from "../../utils/server"
-import { Order } from "../../global"
+import { Order, Moment } from "../../global"
 import { Main } from "../../layouts/main"
 
 const useStyles = makeStyles(theme => ({
@@ -46,7 +46,7 @@ interface OrderConfirmationProps {}
 const OrderConfirmation: FunctionComponent<OrderConfirmationProps> = () => {
   const classes = useStyles({})
   const router = useRouter()
-  const [state, setState] = React.useState({ moments: [] })
+  const [state, setState] = React.useState<{ moments: Moment[] }>({ moments: [] })
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +54,7 @@ const OrderConfirmation: FunctionComponent<OrderConfirmationProps> = () => {
         return
       }
 
-      const { success, data, message } = await server.getAsync(`/order/${router.query.id}`)
+      const { success, data } = await server.getAsync<Order>(`/order/${router.query.id}`)
       if (success) {
         setState(data)
       }

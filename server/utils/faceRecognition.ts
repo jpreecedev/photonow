@@ -1,6 +1,7 @@
 import AWS from "aws-sdk"
 import { Types } from "mongoose"
-import { getMoment, getMoments } from "../database/moments"
+import { getMoments } from "../database/moments"
+import { PictureItem } from "../../global"
 
 const rekognition = new AWS.Rekognition({ region: process.env.AWS_REGION })
 AWS.config.region = process.env.AWS_REGION
@@ -31,7 +32,7 @@ async function createCollection(collectionName: string) {
   })
 }
 
-async function recogniseFromBuffer(image: Buffer) {
+async function recogniseFromBuffer(image: Buffer): Promise<PictureItem[]> {
   return new Promise((resolve, reject) => {
     rekognition.searchFacesByImage(
       {
@@ -62,12 +63,16 @@ async function recogniseFromBuffer(image: Buffer) {
           )
 
           return resolve(
-            moments.map(moment => ({
-              momentId: moment._id,
-              label: moment.filename,
-              url: moment.resizedLocation,
-              price: moment.amount
-            }))
+            moments.map(
+              moment =>
+                <PictureItem>{
+                  momentId: moment._id,
+                  label: moment.filename,
+                  url: moment.resizedLocation,
+                  price: moment.amount,
+                  addedToBasket: false
+                }
+            )
           )
         }
         return reject("Not recognized")

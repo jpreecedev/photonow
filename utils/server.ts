@@ -1,13 +1,43 @@
+import { ClientResponse } from "../global"
+
 function getServerApiUrl() {
   return process.env.SERVER_API_URL
 }
 
-const callFetchAsync = async (
+const uploadPhotoAsync = async <T>(
+  apiUrl: string,
+  filename: string,
+  blob: Blob
+): Promise<ClientResponse<T>> => {
+  const formData = new FormData()
+  formData.append("photo", blob, filename)
+
+  const options = {
+    method: "POST",
+    body: formData
+  }
+
+  const response = await fetch(`${getServerApiUrl()}${apiUrl}`, {
+    credentials: "same-origin",
+    ...options
+  })
+
+  if (response.status !== 200) {
+    return <any>{
+      success: false,
+      data: `Request failed with status code ${response.status}.  ${await response.text()}`
+    }
+  }
+
+  return await response.json()
+}
+
+const callFetchAsync = async <T>(
   url: string,
   method: "GET" | "PUT" | "POST" | "DELETE",
   body: BodyInit = undefined,
   headers = {}
-) => {
+): Promise<ClientResponse<T>> => {
   try {
     const options = {
       headers: new Headers({
@@ -31,48 +61,17 @@ const callFetchAsync = async (
   } catch (err) {
     return {
       success: false,
-      message: err
+      data: err
     }
   }
 }
 
-const getAsync = (url: string) => {
-  return callFetchAsync(url, "GET")
+const getAsync = <T>(url: string): Promise<ClientResponse<T>> => {
+  return callFetchAsync<T>(url, "GET")
 }
 
-const postAsync = (url: string, body: any) => {
-  return callFetchAsync(url, "POST", body)
+const postAsync = <T>(url: string, body: any): Promise<ClientResponse<T>> => {
+  return callFetchAsync<T>(url, "POST", body)
 }
 
-const putAsync = (url: string, body: any) => {
-  return callFetchAsync(url, "PUT", body)
-}
-
-const deleteAsync = (url: string, body: any) => {
-  return callFetchAsync(url, "DELETE", body)
-}
-
-const uploadPhotoAsync = async <T>(
-  apiUrl: string,
-  filename: string,
-  blob: Blob
-): Promise<{ success: boolean; data: T }> => {
-  const formData = new FormData()
-  formData.append("photo", blob, filename)
-
-  const options = {
-    method: "POST",
-    body: formData
-  }
-
-  const response = await fetch(`${getServerApiUrl()}${apiUrl}`, options)
-
-  if (response.status !== 200) {
-    throw new Error(`Request failed with status code ${response.status}.  ${await response.text()}`)
-  }
-
-  const { success, data } = await response.json()
-  return { success, data }
-}
-
-export { getAsync, postAsync, putAsync, deleteAsync, uploadPhotoAsync, getServerApiUrl }
+export { getAsync, postAsync, uploadPhotoAsync, getServerApiUrl }

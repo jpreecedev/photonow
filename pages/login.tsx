@@ -49,7 +49,7 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { success, message } = await server.postAsync("/auth/login", {
+    const { success, data } = await server.postAsync<string>("/auth/login", {
       email: loginForm.values.email,
       password: loginForm.values.password
     })
@@ -58,7 +58,7 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
       return await Router.push("/upload")
     }
 
-    setErrors({ ...errors, global: message })
+    setErrors({ ...errors, global: data })
   }
 
   return (

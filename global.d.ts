@@ -144,3 +144,8 @@ export interface Country {
   label: string
   value: string
 }
+
+export interface ClientResponse<T> {
+  success: boolean
+  data: T
+}
