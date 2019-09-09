@@ -44,4 +44,4 @@ const initialiseStore = (initialState: AppState = loadState()) => {
   return store
 }
 
-export { initialiseStore, actions }
+export { initialiseStore, actions, rootReducer }

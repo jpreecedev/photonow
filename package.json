@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "next build && tsc --project tsconfig.server.json",
+    "build": "next build && tsc --project tsconfig.server.json && next start",
     "start": "cross-env NODE_ENV=production node dist/index.js",
-    "test": "jest",
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "jest --config ./jest.server.config.js",
+    "test:client": "jest --config ./jest.client.config.js",
     "lint:prettier": "prettier --write '{components,layouts,pages,server,utils}/**/*.{js,jsx,ts,tsx}'"
   },
   "keywords": [],
@@ -55,6 +57,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@testing-library/react": "^9.1.4",
     "@types/aws-sdk": "^2.7.0",
     "@types/bcrypt": "^3.0.0",
     "@types/body-parser": "^1.17.1",

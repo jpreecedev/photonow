@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DefaultButton /> tests should render a default button 1`] = `
+<button
+  class="MuiButtonBase-root MuiButton-root makeStyles-button-1 MuiButton-contained MuiButton-containedPrimary"
+  data-testid="button"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label"
+  >
+    <span
+      data-testid="button-content"
+    >
+      Some button content
+    </span>
+  </span>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</button>
+`;
+
+exports[`<DefaultButton /> tests should render a large button 1`] = `
+<button
+  class="MuiButtonBase-root MuiButton-root makeStyles-button-32 MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge"
+  data-testid="button"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label"
+  >
+    <span
+      data-testid="button-content"
+    >
+      Some button content
+    </span>
+  </span>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</button>
+`;
+
+exports[`<DefaultButton /> tests should render a secondary button 1`] = `
+<button
+  class="MuiButtonBase-root MuiButton-root makeStyles-button-63 MuiButton-contained MuiButton-containedSecondary"
+  data-testid="button"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label"
+  >
+    <span
+      data-testid="button-content"
+    >
+      Some button content
+    </span>
+  </span>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</button>
+`;
+
+exports[`<DefaultButton /> tests should render an outlined secondary button 1`] = `
+<button
+  class="MuiButtonBase-root MuiButton-root makeStyles-button-94 MuiButton-outlined MuiButton-outlinedSecondary"
+  data-testid="button"
+  tabindex="0"
+  type="button"
+>
+  <span
+    class="MuiButton-label"
+  >
+    <span
+      data-testid="button-content"
+    >
+      Some button content
+    </span>
+  </span>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</button>
+`;

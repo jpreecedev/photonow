@@ -37,18 +37,18 @@ interface MainAppBarProps {
 
 const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures }) => {
   const classes = useStyles({})
+  let addedToBasket = 0
 
-  const addedToBasket = pictures.reduce(
-    (acc, current) => (current.addedToBasket ? (acc += 1) : acc),
-    0
-  )
+  if (pictures && pictures.length) {
+    addedToBasket = pictures.reduce((acc, current) => (current.addedToBasket ? (acc += 1) : acc), 0)
+  }
 
   const rootClasses = clsx(classes.grow, {
     [classes.gap]: gap
   })
 
   return (
-    <div className={rootClasses}>
+    <div data-testid="appbar-container" className={rootClasses}>
       <AppBar position="static">
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
@@ -86,4 +86,4 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures 
 
 const ConnectedMainAppBar = connect((state: AppState) => ({ pictures: state.pictures }))(MainAppBar)
 
-export { ConnectedMainAppBar as MainAppBar }
+export { ConnectedMainAppBar as MainAppBar, MainAppBar as PlainMainAppBar }
