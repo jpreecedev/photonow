@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "next build && tsc --project tsconfig.server.json && next start",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production tsc --project tsconfig.server.json && node dist/server/index.js",
     "test": "npm run test:server && npm run test:client",
     "test:server": "jest --config ./jest.server.config.js",
     "test:client": "jest --config ./jest.client.config.js",

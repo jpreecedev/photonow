@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { connect } from "react-redux"
 import Router from "next/router"
+import Link from "next/link"
 import clsx from "clsx"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
@@ -10,7 +11,7 @@ import Typography from "@material-ui/core/Typography"
 import Badge from "@material-ui/core/Badge"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
-
+import MaterialLink from "@material-ui/core/Link"
 import { AppState, PictureItem } from "../../global"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(4)
     },
     title: {
-      display: "block"
+      display: "block",
+      cursor: "pointer",
+      "&:hover": {
+        textDecoration: "underline"
+      }
     },
     section: {
       display: "flex"
@@ -51,9 +56,11 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures 
     <div data-testid="appbar-container" className={rootClasses}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Find My Face
-          </Typography>
+          <Link href="/">
+            <Typography className={classes.title} variant="h6" component="a" noWrap>
+              Find My Face
+            </Typography>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.section}>
             <IconButton

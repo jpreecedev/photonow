@@ -1,14 +1,18 @@
-import App from "next/app"
 import React from "react"
 import { Provider } from "react-redux"
+import Head from "next/head"
+import App from "next/app"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import { ThemeProvider } from "@material-ui/styles"
 
 import { initialiseStore } from "../store"
+import { theme } from "../components/Theme"
 
-interface WithReduxProps {
+interface FindMyFaceProps {
   reduxStore: any
 }
 
-class FindMyFace extends App<WithReduxProps> {
+class FindMyFace extends App<FindMyFaceProps> {
   reduxStore: any
 
   constructor(props) {
@@ -16,12 +20,28 @@ class FindMyFace extends App<WithReduxProps> {
     this.reduxStore = initialiseStore()
   }
 
+  componentDidMount() {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector("#jss-server-side")
+    if (jssStyles) {
+      jssStyles.parentNode.removeChild(jssStyles)
+    }
+  }
+
   render() {
-    const { Component } = this.props
+    const { Component, pageProps } = this.props
     return (
-      <Provider store={this.reduxStore}>
-        <Component />
-      </Provider>
+      <>
+        <Head>
+          <title>Find My Face</title>
+        </Head>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Provider store={this.reduxStore}>
+            <Component {...pageProps} />
+          </Provider>
+        </ThemeProvider>
+      </>
     )
   }
 }

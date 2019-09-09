@@ -8,5 +8,6 @@
     "noEmit": false,
     "strict": false
   },
-  "include": ["server/**/*.ts"]
+  "exclude": ["setup"],
+  "include": ["server/**/*.ts", "components", "layouts", "pages", "store", "utils"]
 }
