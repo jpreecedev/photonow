@@ -149,3 +149,8 @@ export interface ClientResponse<T> {
   success: boolean
   data: T
 }
+
+export interface LoginFormProps {
+  email: string
+  password: string
+}

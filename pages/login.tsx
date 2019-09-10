@@ -1,7 +1,5 @@
-import React, { FormEvent, FunctionComponent } from "react"
+import React, { FunctionComponent } from "react"
 import { connect } from "react-redux"
-import { InjectedFormProps, FormState } from "redux-form"
-import Router from "next/router"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
@@ -9,10 +7,10 @@ import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Grid from "@material-ui/core/Grid"
 
-import * as server from "../utils/server"
 import { Main } from "../layouts/main"
 import { LoginForm } from "../components/LoginForm"
-import { AppState } from "../global"
+import { AppState, LoginFormProps } from "../global"
+import * as server from "../utils/server"
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -29,33 +27,27 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(3)
     }
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
+  error: {
+    color: theme.palette.error.main,
+    textAlign: "center"
   }
 }))
 
-interface LoginProps extends InjectedFormProps {
-  loginForm: FormState
-}
+interface LoginProps {}
 
-const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
+const Login: FunctionComponent<LoginProps> = () => {
   const classes = useStyles({})
   const [errors, setErrors] = React.useState({})
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onSubmit = async ({ email, password }: LoginFormProps) => {
     const { success, data } = await server.postAsync<string>("/auth/login", {
-      email: loginForm.values.email,
-      password: loginForm.values.password
+      email,
+      password
     })
 
     if (success) {
-      return await Router.push("/upload")
+      window.location.replace("/upload")
+      return
     }
 
     setErrors({ ...errors, global: data })
@@ -64,11 +56,6 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
   return (
     <Main gap maxWidth="sm">
       <main className={classes.layout}>
-        <aside>
-          {Object.keys(errors).map(error => (
-            <p key={errors[error]}>{errors[error]}</p>
-          ))}
-        </aside>
         <Paper className={classes.paper} elevation={2}>
           <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
             <Typography component="h1" variant="h4" gutterBottom>
@@ -78,16 +65,12 @@ const Login: FunctionComponent<LoginProps> = ({ loginForm }) => {
               Log in to your account dashboard
             </Typography>
           </Box>
-          <form
-            method="post"
-            action="/api/auth"
-            className={classes.form}
-            onSubmit={onSubmit}
-            noValidate
-          >
-            <LoginForm />
-          </form>
-
+          <aside className={classes.error}>
+            {Object.keys(errors).map(error => (
+              <p key={errors[error]}>{errors[error]}</p>
+            ))}
+          </aside>
+          <LoginForm onSubmit={onSubmit} />
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/register">

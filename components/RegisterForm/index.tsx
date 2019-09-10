@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 
-import { renderTextField } from "../FormTextField"
+import { renderTextField } from "../ReduxForm"
 
 const useStyles = makeStyles(theme => ({
   submit: {
@@ -20,7 +20,6 @@ const RegisterForm: FunctionComponent<RegisterProps> = () => {
   return (
     <>
       <Field
-        variant="outlined"
         margin="normal"
         required
         fullWidth
@@ -32,7 +31,6 @@ const RegisterForm: FunctionComponent<RegisterProps> = () => {
         component={renderTextField}
       />
       <Field
-        variant="outlined"
         margin="normal"
         required
         fullWidth
@@ -43,7 +41,6 @@ const RegisterForm: FunctionComponent<RegisterProps> = () => {
         component={renderTextField}
       />
       <Field
-        variant="outlined"
         margin="normal"
         required
         fullWidth
@@ -54,7 +51,6 @@ const RegisterForm: FunctionComponent<RegisterProps> = () => {
         component={renderTextField}
       />
       <Field
-        variant="outlined"
         margin="normal"
         required
         fullWidth
