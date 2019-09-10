@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Grid from "@material-ui/core/Grid"
 
@@ -12,7 +12,7 @@ import { LoginForm } from "../components/LoginForm"
 import { AppState, LoginFormProps } from "../global"
 import * as server from "../utils/server"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),

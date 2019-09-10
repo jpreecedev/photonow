@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { Field, reduxForm, FormState, InjectedFormProps, FormSubmitHandler } from "redux-form"
+import { Field, reduxForm, InjectedFormProps } from "redux-form"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
@@ -25,10 +25,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-interface LoginProps extends InjectedFormProps<LoginFormProps> {
-  onLoggedIn: Function
-}
-
 const validate = (values: LoginFormProps) => {
   const errors = {
     email: null
@@ -45,7 +41,10 @@ const validate = (values: LoginFormProps) => {
   return errors
 }
 
-const LoginForm: FunctionComponent<LoginProps> = ({ handleSubmit, submitting }) => {
+const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
+  handleSubmit,
+  submitting
+}) => {
   const classes = useStyles({})
 
   return (

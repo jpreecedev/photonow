@@ -1,11 +1,10 @@
-import React, { FormEvent, FunctionComponent } from "react"
+import React, { FunctionComponent } from "react"
 import { connect } from "react-redux"
 import { InjectedFormProps, FormState } from "redux-form"
-import Router from "next/router"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Grid from "@material-ui/core/Grid"
 
@@ -14,7 +13,7 @@ import { Main } from "../layouts/main"
 import { RegisterForm } from "../components/RegisterForm"
 import { AppState } from "../global"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
@@ -29,12 +28,9 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(3)
     }
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
+  error: {
+    color: theme.palette.error.main,
+    textAlign: "center"
   }
 }))
 
@@ -46,18 +42,17 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
   const classes = useStyles({})
   const [errors, setErrors] = React.useState({})
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onSubmit = async ({ firstName, lastName, email, password }) => {
     const { success, data } = await server.postAsync<string>("/auth/register", {
-      firstName: registerForm.values.firstName,
-      lastName: registerForm.values.lastName,
-      email: registerForm.values.email,
-      password: registerForm.values.password
+      firstName,
+      lastName,
+      email,
+      password
     })
 
     if (success) {
-      return await Router.push("/upload")
+      window.location.replace("/upload")
+      return
     }
 
     setErrors({ ...errors, global: data })
@@ -66,11 +61,6 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
   return (
     <Main gap maxWidth="sm">
       <main className={classes.layout}>
-        <aside>
-          {Object.keys(errors).map(error => (
-            <p key={errors[error]}>{errors[error]}</p>
-          ))}
-        </aside>
         <Paper className={classes.paper} elevation={2}>
           <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
             <Typography component="h1" variant="h4" gutterBottom>
@@ -80,15 +70,12 @@ const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
               Sign up for a new account
             </Typography>
           </Box>
-          <form
-            method="post"
-            action="/api/auth"
-            className={classes.form}
-            onSubmit={onSubmit}
-            noValidate
-          >
-            <RegisterForm />
-          </form>
+          <aside className={classes.error}>
+            {Object.keys(errors).map(error => (
+              <p key={errors[error]}>{errors[error]}</p>
+            ))}
+          </aside>
+          <RegisterForm onSubmit={onSubmit} />
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/login">

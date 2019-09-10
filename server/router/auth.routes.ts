@@ -66,12 +66,10 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
       .status(500)
       .json(<ClientResponse<string>>{ success: false, data: "Enter a valid email address." })
   } else if (password.length < 5 || password.length > 20) {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{
-        success: false,
-        data: "Password must be between 5 and a 20 characters."
-      })
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "Password must be between 5 and a 20 characters."
+    })
   }
 
   let [err, user] = await to(
@@ -84,14 +82,9 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
   )
 
   if (err) {
-    if (err.code == 11000) {
-      return res
-        .status(500)
-        .json(<ClientResponse<string>>{ success: false, data: "Email is already taken" })
-    } else {
-      console.error(err)
-      return res.status(500).json(<ClientResponse<string>>{ success: false, data: "Server error" })
-    }
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Email is already taken" })
   }
 
   const [loginErr, token] = await to(promisifiedPassportLogin(<LogInRequest>req, user))
