@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser"
 import passport from "passport"
 import router from "./router"
 import { connectToDatabase } from "./database/connection"
-import { applyMiddleware, isAuthenticated } from "./utils/authorisation"
+import { applyMiddleware } from "./utils/authorisation"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
