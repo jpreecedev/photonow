@@ -4,8 +4,9 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "target": "es5"
-  }
+    "noImplicitAny": false,
+    "sourceMap": false
+  },
+
+  "include": ["./global.d.ts"]
 }

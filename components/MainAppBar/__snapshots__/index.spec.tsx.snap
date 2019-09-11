@@ -11,11 +11,11 @@ exports[`<MainAppBar /> tests should render a default app bar 1`] = `
     <div
       class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
     >
-      <h6
+      <a
         class="MuiTypography-root makeStyles-title-3 MuiTypography-h6 MuiTypography-noWrap"
       >
         Find My Face
-      </h6>
+      </a>
       <div
         class="makeStyles-grow-1"
       />
@@ -25,6 +25,7 @@ exports[`<MainAppBar /> tests should render a default app bar 1`] = `
         <button
           aria-label="Basket"
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit"
+          data-testid="appbar-basket-button"
           tabindex="0"
           type="button"
         >
@@ -33,6 +34,7 @@ exports[`<MainAppBar /> tests should render a default app bar 1`] = `
           >
             <span
               class="MuiBadge-root"
+              data-testid="appbar-basket-badge"
             >
               <svg
                 aria-hidden="true"
@@ -59,6 +61,7 @@ exports[`<MainAppBar /> tests should render a default app bar 1`] = `
         <button
           aria-label="account of current user"
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeEnd"
+          data-testid="appbar-account-button"
           tabindex="0"
           type="button"
         >
@@ -85,4 +88,28 @@ exports[`<MainAppBar /> tests should render a default app bar 1`] = `
     </div>
   </header>
 </div>
+`;
+
+exports[`<MainAppBar /> tests should render with the correct number of basket items 1`] = `
+<span
+  class="MuiBadge-root"
+  data-testid="appbar-basket-badge"
+>
+  <svg
+    aria-hidden="true"
+    class="MuiSvgIcon-root"
+    focusable="false"
+    role="presentation"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1h-4.79zM9 9l3-4.4L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
+    />
+  </svg>
+  <span
+    class="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorSecondary"
+  >
+    2
+  </span>
+</span>
 `;

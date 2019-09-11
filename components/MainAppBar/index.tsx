@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography"
 import Badge from "@material-ui/core/Badge"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
-import MaterialLink from "@material-ui/core/Link"
+
 import { AppState, PictureItem } from "../../global"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,11 +36,14 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface MainAppBarProps {
+  pictures?: PictureItem[]
   gap?: boolean
-  pictures: PictureItem[]
 }
 
-const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures }) => {
+export const MainAppBarComponent: FunctionComponent<MainAppBarProps> = ({
+  gap = false,
+  pictures = []
+}) => {
   const classes = useStyles({})
   let addedToBasket = 0
 
@@ -64,17 +67,23 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures 
           <div className={classes.grow} />
           <div className={classes.section}>
             <IconButton
+              data-testid="appbar-basket-button"
               aria-label="Basket"
               color="inherit"
               onClick={() => {
                 Router.push("/checkout")
               }}
             >
-              <Badge badgeContent={addedToBasket} color="secondary">
+              <Badge
+                data-testid="appbar-basket-badge"
+                badgeContent={addedToBasket}
+                color="secondary"
+              >
                 <ShoppingBasket />
               </Badge>
             </IconButton>
             <IconButton
+              data-testid="appbar-account-button"
               edge="end"
               aria-label="account of current user"
               onClick={() => {
@@ -91,6 +100,8 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false, pictures 
   )
 }
 
-const ConnectedMainAppBar = connect((state: AppState) => ({ pictures: state.pictures }))(MainAppBar)
+const ConnectedMainAppBar = connect((state: AppState) => ({ pictures: state.pictures }))(
+  MainAppBarComponent
+)
 
-export { ConnectedMainAppBar as MainAppBar, MainAppBar as PlainMainAppBar }
+export { ConnectedMainAppBar as MainAppBar }
