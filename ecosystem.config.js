@@ -8,7 +8,7 @@ module.exports = {
   deploy: {
     production: {
       user: "ubuntu",
-      host: "http://ec2-34-230-81-42.compute-1.amazonaws.com/",
+      host: "http://ec2-3-91-183-71.compute-1.amazonaws.com/",
       key: "~/.ssh/find-my-face.pem",
       ref: "origin/master",
       repo: "git@github.com:jpreecedev/findmyface.git",
