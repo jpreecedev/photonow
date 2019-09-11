@@ -7,6 +7,8 @@
     "dev": "nodemon",
     "build": "next build",
     "start": "cross-env NODE_ENV=production tsc --project tsconfig.server.json && node dist/server/index.js",
+    "restart": "pm2 startOrRestart ecosystem.config.js",
+    "deploy": "pm2 deploy ecosystem.config.js production",
     "test": "npm run test:server && npm run test:client",
     "test:server": "jest --config ./jest.server.config.js",
     "test:client": "jest --config ./jest.client.config.js",
