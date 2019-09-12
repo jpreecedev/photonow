@@ -7,7 +7,7 @@ module.exports = {
       ref: "origin/master",
       repo: "git@github.com:jpreecedev/findmyface.git",
       path: "/home/ubuntu/deploy/find-my-face-dev",
-      "post-deploy": "npm install && pm2 startOrRestart ecosystem.config.js"
+      "post-deploy": "npm install && npm run start"
     }
   }
 }
