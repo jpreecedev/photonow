@@ -38,7 +38,7 @@ interface RegisterProps extends InjectedFormProps {
   registerForm: FormState
 }
 
-const Register: FunctionComponent<RegisterProps> = ({ registerForm }) => {
+const Register: FunctionComponent<RegisterProps> = () => {
   const classes = useStyles({})
   const [errors, setErrors] = React.useState({})
 

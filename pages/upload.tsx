@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from "react"
 import { Typography } from "@material-ui/core"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 
 import { Main } from "../layouts/main"
 import { FileUpload } from "../components/FileUpload"
 import { withProtectedRoute } from "../utils/withProtectedRoute"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     display: "flex",
     flexDirection: "column",

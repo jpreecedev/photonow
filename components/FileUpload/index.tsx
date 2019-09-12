@@ -1,6 +1,6 @@
 import * as React from "react"
 import { FilePond, registerPlugin } from "react-filepond"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 
 import "filepond/dist/filepond.min.css"
 
@@ -10,7 +10,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginTop: theme.spacing(2)
   }

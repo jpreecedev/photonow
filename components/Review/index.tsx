@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { connect, DispatchProp } from "react-redux"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles,Theme } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
 import List from "@material-ui/core/List"
@@ -15,7 +15,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import { AppState, PictureItem } from "../../global"
 import { actions } from "../../store"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
     padding: theme.spacing(1, 0)
   },

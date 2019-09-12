@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react"
 import Container from "@material-ui/core/Container"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 
 import { Base } from "./base"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginBottom: theme.spacing(10)
   }

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm, InjectedFormProps } from "redux-form"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import CircularProgress from "@material-ui/core/CircularProgress"
@@ -8,7 +8,7 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 import { RegisterFormProps } from "../../global"
 import { renderTextField } from "../ReduxForm"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2)
   },
@@ -22,6 +22,10 @@ const useStyles = makeStyles(theme => ({
     left: "50%",
     marginTop: -12,
     marginLeft: -12
+  },
+  error: {
+    color: theme.palette.error.main,
+    textAlign: "center"
   }
 }))
 
@@ -101,8 +105,11 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
         component={renderTextField}
       />
       <Box mb={6}>
+        {process.env.IS_REGISTRATION_DISABLED === "true" && (
+          <p className={classes.error}>Sorry, registration is currently closed.</p>
+        )}
         <Button
-          disabled={submitting}
+          disabled={submitting || process.env.IS_REGISTRATION_DISABLED === "true"}
           type="submit"
           fullWidth
           variant="contained"

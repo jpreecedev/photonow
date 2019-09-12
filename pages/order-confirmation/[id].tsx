@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { useRouter } from "next/router"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
@@ -16,7 +16,7 @@ import * as server from "../../utils/server"
 import { Order, Moment } from "../../global"
 import { Main } from "../../layouts/main"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   layout: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
