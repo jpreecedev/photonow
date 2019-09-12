@@ -1,10 +1,4 @@
 module.exports = {
-  apps: [
-    {
-      name: "find-my-face-dev",
-      script: "./dist/server/index.js"
-    }
-  ],
   deploy: {
     production: {
       user: "ubuntu",
