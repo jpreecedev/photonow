@@ -63,7 +63,7 @@ describe("<MainAppBar /> tests", () => {
     expect(Router[0]).toEqual("/login")
   })
 
-  it("should redirect to the login page when clicking account button", () => {
+  it("should redirect to getting started when clicking account button and basket is empty", () => {
     const accountButtonTestId = "appbar-basket-button"
 
     const { getByTestId } = render(<MainAppBarComponent />)
@@ -71,6 +71,27 @@ describe("<MainAppBar /> tests", () => {
     fireEvent.click(getByTestId(accountButtonTestId))
 
     expect(Router.push).toHaveLength(1)
-    expect(Router[0]).toEqual("/checkout")
+    expect(Router[0]).toEqual("/getting-started")
+  })
+
+  it("should redirect to the select your pictures page when clicking account button and basket is not empty", () => {
+    const accountButtonTestId = "appbar-basket-button"
+
+    const picture: PictureItem = {
+      momentId: "momentId",
+      label: "label",
+      url: "url",
+      price: 123,
+      addedToBasket: false
+    }
+
+    const pictures: PictureItem[] = [{ ...picture, addedToBasket: true }, { ...picture }]
+
+    const { getByTestId } = render(<MainAppBarComponent pictures={pictures} />)
+
+    fireEvent.click(getByTestId(accountButtonTestId))
+
+    expect(Router.push).toHaveLength(1)
+    expect(Router[0]).toEqual("/select-your-pictures")
   })
 })

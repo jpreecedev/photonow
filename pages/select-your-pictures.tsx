@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center"
   },
   paper: {
-    marginTop: theme.spacing(8),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(8),
       padding: `${theme.spacing(6)}px ${theme.spacing(4)}px`
     }
   },

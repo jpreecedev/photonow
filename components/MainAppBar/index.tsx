@@ -71,7 +71,11 @@ export const MainAppBarComponent: FunctionComponent<MainAppBarProps> = ({
               aria-label="Basket"
               color="inherit"
               onClick={() => {
-                Router.push("/checkout")
+                if (addedToBasket === 0) {
+                  Router.push("/getting-started")
+                  return
+                }
+                Router.push("/select-your-pictures")
               }}
             >
               <Badge

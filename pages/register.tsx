@@ -15,17 +15,15 @@ import { AppState } from "../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   layout: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
   },
   paper: {
-    marginTop: theme.spacing(8),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      padding: theme.spacing(3)
+      marginTop: theme.spacing(8),
+      padding: `${theme.spacing(6)}px ${theme.spacing(4)}px`
     }
   },
   error: {
