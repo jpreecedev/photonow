@@ -6,8 +6,7 @@ module.exports = {
       key: "~/.ssh/find-my-face-dev.pem",
       ref: "origin/master",
       repo: "git@github.com:jpreecedev/findmyface.git",
-      path: "/home/ubuntu/deploy/find-my-face-dev",
-      "post-deploy": "npm install && npm run start"
+      path: "/home/ubuntu/deploy/find-my-face-dev"
     }
   }
 }
