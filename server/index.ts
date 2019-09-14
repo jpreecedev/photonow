@@ -46,7 +46,7 @@ nextApp.prepare().then(() => {
 
   app.listen(port, err => {
     if (err) throw err
-    console.log(`> Ready on http://localhost:${port}`)
+    console.log(`> Ready on ${process.env.SERVER_URL}`)
     console.log(`${process.env.NODE_ENV}`)
   })
 })
