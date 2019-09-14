@@ -41,7 +41,16 @@ router.post("/login", check, async (req: LogInRequest, res: Response) => {
   return res
     .status(200)
     .cookie("jwt", token, {
-      httpOnly: true
+      httpOnly: true,
+      secure:
+        process.env.NODE_ENV == `production` && process.env.SERVER_URL.includes("https")
+          ? true
+          : false,
+      maxAge: Date.now() + 60 * 60 * 1000 * 4,
+      domain:
+        process.env.NODE_ENV == `production`
+          ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
+          : "localhost"
     })
     .json(<ClientResponse<object>>{
       success: true,
@@ -97,7 +106,16 @@ router.post("/register", check, async (req: RegisterRequest, res: Response) => {
   return res
     .status(200)
     .cookie("jwt", token, {
-      httpOnly: true
+      httpOnly: true,
+      secure:
+        process.env.NODE_ENV == `production` && process.env.SERVER_URL.includes("https")
+          ? true
+          : false,
+      maxAge: Date.now() + 60 * 60 * 1000 * 4,
+      domain:
+        process.env.NODE_ENV == `production`
+          ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
+          : "localhost"
     })
     .json(<ClientResponse<string>>{
       success: true,
