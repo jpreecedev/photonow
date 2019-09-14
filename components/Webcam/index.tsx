@@ -32,7 +32,7 @@ const useStyles = makeStyles(() =>
 
 const getVideoConstraints = (padding: number) => {
   const aspectRatio = 1.777777777777778
-  const width = window.innerWidth > 1280 + padding ? 1280 : window.innerWidth - padding
+  const width = window.innerWidth > 640 + padding ? 640 : window.innerWidth - padding
 
   return {
     width,

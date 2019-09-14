@@ -12,6 +12,8 @@ router.post("/", upload.single("photo"), async (req: FileRequest, res: Response)
   if (response) {
     try {
       const recogniseFromBuffer = await faceRecognition.recogniseFromBuffer(req.file.buffer)
+      console.log(recogniseFromBuffer)
+
       return res.status(200).json(<ClientResponse<PictureItem[]>>{
         success: true,
         data: recogniseFromBuffer

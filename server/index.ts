@@ -9,6 +9,7 @@ import passport from "passport"
 import router from "./router"
 import { connectToDatabase } from "./database/connection"
 import { applyMiddleware } from "./utils/authorisation"
+import { Handlers, init } from "@sentry/node"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
@@ -18,6 +19,9 @@ const handle = nextApp.getRequestHandler()
 nextApp.prepare().then(() => {
   const app = express()
 
+  init({ dsn: "https://bd58a1b715494744b2bc3b9c444172d1@sentry.io/1727049" })
+
+  app.use(Handlers.requestHandler())
   app.use(cors())
 
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -35,6 +39,8 @@ nextApp.prepare().then(() => {
   ;(async () => {
     await connectToDatabase()
   })()
+
+  app.use(Handlers.errorHandler())
 
   app.listen(port, err => {
     if (err) throw err

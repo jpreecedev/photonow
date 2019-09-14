@@ -75,70 +75,98 @@ const SelectYourPictures: FunctionComponent<DispatchProp<any> & SelectYourPictur
     0
   )
 
+  const renderNoPicturesFound = () => (
+    <>
+      <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" mb={3}>
+        <Typography component="h1" variant="h4" align="center">
+          Nothing to show
+        </Typography>
+        <Typography component="p" gutterBottom>
+          Sorry, we were not able to find any pictures of you, please try again.
+        </Typography>
+      </Box>
+      <Box display="flex" justifyContent="center" mt={3}>
+        <Link href="/getting-started">
+          <Button size="large" color="primary" variant="contained">
+            Try again
+          </Button>
+        </Link>
+      </Box>
+    </>
+  )
+
+  const renderPictures = () => {
+    return (
+      <>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexDirection="column"
+          mb={3}
+        >
+          <Typography component="h1" variant="h4" align="center">
+            Choose your pictures
+          </Typography>
+          <Typography component="p" gutterBottom>
+            Please review your pictures and add any you would like to purchase to your basket
+          </Typography>
+        </Box>
+        <Grid container spacing={4}>
+          {pictures.map((picture: PictureItem) => (
+            <Grid item key={picture.url} xs={12} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={picture.url}
+                  title={picture.label}
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography>
+                    Your picture is available for purchase for only &pound;
+                    {Number.parseInt(process.env.DEFAULT_MOMENT_PRICE) / 100}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  {!picture.addedToBasket && (
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={() => dispatch(actions.pictures.addToBasket(picture))}
+                    >
+                      Add to basket
+                    </Button>
+                  )}
+                  {picture.addedToBasket && (
+                    <Button
+                      size="small"
+                      color="primary"
+                      onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
+                    >
+                      Remove from basket
+                    </Button>
+                  )}
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        <Box display="flex" justifyContent="flex-end" mt={3}>
+          <Link href="/checkout">
+            <Button size="large" color="primary" variant="contained" disabled={!addedToBasket}>
+              Proceed to checkout
+            </Button>
+          </Link>
+        </Box>
+      </>
+    )
+  }
+
   return (
     <Main gap>
       <main className={classes.layout}>
         <Paper className={classes.paper} elevation={2}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-            mb={3}
-          >
-            <Typography component="h1" variant="h4" align="center">
-              Choose your pictures
-            </Typography>
-            <Typography component="p" gutterBottom>
-              Please review your pictures and add any you would like to purchase to your basket
-            </Typography>
-          </Box>
-          <Grid container spacing={4}>
-            {pictures.map((picture: PictureItem) => (
-              <Grid item key={picture.url} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={picture.url}
-                    title={picture.label}
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography>
-                      Your picture is available for purchase for only &pound;
-                      {Number.parseInt(process.env.DEFAULT_MOMENT_PRICE) / 100}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    {!picture.addedToBasket && (
-                      <Button
-                        size="small"
-                        color="primary"
-                        onClick={() => dispatch(actions.pictures.addToBasket(picture))}
-                      >
-                        Add to basket
-                      </Button>
-                    )}
-                    {picture.addedToBasket && (
-                      <Button
-                        size="small"
-                        color="primary"
-                        onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
-                      >
-                        Remove from basket
-                      </Button>
-                    )}
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Box display="flex" justifyContent="flex-end" mt={3}>
-            <Link href="/checkout">
-              <Button size="large" color="primary" variant="contained" disabled={!addedToBasket}>
-                Proceed to checkout
-              </Button>
-            </Link>
-          </Box>
+          {pictures && pictures.length > 0 ? renderPictures() : renderNoPicturesFound()}
         </Paper>
       </main>
     </Main>
