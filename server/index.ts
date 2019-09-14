@@ -10,6 +10,7 @@ import router from "./router"
 import { connectToDatabase } from "./database/connection"
 import { applyMiddleware } from "./utils/authorisation"
 import { Handlers, init } from "@sentry/node"
+import compression from "compression"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
@@ -18,6 +19,7 @@ const handle = nextApp.getRequestHandler()
 
 nextApp.prepare().then(() => {
   const app = express()
+  app.use(compression())
 
   init({ dsn: "https://bd58a1b715494744b2bc3b9c444172d1@sentry.io/1727049" })
 
