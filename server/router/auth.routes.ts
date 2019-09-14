@@ -38,19 +38,6 @@ router.post("/login", check, async (req: LogInRequest, res: Response) => {
       .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
-  console.log({
-    httpOnly: true,
-    secure:
-      process.env.NODE_ENV == `production` && process.env.SERVER_URL.includes("https")
-        ? true
-        : false,
-    maxAge: Date.now() + 60 * 60 * 1000 * 4,
-    domain:
-      process.env.NODE_ENV == `production`
-        ? process.env.SERVER_URL.replace(/http:\/\/|https:\/\//g, "")
-        : "localhost"
-  })
-
   return res
     .status(200)
     .cookie("jwt", token, {

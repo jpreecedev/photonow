@@ -7,7 +7,6 @@ import { Request, Response, NextFunction } from "express"
 import { MulterFile } from "../../global"
 
 const BUCKET = process.env.AWS_BUCKET
-const watermark = join(__dirname, "../../static/watermark.png")
 
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -54,12 +53,7 @@ const upload = (
       id: "resized",
       ...multerMetadata,
       transform: (_req, _file, cb) => {
-        cb(
-          null,
-          sharp()
-            .resize(250)
-            .composite([{ input: watermark, gravity: "center", blend: "overlay" }])
-        )
+        cb(null, sharp().resize(250))
       }
     })
   }
