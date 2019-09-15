@@ -11,7 +11,7 @@ _Find My Face_ has the following features;
 - Uploads your face to AWS Rekognition, which then searches through a predefined collection of images and returns all the images you were found in.
 - You can preview all the pictures you were found in, and add any you would like to purchase to a basket.
 - You can go through a checkout journey, and purchase those pictures (payment is made using Stripe).
-- Finally, once payment is confirmed, you can download the high quality pictures directly to your device.
+- Finally, once payment is confirmed, you can download the high-quality pictures directly to your device.
 - As an administrator (you have created an account), you can upload pictures directly to the collection.
 
 The original thinking was that this product would be used at private events, conferences, gigs, festivals, and basically anywhere where a large group or crowd of people gather. A photographer would go around and take pictures of people and then anybody would be easily able to find those pictures later (and ideally purchase them). The product never made it to market.
@@ -20,7 +20,7 @@ The original thinking was that this product would be used at private events, con
 
 Find My Face was built using the following technologies;
 
-- Next.js with a custom back-end, which features server-side rendering, client side hydration and more.
+- Next.js with a custom back-end, which features server-side rendering, client-side hydration and more.
 - AWS Rekognition, for face detection/recognition.
 - React for the front-end.
 - MongoDB to store data about users, orders, payments etc.
@@ -41,6 +41,18 @@ Those features were;
 - Full end-to-end SSL (we're using Cloudflare for SSL at the minute). This would allow us to have secure cookies.
 - Fully automated deployment with PM2
 - Allow OAuth login using Google and/or Facebook
+
+## How to set up and use.
+
+This code should be straightforward to download and use, thanks to the power and simplicity of Next.js.
+
+- Clone the repo
+- Run `npm install` to install package dependencies
+- Rename `.env-example` to `.env` and populate the placeholder variables with your own values (should be fairly self-explanatory)
+- Then run `npm run dev` to spin up the development server and navigate to `http://localhost:3000` in your browser.
+- To upload images to your collection, first create an account (`http://localhost:3000/register`) and you will be redirected to an upload screen. Use the upload screen to upload images directly to your AWS Face Rekognition collection.
+
+If you find any particular pain-points during the setup process, please open an issue.
 
 ## Future development
 
