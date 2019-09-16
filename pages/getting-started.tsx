@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
+import { NextPage } from "next"
 import { connect, DispatchProp } from "react-redux"
 import dynamic from "next/dynamic"
 import Router from "next/router"
@@ -13,7 +14,7 @@ const Webcam = dynamic(import("../components/Webcam").then(instance => instance.
   ssr: false
 })
 
-const GettingStarted: FunctionComponent<DispatchProp<any>> = ({ dispatch }) => {
+const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
   const [uploading, setUploading] = React.useState(false)
 
   const processImage = async (blob: Blob) => {

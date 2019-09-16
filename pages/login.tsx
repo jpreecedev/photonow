@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { connect } from "react-redux"
+import { NextPage } from "next"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface LoginProps {}
 
-const Login: FunctionComponent<LoginProps> = () => {
+const Login: NextPage<LoginProps> = () => {
   const classes = useStyles({})
   const [errors, setErrors] = React.useState({})
 

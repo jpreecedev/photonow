@@ -1,6 +1,7 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import { InjectedFormProps, FormState } from "redux-form"
+import { NextPage } from "next"
 import Link from "next/link"
 import Typography from "@material-ui/core/Typography"
 import Box from "@material-ui/core/Box"
@@ -36,7 +37,7 @@ interface RegisterProps extends InjectedFormProps {
   registerForm: FormState
 }
 
-const Register: FunctionComponent<RegisterProps> = () => {
+const Register: NextPage<RegisterProps> = () => {
   const classes = useStyles({})
   const [errors, setErrors] = React.useState({})
 

@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
+import { NextPage } from "next"
 import { Typography } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface UploadProps {}
 
-const Upload: FunctionComponent<UploadProps> = () => {
+const Upload: NextPage<UploadProps> = () => {
   const classes = useStyles({})
   return (
     <Main gap>

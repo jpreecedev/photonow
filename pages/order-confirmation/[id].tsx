@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
+import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface OrderConfirmationProps {}
 
-const OrderConfirmation: FunctionComponent<OrderConfirmationProps> = () => {
+const OrderConfirmation: NextPage<OrderConfirmationProps> = () => {
   const classes = useStyles({})
   const router = useRouter()
   const [state, setState] = React.useState<{ moments: Moment[] }>({ moments: [] })

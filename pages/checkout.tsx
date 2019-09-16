@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { Elements, StripeProvider } from "react-stripe-elements"
+import { NextPage } from "next"
 import Head from "next/head"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface CheckoutProps {}
 
-const Checkout: FunctionComponent<CheckoutProps> = () => {
+const Checkout: NextPage<CheckoutProps> = () => {
   const classes = useStyles({})
 
   const [state, setState] = React.useState({ stripe: null })

@@ -1,5 +1,6 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { connect, DispatchProp } from "react-redux"
+import { NextPage } from "next"
 import Link from "next/link"
 import Button from "@material-ui/core/Button"
 import Card from "@material-ui/core/Card"
@@ -64,7 +65,7 @@ interface SelectYourPicturesProps {
   pictures: PictureItem[]
 }
 
-const SelectYourPictures: FunctionComponent<DispatchProp<any> & SelectYourPicturesProps> = ({
+const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> = ({
   pictures,
   dispatch
 }) => {
