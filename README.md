@@ -54,6 +54,36 @@ This code should be straightforward to download and use, thanks to the power and
 
 If you find any particular pain-points during the setup process, please open an issue.
 
+## Dream MVP
+
+If I had unlimited time and resource, I'd use the following/have the following features for my MVP;
+
+- Next.js for SSR, with custom back end using Express.
+- Mongoose as a light wrapper around Mongo, and a View Model layer around each Schema for easier code reuse.
+- Write all tests using Jest
+  - Back-end tests would rely on Mongo Memory Server for speed
+  - Front-end tests would use React Testing Library
+  - End-to-end tests would be written in Cypress
+- Authentication using Passport.js local strategy, Google OAuth and Facebook (for speed and simplicity when registering and logging in)
+- Session management using JWT
+- Authorisation
+  - Administrator role, owner role (photographer), and customer role
+  - Administrators and owner would have the ability to create image collections
+  - Owners should be able to create image collections and would be able to see orders, revenue etc
+  - Administrators would have dashboard figures for all photographers, similar to that provided in Stripe
+- Filepond for image upload, Multer for accepting image uploads, AWS S3 for storage, Sharp for image processing
+- React Webcam for image capture
+- Stripe for payments
+- React, Redux (or Apollo) front-end/state management
+- Material UI for design
+- End-to-end SSL, automated deployments to Digital Ocean, PM2 for process handling
+- Transactional emails using AWS SES, useful when creating an account, placing an order etc
+- Allow customers to watch collections
+- Push notifications, let the customer know when a collection they are watching has been updated
+- Google Analytics
+
+I think that covers most of what is required for a basic SASS product.
+
 ## Future development
 
 It was great fun building this website and I intend to get some value out of it. The plan is to turn the development of this website into a series of blog posts and potentially an e-book, so as to reinforce my own understand of all the technologies, and to help others learn and grow themselves.
