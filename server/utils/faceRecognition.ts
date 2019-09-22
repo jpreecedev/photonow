@@ -81,33 +81,6 @@ async function recogniseFromBuffer(image: Buffer): Promise<PictureItem[]> {
   })
 }
 
-async function recognise(bucket: string, filename: string) {
-  return new Promise((resolve, reject) => {
-    rekognition.searchFacesByImage(
-      {
-        CollectionId: collectionName,
-        FaceMatchThreshold: 95,
-        Image: {
-          S3Object: {
-            Bucket: bucket,
-            Name: filename
-          }
-        },
-        MaxFaces: 1
-      },
-      (err, data) => {
-        if (err) {
-          return reject(err)
-        }
-        if (data.FaceMatches && data.FaceMatches.length > 0 && data.FaceMatches[0].Face) {
-          return resolve(data.FaceMatches[0].Face)
-        }
-        return reject("Not recognized")
-      }
-    )
-  })
-}
-
 async function verifyFace(image: Buffer) {
   return new Promise((resolve, reject) => {
     rekognition.detectFaces({ Image: { Bytes: image } }, (err, response) => {
@@ -163,4 +136,4 @@ async function addImageToCollection(bucket: string, momentId: string, s3Filename
   }
 })()
 
-export default { addImageToCollection, recognise, recogniseFromBuffer, verifyFace }
+export default { addImageToCollection, recogniseFromBuffer, verifyFace }
