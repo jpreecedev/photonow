@@ -110,7 +110,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,md}": [
-      "npm run lint:prettier",
+      "prettier --write",
       "git add"
     ]
   }
