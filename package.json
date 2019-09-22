@@ -92,7 +92,9 @@
     "@types/stripe": "^6.31.23",
     "@types/uuid": "^3.4.5",
     "cross-env": "^5.2.1",
+    "husky": "^3.0.5",
     "jest": "^24.9.0",
+    "lint-staged": "^9.3.0",
     "mongodb-memory-server": "^5.2.1",
     "nodemon": "^1.19.2",
     "prettier": "^1.18.2",
@@ -103,5 +105,21 @@
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.css": [
+      "stylelint --fix",
+      "git add"
+    ]
   }
 }
