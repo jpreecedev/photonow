@@ -12,7 +12,7 @@ export default () => {
 
   const start = async () => {
     const url = await server.getConnectionString()
-    connection = await MongoClient.connect(url, { useNewUrlParser: true })
+    connection = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     db = connection.db(await server.getDbName())
     await mongoose.connect(url, { useNewUrlParser: true }, err => {
       if (err) console.error(err)
@@ -34,9 +34,7 @@ export default () => {
   const cleanup = async () => {
     const collections = await db.listCollections().toArray()
     return Promise.all(
-      collections
-        .map(({ name }) => name)
-        .map(collection => db.collection(collection).drop())
+      collections.map(({ name }) => name).map(collection => db.collection(collection).drop())
     )
   }
 
