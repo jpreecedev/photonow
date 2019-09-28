@@ -4,7 +4,7 @@ import passport from "passport"
 import passportJWT from "passport-jwt"
 import jwt from "jsonwebtoken"
 import { to } from "await-to-js"
-import { User, UserRequest, JWTPayload, ClientResponse } from "../../global"
+import { User, JWTPayload } from "../../global"
 
 import { UserModel } from "../database/schema"
 import { errorHandler } from "../utils"
@@ -13,13 +13,35 @@ import { getUserById } from "../database/user"
 const saltRounds = 10
 const JWTStrategy = passportJWT.Strategy
 
-const check = (req: UserRequest, res: Response, next: NextFunction) => {
-  if (req.user) {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "You are already signed in!" })
-  }
-  return next()
+const createStrategy = () => {
+  passport.serializeUser((user: User, done) => done(null, user._id))
+
+  passport.deserializeUser(async (id: string, done) => {
+    try {
+      const user = await UserModel.findById(id).exec()
+      return done(null, user)
+    } catch (err) {
+      errorHandler.handle(err)
+      return done(err, null)
+    }
+  })
+
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: (req: Request) => req.cookies.jwt,
+        secretOrKey: process.env.JWT_SECRET
+      },
+      async (jwtPayload: JWTPayload, cb) => {
+        const [err, user] = await to(UserModel.findById(jwtPayload.data._id).exec())
+
+        if (err) {
+          return cb(err)
+        }
+        return cb(null, user)
+      }
+    )
+  )
 }
 
 const verifyPassword = async (candidate: string, actual: string) => {
@@ -67,7 +89,7 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
   )
 }
 
-const promisifiedPassportLogin = (req: Request, user: User): Promise<string> => {
+const login = (req: Request, user: User): Promise<string> => {
   return new Promise((resolve, reject) => {
     req.login(user, { session: false }, err => {
       if (err) {
@@ -88,43 +110,4 @@ const logout = (req: Request) => {
   req.clearCookie("jwt")
 }
 
-const applyMiddleware = () => {
-  passport.serializeUser((user: User, done) => done(null, user._id))
-
-  passport.deserializeUser(async (id: string, done) => {
-    try {
-      const user = await UserModel.findById(id).exec()
-      return done(null, user)
-    } catch (err) {
-      errorHandler.handle(err)
-      return done(err, null)
-    }
-  })
-
-  passport.use(
-    new JWTStrategy(
-      {
-        jwtFromRequest: (req: Request) => req.cookies.jwt,
-        secretOrKey: process.env.JWT_SECRET
-      },
-      async (jwtPayload: JWTPayload, cb) => {
-        const [err, user] = await to(UserModel.findById(jwtPayload.data._id).exec())
-
-        if (err) {
-          return cb(err)
-        }
-        return cb(null, user)
-      }
-    )
-  )
-}
-
-export {
-  isAuthenticated,
-  verifyPassword,
-  hashPassword,
-  applyMiddleware,
-  promisifiedPassportLogin,
-  logout,
-  check
-}
+export { isAuthenticated, verifyPassword, hashPassword, createStrategy, login, logout }

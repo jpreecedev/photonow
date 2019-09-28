@@ -55,6 +55,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
+    "saslprep": "^1.0.3",
     "sharp": "^0.23.1",
     "stripe": "^7.9.1",
     "uuid": "^3.3.3"

@@ -1,13 +1,14 @@
 import express from "express"
 import uuid from "uuid/v4"
 import { MomentsController } from "../controllers"
-import { s3Upload, authorisation } from "../utils"
+import { jwt } from "../authentication"
+import { s3Upload } from "../utils"
 
 const router = express.Router()
 
 router.post(
   "/",
-  authorisation.isAuthenticated,
+  jwt.isAuthenticated,
   s3Upload.uploadFromClient(
     true,
     file => ({ filename: file.originalname }),

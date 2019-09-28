@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser"
 import passport from "passport"
 import router from "./router"
 import { connectToDatabase } from "./database/connection"
-import { applyMiddleware } from "./utils/authorisation"
+import { jwt } from "./authentication"
 import { Handlers, init } from "@sentry/node"
 import compression from "compression"
 
@@ -33,7 +33,7 @@ nextApp.prepare().then(() => {
   app.use(passport.initialize())
 
   router(app)
-  applyMiddleware()
+  jwt.createStrategy()
 
   app.get("*", (req, res) => {
     return handle(req, res)
