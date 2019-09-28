@@ -7,6 +7,7 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 
 import { LoginFormProps } from "../../global"
 import { renderTextField } from "../ReduxForm"
+import { GoogleLoginButton } from "../GoogleLoginButton"
 
 const useStyles = makeStyles((theme: Theme) => ({
   submit: {
@@ -90,6 +91,7 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
           {submitting && <CircularProgress size={24} className={classes.buttonProgress} />}
           {submitting ? "Signing in..." : "Sign In"}
         </Button>
+        <GoogleLoginButton />
       </Box>
     </form>
   )
