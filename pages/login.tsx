@@ -45,7 +45,7 @@ const Login: NextPage<LoginProps> = () => {
     })
 
     if (success) {
-      window.location.replace("/upload")
+      window.location.replace(data)
       return
     }
 

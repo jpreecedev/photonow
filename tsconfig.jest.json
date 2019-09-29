@@ -5,7 +5,9 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
-    "sourceMap": false
+    "sourceMap": false,
+    "isolatedModules": false,
+    "preserveConstEnums": true
   },
 
   "include": ["./global.d.ts"]

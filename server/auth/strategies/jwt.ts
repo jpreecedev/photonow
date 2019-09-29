@@ -12,13 +12,15 @@ const JWTStrategy = passportJWT.Strategy
 const strategy = () => {
   const strategyOptions = {
     jwtFromRequest: (req: Request) => req.cookies.jwt,
-    secretOrKey: process.env.JWT_SECRET
+    secretOrKey: process.env.JWT_SECRET,
+    passReqToCallback: true
   }
 
-  const verifyCallback = async (jwtPayload: JWTPayload, cb) => {
+  const verifyCallback = async (req: Request, jwtPayload: JWTPayload, cb) => {
     const [err, user] = await to(getUserById(jwtPayload.data._id))
 
     if (err) {
+      req.user = user
       return cb(err)
     }
     return cb(null, user)

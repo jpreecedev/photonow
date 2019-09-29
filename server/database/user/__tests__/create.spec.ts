@@ -1,8 +1,6 @@
-import { Types } from "mongoose"
 import { createUser } from "../create"
-import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { User } from "../../../../global"
+import { User, UserRoles } from "../../../../global"
 
 const dbHelper = TestDbHelper()
 
@@ -24,7 +22,8 @@ describe("Create user tests", () => {
       firstName: "Test First Name",
       lastName: "Test Last Name",
       email: "test@test.com",
-      password: "test-super-secure-password-probably-hashed"
+      password: "test-super-secure-password-probably-hashed",
+      role: UserRoles.Customer
     }
 
     const result = await createUser(user)
@@ -35,5 +34,6 @@ describe("Create user tests", () => {
     expect(result.lastName).toEqual(user.lastName)
     expect(result.email).toEqual(user.email)
     expect(result.password).toEqual(user.password)
+    expect(result.role).toEqual(user.role)
   })
 })

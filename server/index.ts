@@ -12,6 +12,7 @@ import compression from "compression"
 import router from "./router"
 import { connectToDatabase } from "./database/connection"
 import { initialiseAuthentication, utils } from "./auth"
+import { UserRoles } from "../global"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
@@ -36,9 +37,14 @@ nextApp.prepare().then(() => {
   router(app)
   initialiseAuthentication(app)
 
-  app.get("/admin", utils.checkIsInRole("Admin"), (req, res) => {
-    return handle(req, res)
-  })
+  app.get(
+    "/admin",
+    passport.authenticate("jwt", { failureRedirect: "/login" }),
+    utils.checkIsInRole(UserRoles.Admin),
+    (req, res) => {
+      return handle(req, res)
+    }
+  )
 
   app.get("*", (req, res) => {
     return handle(req, res)

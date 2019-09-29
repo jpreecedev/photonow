@@ -3,9 +3,8 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 import { Request, Response, NextFunction } from "express"
-import { User, UserRequest, ClientResponse, JWTPayload } from "../../global"
+import { User, UserRequest, ClientResponse, JWTPayload, UserRoles } from "../../global"
 import { UserModel } from "../database/schema"
-import { getUserById } from "../database/user"
 import { errorHandler } from "../utils"
 import { UserViewModel } from "../viewModels"
 
@@ -34,16 +33,15 @@ const checkIfLoggedIn = (req: UserRequest, res: Response, next: NextFunction) =>
   return next()
 }
 
-const checkIsInRole = (role: "Admin" | "Photographer" | "Customer") => (
+const checkIsInRole = (role: UserRoles) => (
   req: UserRequest,
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user) {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "You are already signed in!" })
+  if (!req.user || req.user.role !== role) {
+    return res.redirect("/login")
   }
+
   return next()
 }
 
@@ -87,8 +85,6 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
         return res.redirect("/login")
       }
 
-      req.user = await getUserById(decodedToken.data._id)
-
       next()
     }
   )
@@ -99,6 +95,16 @@ const logout = (req: Request) => {
   req.clearCookie("jwt")
 }
 
+const getRedirectUrl = (role: UserRoles) => {
+  switch (role) {
+    case UserRoles.Admin:
+      return "/admin"
+    case UserRoles.Photographer:
+      return "/photographer"
+  }
+  return "/getting-started"
+}
+
 export {
   setup,
   isAuthenticated,
@@ -107,5 +113,6 @@ export {
   verifyPassword,
   hashPassword,
   signToken,
-  logout
+  logout,
+  getRedirectUrl
 }

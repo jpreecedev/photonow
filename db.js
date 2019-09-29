@@ -16,6 +16,8 @@ UserModel.find({}).exec((err, users) => {
   users.forEach(u => console.log(u))
 })
 
+// UserModel.updateOne({ _id: "5d90b2d24bcbb8199b15fc09" }, { role: "Photographer" }).exec()
+
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 
 // MomentModel.find({}).exec((err, moments) => {

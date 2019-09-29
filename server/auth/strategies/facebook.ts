@@ -3,9 +3,9 @@ import passport from "passport"
 import passportFacebook from "passport-facebook"
 import { to } from "await-to-js"
 
-import { User, FacebookProfile, UserRequest } from "../../../global"
+import { User, FacebookProfile, UserRequest, UserRoles } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
-import { signToken } from "../utils"
+import { signToken, getRedirectUrl } from "../utils"
 
 const FacebookStrategy = passportFacebook.Strategy
 
@@ -36,6 +36,7 @@ const strategy = (app: Express) => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: profile.emails[0].value,
+        role: UserRoles.Customer,
         password: null
       })
     )
@@ -56,7 +57,7 @@ const strategy = (app: Express) => {
         .cookie("jwt", signToken(req.user), {
           httpOnly: true
         })
-        .redirect("/getting-started")
+        .redirect(getRedirectUrl(req.user.role))
     }
   )
 

@@ -6,7 +6,8 @@
     "target": "es2017",
     "isolatedModules": false,
     "noEmit": false,
-    "strict": false
+    "strict": false,
+    "preserveConstEnums": true
   },
   "exclude": ["setup"],
   "include": ["server/**/*.ts", "components", "layouts", "pages", "store", "utils"]

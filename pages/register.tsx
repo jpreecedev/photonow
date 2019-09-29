@@ -50,7 +50,7 @@ const Register: NextPage<RegisterProps> = () => {
     })
 
     if (success) {
-      window.location.replace("/upload")
+      window.location.replace(data)
       return
     }
 

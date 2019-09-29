@@ -3,7 +3,7 @@ import { to } from "await-to-js"
 import { utils } from "../auth"
 import { login } from "../auth/strategies/jwt"
 import { createUser, getUserByEmail } from "../database/user"
-import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
+import { LogInRequest, RegisterRequest, User, ClientResponse, UserRoles } from "../../global"
 
 const router = express.Router()
 
@@ -44,9 +44,9 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
     .cookie("jwt", token, {
       httpOnly: true
     })
-    .json(<ClientResponse<object>>{
+    .json(<ClientResponse<string>>{
       success: true,
-      data: null
+      data: utils.getRedirectUrl(user.role)
     })
 })
 
@@ -76,7 +76,8 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
       firstName,
       lastName,
       email,
-      password: await utils.hashPassword(password)
+      password: await utils.hashPassword(password),
+      role: UserRoles.Customer
     })
   )
 
@@ -102,7 +103,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
     })
     .json(<ClientResponse<string>>{
       success: true,
-      data: null
+      data: utils.getRedirectUrl(user.role)
     })
 })
 

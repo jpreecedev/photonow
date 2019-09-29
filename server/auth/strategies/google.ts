@@ -3,9 +3,9 @@ import passport from "passport"
 import passportGoogle from "passport-google-oauth"
 import { to } from "await-to-js"
 
-import { User, GoogleProfile, UserRequest } from "../../../global"
+import { User, GoogleProfile, UserRequest, UserRoles } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
-import { signToken } from "../utils"
+import { signToken, getRedirectUrl } from "../utils"
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy
 
@@ -37,6 +37,7 @@ const strategy = (app: Express) => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: verifiedEmail.value,
+        role: UserRoles.Customer,
         password: null
       })
     )
@@ -65,7 +66,7 @@ const strategy = (app: Express) => {
         .cookie("jwt", signToken(req.user), {
           httpOnly: true
         })
-        .redirect("/getting-started")
+        .redirect(getRedirectUrl(req.user.role))
     }
   )
 
