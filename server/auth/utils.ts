@@ -33,12 +33,18 @@ const checkIfLoggedIn = (req: UserRequest, res: Response, next: NextFunction) =>
   return next()
 }
 
-const checkIsInRole = (role: UserRoles) => (
+const checkIsInRole = (...roles: UserRoles[]) => (
   req: UserRequest,
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.user || req.user.role !== role) {
+  if (!req.user) {
+    return res.redirect("/login")
+  }
+
+  const hasRole = roles.find(role => req.user.role === role)
+
+  if (!hasRole) {
     return res.redirect("/login")
   }
 
@@ -98,9 +104,8 @@ const logout = (req: Request) => {
 const getRedirectUrl = (role: UserRoles) => {
   switch (role) {
     case UserRoles.Admin:
-      return "/admin"
     case UserRoles.Photographer:
-      return "/photographer"
+      return "/dashboard"
   }
   return "/getting-started"
 }

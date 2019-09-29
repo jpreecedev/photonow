@@ -38,9 +38,9 @@ nextApp.prepare().then(() => {
   initialiseAuthentication(app)
 
   app.get(
-    "/admin",
+    "/dashboard",
     passport.authenticate("jwt", { failureRedirect: "/login" }),
-    utils.checkIsInRole(UserRoles.Admin),
+    utils.checkIsInRole(UserRoles.Admin, UserRoles.Photographer),
     (req, res) => {
       return handle(req, res)
     }
