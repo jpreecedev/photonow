@@ -8,7 +8,9 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
   useUnifiedTopology: true
 })
 
-// UserModel.deleteMany({}).then((err, res) => console.log(err))
+// UserModel.deleteMany({})
+//   .exec()
+//   .then((err, res) => console.log(err))
 
 UserModel.find({}).exec((err, users) => {
   users.forEach(u => console.log(u))

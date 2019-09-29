@@ -1,7 +1,7 @@
 import express, { Response } from "express"
 import { to } from "await-to-js"
-import { utils } from "../authentication"
-import { login } from "../authentication/strategies/jwt"
+import { utils } from "../auth"
+import { login } from "../auth/strategies/jwt"
 import { createUser, getUserByEmail } from "../database/user"
 import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
 

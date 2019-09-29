@@ -34,6 +34,19 @@ const checkIfLoggedIn = (req: UserRequest, res: Response, next: NextFunction) =>
   return next()
 }
 
+const checkIsInRole = (role: "Admin" | "Photographer" | "Customer") => (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user) {
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "You are already signed in!" })
+  }
+  return next()
+}
+
 const verifyPassword = async (candidate: string, actual: string) => {
   return await bcrypt.compare(candidate, actual)
 }
@@ -86,4 +99,13 @@ const logout = (req: Request) => {
   req.clearCookie("jwt")
 }
 
-export { setup, isAuthenticated, checkIfLoggedIn, verifyPassword, hashPassword, signToken, logout }
+export {
+  setup,
+  isAuthenticated,
+  checkIfLoggedIn,
+  checkIsInRole,
+  verifyPassword,
+  hashPassword,
+  signToken,
+  logout
+}

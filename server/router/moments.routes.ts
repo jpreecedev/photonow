@@ -1,7 +1,7 @@
 import express from "express"
 import uuid from "uuid/v4"
 import { MomentsController } from "../controllers"
-import { utils } from "../authentication"
+import { utils } from "../auth"
 import { s3Upload } from "../utils"
 
 const router = express.Router()

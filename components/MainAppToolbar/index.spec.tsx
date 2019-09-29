@@ -4,33 +4,16 @@ import "@testing-library/jest-dom/extend-expect"
 import Router from "next/router"
 
 import { PictureItem } from "../../global"
-import { MainAppBarComponent } from "./index"
+import { MainAppToolbarComponent } from "./index"
 
 jest.mock("next/router", () => {
   return []
 })
 
-describe("<MainAppBar /> tests", () => {
+describe("<MainAppToolbarComponent /> tests", () => {
   beforeEach(() => {
     // @ts-ignore
     Router.splice(0)
-  })
-
-  it("should render a default app bar", () => {
-    const appbarTestId = "appbar-container"
-
-    const { getByTestId } = render(<MainAppBarComponent />)
-
-    expect(getByTestId(appbarTestId)).toMatchSnapshot()
-  })
-
-  it("should render with a gap", () => {
-    const appbarTestId = "appbar-container"
-    const gap = true
-
-    const { getByTestId } = render(<MainAppBarComponent gap={gap} />)
-
-    expect(getByTestId(appbarTestId)).toHaveClass("makeStyles-gap-122")
   })
 
   it("should render with the correct number of basket items", () => {
@@ -48,14 +31,14 @@ describe("<MainAppBar /> tests", () => {
       { ...picture }
     ]
 
-    const { getByTestId } = render(<MainAppBarComponent pictures={pictures} />)
+    const { getByTestId } = render(<MainAppToolbarComponent pictures={pictures} />)
 
     expect(getByTestId(appbarBadgeTestId)).toMatchSnapshot()
   })
 
   it("should redirect to the login page when clicking account button", () => {
     const accountButtonTestId = "appbar-account-button"
-    const { getByTestId } = render(<MainAppBarComponent />)
+    const { getByTestId } = render(<MainAppToolbarComponent />)
 
     fireEvent.click(getByTestId(accountButtonTestId))
 
@@ -66,7 +49,7 @@ describe("<MainAppBar /> tests", () => {
   it("should redirect to getting started when clicking account button and basket is empty", () => {
     const accountButtonTestId = "appbar-basket-button"
 
-    const { getByTestId } = render(<MainAppBarComponent />)
+    const { getByTestId } = render(<MainAppToolbarComponent />)
 
     fireEvent.click(getByTestId(accountButtonTestId))
 
@@ -87,7 +70,7 @@ describe("<MainAppBar /> tests", () => {
 
     const pictures: PictureItem[] = [{ ...picture, addedToBasket: true }, { ...picture }]
 
-    const { getByTestId } = render(<MainAppBarComponent pictures={pictures} />)
+    const { getByTestId } = render(<MainAppToolbarComponent pictures={pictures} />)
 
     fireEvent.click(getByTestId(accountButtonTestId))
 
