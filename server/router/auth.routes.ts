@@ -11,34 +11,32 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
   const { email, password } = req.body
   const [err, user] = await to(getUserByEmail(email))
 
-  if (err || !user) {
-    console.error("Unable to find user")
+  const authenticationError = () => {
     return res
       .status(500)
       .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+  }
+
+  if (err || !user) {
+    console.error("Unable to find user")
+    return authenticationError()
   }
 
   if (!password || !user.password) {
     console.error("Probably should be using social login")
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+    return authenticationError()
   }
 
   if (!(await utils.verifyPassword(password, user.password))) {
     console.error("Passwords do not match")
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+    return authenticationError()
   }
 
   const [loginErr, token] = await to(login(req, user))
 
   if (loginErr) {
     console.error("Log in error", loginErr)
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+    return authenticationError()
   }
 
   return res
