@@ -40,7 +40,7 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
   return (
     <div data-testid="appbar-container" className={rootClasses}>
       <AppBar position="static">
-        <MainAppToolbar />
+        <MainAppToolbar isOpen={false} showDrawer={false} />
       </AppBar>
     </div>
   )

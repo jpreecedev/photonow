@@ -13,10 +13,11 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import DashboardIcon from "@material-ui/icons/Dashboard"
-import { NextPage } from "next"
+import { NextPage, NextPageContext } from "next"
 import { Divider } from "@material-ui/core"
 
 import { MainAppToolbar } from "../components/MainAppToolbar"
+import { UserRoles, UserRequest } from "../global"
 
 const drawerWidth = 240
 
@@ -78,22 +79,18 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-interface AdminProps {}
+interface DashboardProps {
+  role: UserRoles
+}
 
-const Admin: NextPage<AdminProps> = () => {
+const Dashboard: NextPage<DashboardProps> = ({ role }) => {
   const classes = useStyles({})
   const [open, setOpen] = React.useState(true)
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
 
   return (
     <div className={classes.root}>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <MainAppToolbar />
+        <MainAppToolbar isOpen={open} showDrawer={true} handleDrawerOpen={() => setOpen(!open)} />
       </AppBar>
       <Drawer
         variant="permanent"
@@ -103,7 +100,7 @@ const Admin: NextPage<AdminProps> = () => {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => setOpen(false)}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -121,7 +118,7 @@ const Admin: NextPage<AdminProps> = () => {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            <Typography>This is a page restricted only to administrators.</Typography>
+            <Typography>Welcome, {role}.</Typography>
           </Grid>
         </Container>
       </main>
@@ -129,4 +126,11 @@ const Admin: NextPage<AdminProps> = () => {
   )
 }
 
-export default Admin
+Dashboard.getInitialProps = async (ctx: NextPageContext) => {
+  const user = (ctx.req as UserRequest).user
+  return {
+    role: user && user.role
+  }
+}
+
+export default Dashboard

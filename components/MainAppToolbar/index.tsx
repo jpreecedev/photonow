@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react"
 import { connect } from "react-redux"
 import Router from "next/router"
 import Link from "next/link"
+import clsx from "clsx"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
@@ -9,6 +10,7 @@ import Typography from "@material-ui/core/Typography"
 import Badge from "@material-ui/core/Badge"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
+import MenuIcon from "@material-ui/icons/Menu"
 
 import { AppState, PictureItem } from "../../global"
 
@@ -26,15 +28,24 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     section: {
       display: "flex"
+    },
+    menuButton: {
+      marginRight: theme.spacing(2)
     }
   })
 )
 
 interface MainAppToolbarProps {
+  showDrawer: boolean
+  handleDrawerOpen?: Function
   pictures?: PictureItem[]
 }
 
-export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = ({ pictures }) => {
+export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = ({
+  pictures,
+  showDrawer,
+  handleDrawerOpen
+}) => {
   const classes = useStyles({})
 
   let addedToBasket = 0
@@ -44,6 +55,17 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
 
   return (
     <Toolbar>
+      {showDrawer && (
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => handleDrawerOpen()}
+          edge="start"
+          className={clsx(classes.menuButton)}
+        >
+          <MenuIcon />
+        </IconButton>
+      )}
       <Link href="/">
         <Typography className={classes.title} variant="h6" component="a" noWrap>
           Find My Face
