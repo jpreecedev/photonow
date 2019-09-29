@@ -4,14 +4,16 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Typography from "@material-ui/core/Typography"
 
 import { LoginFormProps } from "../../global"
 import { renderTextField } from "../ReduxForm"
 import { GoogleLoginButton } from "../GoogleLoginButton"
+import { FacebookLoginButton } from "../FacebookLoginButton"
 
 const useStyles = makeStyles((theme: Theme) => ({
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 3)
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -91,7 +93,11 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
           {submitting && <CircularProgress size={24} className={classes.buttonProgress} />}
           {submitting ? "Signing in..." : "Sign In"}
         </Button>
+        <Typography variant="overline" display="block" gutterBottom>
+          Social Login Providers
+        </Typography>
         <GoogleLoginButton />
+        <FacebookLoginButton />
       </Box>
     </form>
   )
