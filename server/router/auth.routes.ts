@@ -18,6 +18,13 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
       .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
+  if (!password || !user.password) {
+    console.error("Probably should be using social login")
+    return res
+      .status(500)
+      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+  }
+
   if (!(await utils.verifyPassword(password, user.password))) {
     console.error("Passwords do not match")
     return res
