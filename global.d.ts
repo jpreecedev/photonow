@@ -20,7 +20,6 @@ export interface Moment extends Document {
 }
 
 export interface User extends Document {
-  id: string
   email?: string
   password?: string
   businessName?: string

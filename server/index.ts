@@ -6,11 +6,12 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import passport from "passport"
-import router from "./router"
-import { connectToDatabase } from "./database/connection"
-import { jwt, google } from "./authentication"
 import { Handlers, init } from "@sentry/node"
 import compression from "compression"
+
+import router from "./router"
+import { connectToDatabase } from "./database/connection"
+import { initialiseAuthentication } from "./authentication"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
@@ -33,8 +34,7 @@ nextApp.prepare().then(() => {
   app.use(passport.initialize())
 
   router(app)
-  jwt.createStrategy()
-  google.createStrategy(app)
+  initialiseAuthentication(app)
 
   app.get("*", (req, res) => {
     return handle(req, res)

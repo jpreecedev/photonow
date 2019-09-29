@@ -1,6 +1,7 @@
 import express, { Response } from "express"
 import { to } from "await-to-js"
-import { jwt, utils } from "../authentication"
+import { utils } from "../authentication"
+import { login } from "../authentication/strategies/jwt"
 import { createUser, getUserByEmail } from "../database/user"
 import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
 
@@ -17,14 +18,14 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
       .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
-  if (!(await jwt.verifyPassword(password, user.password))) {
+  if (!(await utils.verifyPassword(password, user.password))) {
     console.error("Passwords do not match")
     return res
       .status(500)
       .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
   }
 
-  const [loginErr, token] = await to(jwt.login(req, user))
+  const [loginErr, token] = await to(login(req, user))
 
   if (loginErr) {
     console.error("Log in error", loginErr)
@@ -70,7 +71,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
       firstName,
       lastName,
       email,
-      password: await jwt.hashPassword(password)
+      password: await utils.hashPassword(password)
     })
   )
 
@@ -80,7 +81,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
       .json(<ClientResponse<string>>{ success: false, data: "Email is already taken" })
   }
 
-  const [loginErr, token] = await to(jwt.login(<LogInRequest>req, user))
+  const [loginErr, token] = await to(login(<LogInRequest>req, user))
 
   if (loginErr) {
     console.error(loginErr)

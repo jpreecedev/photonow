@@ -1,5 +1,17 @@
-import * as jwt from "./jwt"
-import * as google from "./google"
-import * as utils from "./utils"
+import { Express } from "express"
 
-export { jwt, google, utils }
+import * as utils from "./utils"
+import * as strategies from "./strategies"
+
+const pipe = (...functions) => args => functions.reduce((arg, fn) => fn(arg), args)
+
+const initialiseAuthentication = (app: Express) => {
+  utils.setup()
+
+  pipe(
+    strategies.GoogleStrategy,
+    strategies.JWTStrategy
+  )(app)
+}
+
+export { utils, initialiseAuthentication, strategies }
