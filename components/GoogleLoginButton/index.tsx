@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       boxShadow: theme.shadows[1],
       height: "36px",
       cursor: "pointer",
+      textDecoration: "none",
       "&:hover": {
         boxShadow: "0 0 6px #4285f4"
       },
@@ -56,7 +57,7 @@ const GoogleLoginButton: FunctionComponent<GoogleLoginButtonProps> = () => {
   const classes = useStyles({})
 
   return (
-    <div className={classes.button}>
+    <a href={`${process.env.BASE_API_URL}/auth/google`} className={classes.button}>
       <div className={classes.wrapper}>
         <svg className={classes.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
           <path
@@ -78,7 +79,7 @@ const GoogleLoginButton: FunctionComponent<GoogleLoginButtonProps> = () => {
         </svg>
       </div>
       <p className={classes.text}>Sign in with google</p>
-    </div>
+    </a>
   )
 }
 

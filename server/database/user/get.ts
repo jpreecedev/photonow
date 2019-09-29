@@ -5,8 +5,12 @@ async function getUserById(id: Types.ObjectId) {
   return await UserModel.findById(id).exec()
 }
 
-async function getUserBy(email: string) {
+async function getUserByEmail(email: string) {
   return await UserModel.findOne({ email }).exec()
 }
 
-export { getUserById, getUserBy }
+async function getUserByGoogleId(googleId: string) {
+  return await UserModel.findOne({ googleId }).exec()
+}
+
+export { getUserById, getUserByEmail, getUserByGoogleId }

@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getUserBy, getUserById } from "../get"
+import { getUserByEmail, getUserById, getUserByGoogleId } from "../get"
 
 const dbHelper = TestDbHelper()
 
@@ -42,7 +42,7 @@ describe("Get user tests", () => {
   test("should get one user by email", async () => {
     const email = testData.users[0].email
 
-    const user = await getUserBy(email)
+    const user = await getUserByEmail(email)
 
     expect(user).toBeDefined()
     expect(user._id).toBeDefined()
@@ -52,5 +52,21 @@ describe("Get user tests", () => {
     expect(user.firstName).toEqual(testData.users[0].firstName)
     expect(user.lastName).toEqual(testData.users[0].lastName)
     expect(user.displayName).toEqual(testData.users[0].displayName)
+  })
+
+  test("should get user by google id", async () => {
+    const googleId = testData.users[1].googleId
+
+    const user = await getUserByGoogleId(googleId)
+
+    expect(user).toBeDefined()
+    expect(user._id).toBeDefined()
+    expect(user._id).toEqual(testData.users[1]._id)
+    expect(user.googleId).toEqual(testData.users[1].googleId)
+    expect(user.password).toEqual(testData.users[1].password)
+    expect(user.businessName).toEqual(testData.users[1].businessName)
+    expect(user.firstName).toEqual(testData.users[1].firstName)
+    expect(user.lastName).toEqual(testData.users[1].lastName)
+    expect(user.displayName).toEqual(testData.users[1].displayName)
   })
 })

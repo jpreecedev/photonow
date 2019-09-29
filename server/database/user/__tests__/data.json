@@ -8,6 +8,16 @@
       "firstName": "Test First Name",
       "lastName": "Test Last Name",
       "displayName": "Test Display Name"
+    },
+    {
+      "_id": "5d9037a7e174b39d1abc8a6a",
+      "email": "user@google.com",
+      "password": "password-google-123",
+      "businessName": "Test Google Business Name",
+      "firstName": "Test Google First Name",
+      "lastName": "Test Google Last Name",
+      "displayName": "Test Google Display Name",
+      "googleId": "Test Google Id"
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { Request, NextFunction, Express } from "express"
+import { Profile } from "passport-google-oauth"
 import { Document, Types } from "mongoose"
 import { Reducer, AnyAction } from "redux"
 import { FormStateMap } from "redux-form"
@@ -26,6 +27,7 @@ export interface User extends Document {
   firstName?: string
   lastName?: string
   displayName?: string
+  googleId?: string
 }
 
 export interface Order extends Document {
@@ -160,6 +162,15 @@ export interface RegisterFormProps {
   lastName: string
   email: string
   password: string
+}
+
+export interface GoogleProfile extends Profile {
+  id: string
+  displayName: string
+  name: { familyName: string; givenName: string }
+  emails: [{ value: string; verified: boolean }]
+  photos: [{ value: string }]
+  provider: string
 }
 
 declare module "*.gif" {

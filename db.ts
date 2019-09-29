@@ -4,7 +4,8 @@ import mongoose from "mongoose"
 const { Types } = mongoose
 
 mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w=1", {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
 
 // UserModel.deleteMany({}).then((err, res) => console.log(err))

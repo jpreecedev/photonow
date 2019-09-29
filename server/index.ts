@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser"
 import passport from "passport"
 import router from "./router"
 import { connectToDatabase } from "./database/connection"
-import { jwt } from "./authentication"
+import { jwt, google } from "./authentication"
 import { Handlers, init } from "@sentry/node"
 import compression from "compression"
 
@@ -34,6 +34,7 @@ nextApp.prepare().then(() => {
 
   router(app)
   jwt.createStrategy()
+  google.createStrategy(app)
 
   app.get("*", (req, res) => {
     return handle(req, res)

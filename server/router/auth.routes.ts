@@ -1,14 +1,14 @@
 import express, { Response } from "express"
 import { to } from "await-to-js"
 import { jwt, utils } from "../authentication"
-import { createUser, getUserBy } from "../database/user"
+import { createUser, getUserByEmail } from "../database/user"
 import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
 
 const router = express.Router()
 
 router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Response) => {
   const { email, password } = req.body
-  const [err, user] = await to(getUserBy(email))
+  const [err, user] = await to(getUserByEmail(email))
 
   if (err || !user) {
     console.error("Unable to find user")

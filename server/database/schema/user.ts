@@ -7,7 +7,8 @@ const UserSchema = new Schema({
   businessName: String,
   firstName: String,
   lastName: String,
-  displayName: String
+  displayName: String,
+  googleId: String
 })
 
 const UserModel: Model<User> = model<User>("User", UserSchema)
