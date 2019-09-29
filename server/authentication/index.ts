@@ -10,6 +10,7 @@ const initialiseAuthentication = (app: Express) => {
 
   pipe(
     strategies.GoogleStrategy,
+    strategies.FacebookStrategy,
     strategies.JWTStrategy
   )(app)
 }

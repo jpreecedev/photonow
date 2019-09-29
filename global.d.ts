@@ -26,7 +26,8 @@ export interface User extends Document {
   firstName?: string
   lastName?: string
   displayName?: string
-  googleId?: string
+  providerId?: string
+  provider?: string
 }
 
 export interface Order extends Document {
@@ -169,7 +170,14 @@ export interface GoogleProfile extends Profile {
   name: { familyName: string; givenName: string }
   emails: [{ value: string; verified: boolean }]
   photos: [{ value: string }]
-  provider: string
+}
+
+export interface FacebookProfile extends Profile {
+  id: string
+  displayName: string
+  name: { familyName: string; givenName: string }
+  emails: [{ value: string }]
+  birthday: string
 }
 
 declare module "*.gif" {

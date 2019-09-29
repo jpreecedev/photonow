@@ -1,7 +1,14 @@
 import { UserModel } from "../schema"
 import { User } from "../../../global"
 
-async function createUser({ firstName, lastName, email, password, googleId }: User): Promise<User> {
+async function createUser({
+  firstName,
+  lastName,
+  email,
+  password,
+  providerId,
+  provider
+}: User): Promise<User> {
   return new Promise(async (resolve, reject) => {
     const user = await UserModel.findOne({ email })
 
@@ -11,7 +18,8 @@ async function createUser({ firstName, lastName, email, password, googleId }: Us
 
     resolve(
       await UserModel.create({
-        googleId,
+        providerId,
+        provider,
         firstName,
         lastName,
         email,

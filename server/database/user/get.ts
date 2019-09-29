@@ -9,8 +9,8 @@ async function getUserByEmail(email: string) {
   return await UserModel.findOne({ email }).exec()
 }
 
-async function getUserByGoogleId(googleId: string) {
-  return await UserModel.findOne({ googleId }).exec()
+async function getUserByProviderId(providerId: string) {
+  return await UserModel.findOne({ providerId }).exec()
 }
 
-export { getUserById, getUserByEmail, getUserByGoogleId }
+export { getUserById, getUserByEmail, getUserByProviderId }

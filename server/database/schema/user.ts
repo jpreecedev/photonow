@@ -8,7 +8,8 @@ const UserSchema = new Schema({
   firstName: String,
   lastName: String,
   displayName: String,
-  googleId: String
+  providerId: String,
+  provider: String
 })
 
 const UserModel: Model<User> = model<User>("User", UserSchema)

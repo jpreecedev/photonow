@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getUserByEmail, getUserById, getUserByGoogleId } from "../get"
+import { getUserByEmail, getUserById, getUserByProviderId } from "../get"
 
 const dbHelper = TestDbHelper()
 
@@ -55,14 +55,15 @@ describe("Get user tests", () => {
   })
 
   test("should get user by google id", async () => {
-    const googleId = testData.users[1].googleId
+    const providerId = testData.users[1].providerId
 
-    const user = await getUserByGoogleId(googleId)
+    const user = await getUserByProviderId(providerId)
 
     expect(user).toBeDefined()
     expect(user._id).toBeDefined()
     expect(user._id).toEqual(testData.users[1]._id)
-    expect(user.googleId).toEqual(testData.users[1].googleId)
+    expect(user.providerId).toEqual(testData.users[1].providerId)
+    expect(user.provider).toEqual(testData.users[1].provider)
     expect(user.password).toEqual(testData.users[1].password)
     expect(user.businessName).toEqual(testData.users[1].businessName)
     expect(user.firstName).toEqual(testData.users[1].firstName)

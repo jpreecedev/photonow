@@ -17,7 +17,8 @@
       "firstName": "Test Google First Name",
       "lastName": "Test Google Last Name",
       "displayName": "Test Google Display Name",
-      "googleId": "Test Google Id"
+      "providerId": "Test Google Id",
+      "provider": "Test Provider"
     }
   ]
 }
