@@ -3,9 +3,10 @@ import passport from "passport"
 import passportGoogle from "passport-google-oauth"
 import { to } from "await-to-js"
 
-import { User, GoogleProfile, UserRequest, UserRoles } from "../../../global"
+import { User, GoogleProfile, UserRequest } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
 import { signToken, getRedirectUrl } from "../utils"
+import { ROLES } from "../../../utils/roles"
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy
 
@@ -37,7 +38,7 @@ const strategy = (app: Express) => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: verifiedEmail.value,
-        role: UserRoles.Customer,
+        role: ROLES.Customer,
         password: null
       })
     )

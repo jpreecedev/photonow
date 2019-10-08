@@ -17,7 +17,7 @@ import { NextPage, NextPageContext } from "next"
 import { Divider } from "@material-ui/core"
 
 import { MainAppToolbar } from "../components/MainAppToolbar"
-import { UserRoles, UserRequest } from "../global"
+import { UserRequest } from "../global"
 
 const drawerWidth = 240
 
@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface DashboardProps {
-  role: UserRoles
+  role: string
 }
 
 const Dashboard: NextPage<DashboardProps> = ({ role }) => {
@@ -90,7 +90,7 @@ const Dashboard: NextPage<DashboardProps> = ({ role }) => {
   return (
     <div className={classes.root}>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <MainAppToolbar isOpen={open} showDrawer={true} handleDrawerOpen={() => setOpen(!open)} />
+        <MainAppToolbar showDrawer={true} handleDrawerOpen={() => setOpen(!open)} />
       </AppBar>
       <Drawer
         variant="permanent"

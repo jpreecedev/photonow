@@ -3,10 +3,11 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 import { Request, Response, NextFunction } from "express"
-import { User, UserRequest, ClientResponse, JWTPayload, UserRoles } from "../../global"
+import { User, UserRequest, ClientResponse, JWTPayload } from "../../global"
 import { UserModel } from "../database/schema"
 import { errorHandler } from "../utils"
 import { UserViewModel } from "../viewModels"
+import { ROLES } from "../../utils/roles"
 
 const saltRounds = 10
 
@@ -33,7 +34,7 @@ const checkIfLoggedIn = (req: UserRequest, res: Response, next: NextFunction) =>
   return next()
 }
 
-const checkIsInRole = (...roles: UserRoles[]) => (
+const checkIsInRole = (...roles: string[]) => (
   req: UserRequest,
   res: Response,
   next: NextFunction
@@ -101,10 +102,10 @@ const logout = (req: Request) => {
   req.clearCookie("jwt")
 }
 
-const getRedirectUrl = (role: UserRoles) => {
+const getRedirectUrl = (role: string) => {
   switch (role) {
-    case UserRoles.Admin:
-    case UserRoles.Photographer:
+    case ROLES.Admin:
+    case ROLES.Photographer:
       return "/dashboard"
   }
   return "/getting-started"

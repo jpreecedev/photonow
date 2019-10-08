@@ -3,7 +3,8 @@ import { to } from "await-to-js"
 import { utils } from "../auth"
 import { login } from "../auth/strategies/jwt"
 import { createUser, getUserByEmail } from "../database/user"
-import { LogInRequest, RegisterRequest, User, ClientResponse, UserRoles } from "../../global"
+import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
+import { ROLES } from "../../utils/roles"
 
 const router = express.Router()
 
@@ -77,7 +78,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
       lastName,
       email,
       password: await utils.hashPassword(password),
-      role: UserRoles.Customer
+      role: ROLES.Customer
     })
   )
 

@@ -32,6 +32,7 @@ interface MainAppBarProps {
 
 const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
   const classes = useStyles({})
+  const [showDrawer, setShowDrawer] = React.useState(false)
 
   const rootClasses = clsx(classes.grow, {
     [classes.gap]: gap
@@ -40,7 +41,12 @@ const MainAppBar: FunctionComponent<MainAppBarProps> = ({ gap = false }) => {
   return (
     <div data-testid="appbar-container" className={rootClasses}>
       <AppBar position="static">
-        <MainAppToolbar isOpen={false} showDrawer={false} />
+        <MainAppToolbar
+          handleDrawerOpen={() => {
+            setShowDrawer(!showDrawer)
+          }}
+          showDrawer={showDrawer}
+        />
       </AppBar>
     </div>
   )

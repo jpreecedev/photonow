@@ -28,7 +28,7 @@ export interface User extends Document {
   displayName?: string
   providerId?: string
   provider?: string
-  role: UserRoles
+  role: string
 }
 
 export interface Order extends Document {
@@ -179,12 +179,6 @@ export interface FacebookProfile extends Profile {
   name: { familyName: string; givenName: string }
   emails: [{ value: string }]
   birthday: string
-}
-
-export const enum UserRoles {
-  "Admin" = "Admin",
-  "Photographer" = "Photographer",
-  "Customer" = "Customer"
 }
 
 declare module "*.gif" {

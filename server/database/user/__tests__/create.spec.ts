@@ -1,6 +1,7 @@
 import { createUser } from "../create"
 import TestDbHelper from "../../../../setup/mongo"
-import { User, UserRoles } from "../../../../global"
+import { User } from "../../../../global"
+import { ROLES } from "../../../../utils/roles"
 
 const dbHelper = TestDbHelper()
 
@@ -23,7 +24,7 @@ describe("Create user tests", () => {
       lastName: "Test Last Name",
       email: "test@test.com",
       password: "test-super-secure-password-probably-hashed",
-      role: UserRoles.Customer
+      role: ROLES.Customer
     }
 
     const result = await createUser(user)

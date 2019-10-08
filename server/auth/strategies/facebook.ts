@@ -3,9 +3,10 @@ import passport from "passport"
 import passportFacebook from "passport-facebook"
 import { to } from "await-to-js"
 
-import { User, FacebookProfile, UserRequest, UserRoles } from "../../../global"
+import { User, FacebookProfile, UserRequest } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
 import { signToken, getRedirectUrl } from "../utils"
+import { ROLES } from "../../../utils/roles"
 
 const FacebookStrategy = passportFacebook.Strategy
 
@@ -36,7 +37,7 @@ const strategy = (app: Express) => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: profile.emails[0].value,
-        role: UserRoles.Customer,
+        role: ROLES.Customer,
         password: null
       })
     )

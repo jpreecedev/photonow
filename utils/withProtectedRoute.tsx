@@ -34,4 +34,3 @@ export const withProtectedRoute = (WrappedComponent: NextComponentType) =>
       return <WrappedComponent {...this.props} />
     }
   }
-withProtectedRoute
