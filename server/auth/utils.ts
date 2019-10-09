@@ -74,8 +74,6 @@ const signToken = (user: User) => {
 }
 
 const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
-  req.user = null
-
   if (!req.cookies.jwt) {
     return res.redirect("/login")
   }
