@@ -68,7 +68,7 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
       )}
       <Link href="/">
         <Typography className={classes.title} variant="h6" component="a" noWrap>
-          Find My Face
+          PhotoNow
         </Typography>
       </Link>
       <div className={classes.grow} />

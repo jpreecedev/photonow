@@ -58,7 +58,7 @@ const Splash = () => {
     <section className={classes.root}>
       <div className={classes.overlay}></div>
       <Typography component="h1" variant="h3" className={classes.title}>
-        FIND MY FACE
+        PhotoNow
       </Typography>
       <Typography align="center" component="p" variant="h4" className={classes.subTitle}>
         Use our face scanning tool to find pictures of yourself in a crowd

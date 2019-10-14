@@ -8,11 +8,11 @@ import { ThemeProvider } from "@material-ui/styles"
 import { initialiseStore } from "../store"
 import { theme } from "../components/Theme"
 
-interface FindMyFaceProps {
+interface PhotoNowProps {
   reduxStore: any
 }
 
-class FindMyFace extends App<FindMyFaceProps> {
+class PhotoNow extends App<PhotoNowProps> {
   reduxStore: any
 
   constructor(props) {
@@ -33,7 +33,7 @@ class FindMyFace extends App<FindMyFaceProps> {
     return (
       <>
         <Head>
-          <title>Find My Face</title>
+          <title>PhotoNow</title>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
@@ -46,4 +46,4 @@ class FindMyFace extends App<FindMyFaceProps> {
   }
 }
 
-export default FindMyFace
+export default PhotoNow
