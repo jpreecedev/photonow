@@ -2,7 +2,7 @@
 
 exports[`<DefaultButton /> tests should render a default button 1`] = `
 <button
-  class="MuiButtonBase-root MuiButton-root makeStyles-button-1 MuiButton-contained MuiButton-containedPrimary"
+  class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-1 MuiButton-containedPrimary"
   data-testid="button"
   tabindex="0"
   type="button"
@@ -24,7 +24,7 @@ exports[`<DefaultButton /> tests should render a default button 1`] = `
 
 exports[`<DefaultButton /> tests should render a large button 1`] = `
 <button
-  class="MuiButtonBase-root MuiButton-root makeStyles-button-32 MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge"
+  class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-43 MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge"
   data-testid="button"
   tabindex="0"
   type="button"
@@ -46,7 +46,7 @@ exports[`<DefaultButton /> tests should render a large button 1`] = `
 
 exports[`<DefaultButton /> tests should render a secondary button 1`] = `
 <button
-  class="MuiButtonBase-root MuiButton-root makeStyles-button-63 MuiButton-contained MuiButton-containedSecondary"
+  class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-button-85 MuiButton-containedSecondary"
   data-testid="button"
   tabindex="0"
   type="button"
@@ -68,7 +68,7 @@ exports[`<DefaultButton /> tests should render a secondary button 1`] = `
 
 exports[`<DefaultButton /> tests should render an outlined secondary button 1`] = `
 <button
-  class="MuiButtonBase-root MuiButton-root makeStyles-button-94 MuiButton-outlined MuiButton-outlinedSecondary"
+  class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-button-127 MuiButton-outlinedSecondary"
   data-testid="button"
   tabindex="0"
   type="button"
