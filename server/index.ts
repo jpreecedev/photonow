@@ -46,6 +46,15 @@ nextApp.prepare().then(() => {
     }
   )
 
+  app.get(
+    "/upload",
+    passport.authenticate("jwt", { failureRedirect: "/login" }),
+    utils.checkIsInRole(ROLES.Admin, ROLES.Photographer),
+    (req, res) => {
+      return handle(req, res)
+    }
+  )
+
   app.get("*", (req, res) => {
     return handle(req, res)
   })
