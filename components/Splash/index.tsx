@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      backgroundImage: `url("/static/audience-blur-church-976866.jpg")`,
+      backgroundImage: `url("/audience-blur-church-976866.jpg")`,
       backgroundPosition: "center",
       position: "relative"
     },
