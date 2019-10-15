@@ -1,4 +1,4 @@
-import express, { Response } from "express"
+import express, { Request, Response } from "express"
 import { to } from "await-to-js"
 import { utils } from "../auth"
 import { login } from "../auth/strategies/jwt"
@@ -7,6 +7,13 @@ import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../globa
 import { ROLES } from "../../utils/roles"
 
 const router = express.Router()
+
+router.get("/logout", async (req: Request, res: Response) => {
+  return res
+    .status(200)
+    .clearCookie("jwt")
+    .redirect("/")
+})
 
 router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Response) => {
   const { email, password } = req.body

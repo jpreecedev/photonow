@@ -11,6 +11,7 @@ import Badge from "@material-ui/core/Badge"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
 import MenuIcon from "@material-ui/icons/Menu"
+import ExitToApp from "@material-ui/icons/ExitToApp"
 
 import { AppState, PictureItem } from "../../global"
 
@@ -91,7 +92,6 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
         </IconButton>
         <IconButton
           data-testid="appbar-account-button"
-          edge="end"
           aria-label="account of current user"
           onClick={() => {
             Router.push("/login")
@@ -99,6 +99,17 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
           color="inherit"
         >
           <AccountCircle />
+        </IconButton>
+        <IconButton
+          data-testid="appbar-account-button"
+          edge="end"
+          aria-label="logout"
+          onClick={() => {
+            Router.push("/api/auth/logout")
+          }}
+          color="inherit"
+        >
+          <ExitToApp />
         </IconButton>
       </div>
     </Toolbar>
