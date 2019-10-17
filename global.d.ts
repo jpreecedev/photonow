@@ -31,6 +31,12 @@ export interface User extends Document {
   role: string
 }
 
+export interface DatabaseUser {
+  _id: string
+  name: string
+  role: string
+}
+
 export interface Order extends Document {
   moments: Type.ObjectId[]
   amount: number

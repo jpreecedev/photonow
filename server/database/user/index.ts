@@ -1,4 +1,4 @@
-import { getUserById, getUserByEmail, getUserByProviderId } from "./get"
+import { getUserById, getUserByEmail, getUserByProviderId, getAllUsers } from "./get"
 import { createUser } from "./create"
 
-export { getUserById, getUserByEmail, getUserByProviderId, createUser }
+export { getUserById, getUserByEmail, getUserByProviderId, createUser, getAllUsers }

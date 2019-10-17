@@ -1,7 +1,8 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getUserByEmail, getUserById, getUserByProviderId } from "../get"
+import { getUserByEmail, getUserById, getUserByProviderId, getAllUsers } from "../get"
+import { User, DatabaseUser } from "../../../../global"
 
 const dbHelper = TestDbHelper()
 
@@ -52,6 +53,7 @@ describe("Get user tests", () => {
     expect(user.firstName).toEqual(testData.users[0].firstName)
     expect(user.lastName).toEqual(testData.users[0].lastName)
     expect(user.displayName).toEqual(testData.users[0].displayName)
+    expect(user.role).toEqual(testData.users[0].role)
   })
 
   test("should get user by google id", async () => {
@@ -69,5 +71,24 @@ describe("Get user tests", () => {
     expect(user.firstName).toEqual(testData.users[1].firstName)
     expect(user.lastName).toEqual(testData.users[1].lastName)
     expect(user.displayName).toEqual(testData.users[1].displayName)
+    expect(user.role).toEqual(testData.users[1].role)
+  })
+
+  test("should get a list of users", async () => {
+    const expectedUsers = testData.users.map((user: User) => ({
+      _id: user._id,
+      name: `${user.firstName} ${user.lastName} (${user.email})`
+    }))
+
+    const users = await getAllUsers()
+
+    expect(users).toBeDefined()
+    expect(users).toHaveLength(2)
+
+    users.forEach((user: DatabaseUser, index: number) => {
+      expect(expectedUsers[index]._id === user._id)
+      expect(expectedUsers[index].name === user.name)
+      expect(expectedUsers[index].role === user.role)
+    })
   })
 })

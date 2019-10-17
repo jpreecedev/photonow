@@ -1,71 +1,22 @@
 import React from "react"
-import clsx from "clsx"
+import { NextPage } from "next"
 import { makeStyles } from "@material-ui/core/styles"
-import Drawer from "@material-ui/core/Drawer"
 import AppBar from "@material-ui/core/AppBar"
 import Typography from "@material-ui/core/Typography"
-import IconButton from "@material-ui/core/IconButton"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemIcon from "@material-ui/core/ListItemIcon"
-import ListItemText from "@material-ui/core/ListItemText"
-import DashboardIcon from "@material-ui/icons/Dashboard"
-import { NextPage, NextPageContext } from "next"
-import { Divider } from "@material-ui/core"
+import Paper from "@material-ui/core/Paper"
+import Button from "@material-ui/core/Button"
 
+import { DatabaseUser } from "../global"
 import { MainAppToolbar } from "../components/MainAppToolbar"
-import { UserRequest } from "../global"
-
-const drawerWidth = 240
+import { Select } from "../components/Select"
+import { getAsync } from "../utils/server"
+import { Roles } from "../components/Roles"
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
-  },
-  toolbarIcon: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9)
-    }
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -76,61 +27,71 @@ const useStyles = makeStyles(theme => ({
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4)
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column"
+  },
+  button: {
+    margin: theme.spacing(1)
   }
 }))
 
-interface DashboardProps {
-  role: string
-}
+interface DashboardProps {}
 
-const Dashboard: NextPage<DashboardProps> = ({ role }) => {
+const Dashboard: NextPage<DashboardProps> = () => {
   const classes = useStyles({})
-  const [open, setOpen] = React.useState(true)
+  const [users, setUsers] = React.useState<DatabaseUser[]>([])
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const { success, data } = await getAsync<DatabaseUser[]>("/users")
+      if (success) {
+        setUsers(data)
+      } else {
+        setUsers([])
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className={classes.root}>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <MainAppToolbar showDrawer={true} handleDrawerOpen={() => setOpen(!open)} />
+      <AppBar position="absolute">
+        <MainAppToolbar title="Dashboard" />
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={() => setOpen(false)}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-        </List>
-      </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container className={classes.container}>
           <Grid container spacing={3}>
-            <Typography>Welcome, {role}.</Typography>
+            <Grid item xs={8}>
+              <Paper className={classes.paper}>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>
+                  Face Recognition Photo Collections
+                </Typography>
+                <Select id="collections" label="Collections" value="" onChange={() => {}}>
+                  <option value={20}>Twenty</option>
+                </Select>
+                <div>
+                  <Button variant="contained" color="primary" className={classes.button}>
+                    Create new collection
+                  </Button>
+                  <Button variant="contained" className={classes.button}>
+                    Secondary
+                  </Button>
+                </div>
+              </Paper>
+            </Grid>
+            <Grid item xs={4}>
+              <Roles users={users} />
+            </Grid>
           </Grid>
         </Container>
       </main>
     </div>
   )
-}
-
-Dashboard.getInitialProps = async (ctx: NextPageContext) => {
-  const user = (ctx.req as UserRequest).user
-  return {
-    role: user && user.role
-  }
 }
 
 export default Dashboard

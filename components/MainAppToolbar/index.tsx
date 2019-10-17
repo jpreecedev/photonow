@@ -37,15 +37,13 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface MainAppToolbarProps {
-  showDrawer: boolean
-  handleDrawerOpen?: Function
   pictures?: PictureItem[]
+  title?: string
 }
 
 export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = ({
   pictures,
-  showDrawer,
-  handleDrawerOpen
+  title = "PhotoNow"
 }) => {
   const classes = useStyles({})
 
@@ -56,20 +54,9 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
 
   return (
     <Toolbar>
-      {showDrawer && (
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={() => handleDrawerOpen()}
-          edge="start"
-          className={clsx(classes.menuButton)}
-        >
-          <MenuIcon />
-        </IconButton>
-      )}
       <Link href="/">
         <Typography className={classes.title} variant="h6" component="a" noWrap>
-          PhotoNow
+          {title}
         </Typography>
       </Link>
       <div className={classes.grow} />

@@ -12,9 +12,9 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   .exec()
 //   .then((err, res) => console.log(err))
 
-// UserModel.find({}).exec((err, users) => {
-//   users.forEach(u => console.log(u))
-// })
+UserModel.find({}).exec((err, users) => {
+  users.forEach(u => console.log(u))
+})
 
 // UserModel.updateOne({ _id: "5da5ade7017b2712fbea929e" }, { role: "Admin" }).exec()
 

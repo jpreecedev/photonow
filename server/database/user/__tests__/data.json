@@ -7,7 +7,8 @@
       "businessName": "Test Business Name",
       "firstName": "Test First Name",
       "lastName": "Test Last Name",
-      "displayName": "Test Display Name"
+      "displayName": "Test Display Name",
+      "role": "Some first role"
     },
     {
       "_id": "5d9037a7e174b39d1abc8a6a",
@@ -18,7 +19,8 @@
       "lastName": "Test Google Last Name",
       "displayName": "Test Google Display Name",
       "providerId": "Test Google Id",
-      "provider": "Test Provider"
+      "provider": "Test Provider",
+      "role": "Some second role"
     }
   ]
 }
