@@ -5,7 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import { useTheme } from "@material-ui/styles"
 
-import { DefaultButton } from "../DefaultButton"
+import { DefaultButton } from "./DefaultButton"
 
 interface WebcamProps {
   onCapture: (blob: Blob) => void

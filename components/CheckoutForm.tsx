@@ -7,12 +7,12 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-import { AddressForm } from "../AddressForm"
-import { PaymentForm } from "../PaymentForm"
-import { Review } from "../Review"
-import { AppState, PictureItem } from "../../global"
-import * as server from "../../utils/server"
-import { actions } from "../../store"
+import { AddressForm } from "./AddressForm"
+import { PaymentForm } from "./PaymentForm"
+import { Review } from "./Review"
+import { AppState, PictureItem } from "../global"
+import * as server from "../utils/server"
+import { actions } from "../store"
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttons: {

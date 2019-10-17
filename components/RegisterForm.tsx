@@ -5,8 +5,8 @@ import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import CircularProgress from "@material-ui/core/CircularProgress"
 
-import { RegisterFormProps } from "../../global"
-import { renderTextField } from "../ReduxForm"
+import { RegisterFormProps } from "../global"
+import { renderTextField } from "./ReduxForm"
 
 const useStyles = makeStyles((theme: Theme) => ({
   submit: {

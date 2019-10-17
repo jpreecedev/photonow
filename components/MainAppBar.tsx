@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 
-import { MainAppToolbar } from "../MainAppToolbar"
+import { MainAppToolbar } from "./MainAppToolbar"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

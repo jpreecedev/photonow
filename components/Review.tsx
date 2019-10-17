@@ -12,8 +12,8 @@ import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
 import DeleteIcon from "@material-ui/icons/Delete"
 
-import { AppState, PictureItem } from "../../global"
-import { actions } from "../../store"
+import { AppState, PictureItem } from "../global"
+import { actions } from "../store"
 
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {

@@ -6,10 +6,10 @@ import Box from "@material-ui/core/Box"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Typography from "@material-ui/core/Typography"
 
-import { LoginFormProps } from "../../global"
-import { renderTextField } from "../ReduxForm"
-import { GoogleLoginButton } from "../GoogleLoginButton"
-import { FacebookLoginButton } from "../FacebookLoginButton"
+import { LoginFormProps } from "../global"
+import { renderTextField } from "./ReduxForm"
+import { GoogleLoginButton } from "./GoogleLoginButton"
+import { FacebookLoginButton } from "./FacebookLoginButton"
 
 const useStyles = makeStyles((theme: Theme) => ({
   submit: {

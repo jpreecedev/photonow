@@ -6,8 +6,8 @@ import TextField from "@material-ui/core/TextField"
 import Box from "@material-ui/core/Box"
 import { CardExpiryElement, CardCVCElement, CardNumberElement } from "react-stripe-elements"
 
-import { StripeInput } from "../StripeInput"
-import { renderTextField } from "../ReduxForm"
+import { StripeInput } from "./StripeInput"
+import { renderTextField } from "./ReduxForm"
 
 interface PaymentFormProps {}
 
