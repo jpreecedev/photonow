@@ -1,6 +1,6 @@
 import React from "react"
 import { NextPage } from "next"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Typography from "@material-ui/core/Typography"
 import Container from "@material-ui/core/Container"
@@ -8,13 +8,10 @@ import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
 import Button from "@material-ui/core/Button"
 
-import { DatabaseUser } from "../global"
 import { MainAppToolbar } from "../components/MainAppToolbar"
-import { Select } from "../components/Select"
-import { getAsync } from "../utils/server"
-import { Roles } from "../components/Roles"
+import { RolesFormContainer } from "../components/RolesFormContainer"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex"
   },
@@ -43,19 +40,6 @@ interface DashboardProps {}
 
 const Dashboard: NextPage<DashboardProps> = () => {
   const classes = useStyles({})
-  const [users, setUsers] = React.useState<DatabaseUser[]>([])
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const { success, data } = await getAsync<DatabaseUser[]>("/users")
-      if (success) {
-        setUsers(data)
-      } else {
-        setUsers([])
-      }
-    }
-    fetchData()
-  }, [])
 
   return (
     <div className={classes.root}>
@@ -71,9 +55,6 @@ const Dashboard: NextPage<DashboardProps> = () => {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Face Recognition Photo Collections
                 </Typography>
-                <Select id="collections" label="Collections" value="" onChange={() => {}}>
-                  <option value={20}>Twenty</option>
-                </Select>
                 <div>
                   <Button variant="contained" color="primary" className={classes.button}>
                     Create new collection
@@ -85,7 +66,9 @@ const Dashboard: NextPage<DashboardProps> = () => {
               </Paper>
             </Grid>
             <Grid item xs={4}>
-              <Roles users={users} />
+              <Paper className={classes.paper}>
+                <RolesFormContainer />
+              </Paper>
             </Grid>
           </Grid>
         </Container>

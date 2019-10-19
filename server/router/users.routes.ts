@@ -14,4 +14,12 @@ router.get(
   UsersController.get
 )
 
+router.post(
+  "/role",
+  passport.authenticate("jwt", { failureRedirect: "/login" }),
+  utils.checkIsInRole(ROLES.Admin),
+  //@ts-ignore
+  UsersController.post
+)
+
 export default router

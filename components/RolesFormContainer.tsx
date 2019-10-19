@@ -1,0 +1,128 @@
+import React, { FunctionComponent } from "react"
+import { connect } from "react-redux"
+import { FormState } from "redux-form"
+import { makeStyles, Theme } from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
+import Button from "@material-ui/core/Button"
+import CircularProgress from "@material-ui/core/CircularProgress"
+
+import { DatabaseUser, AppState } from "../global"
+import { getAsync, postAsync } from "../utils/server"
+import { RolesForm } from "./RolesForm"
+import { Notification } from "../components/Notification"
+
+interface RolesFormContainerProps {
+  rolesForm: FormState
+}
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    display: "flex"
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: "100vh",
+    overflow: "auto"
+  },
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4)
+  },
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column"
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  button: {
+    margin: theme.spacing(1)
+  },
+  buttonProgress: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12
+  },
+  select: {
+    color: theme.palette.text.secondary
+  }
+}))
+
+const RolesFormContainer: FunctionComponent<RolesFormContainerProps> = ({ rolesForm }) => {
+  const classes = useStyles({})
+
+  const [users, setUsers] = React.useState<DatabaseUser[]>([])
+  const [processing, setProcessing] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [notificationMessage, setNotificationMessage] = React.useState("")
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const { success, data } = await getAsync<DatabaseUser[]>("/users")
+      if (success) {
+        setUsers(data)
+      } else {
+        setUsers([])
+      }
+    }
+    fetchData()
+  }, [])
+
+  const handleSubmit = async () => {
+    setProcessing(true)
+
+    try {
+      const formData = {
+        id: rolesForm.values.user,
+        role: rolesForm.values.role
+      }
+
+      const { success, data } = await postAsync<string>("/users/role", formData)
+      if (success) {
+        setNotificationMessage("Role updated")
+      } else {
+        setNotificationMessage(`There was an error: ${data}`)
+      }
+      setOpen(true)
+    } catch (error) {
+      setNotificationMessage(`There was an error: ${error}`)
+      setOpen(true)
+    } finally {
+      setProcessing(false)
+    }
+  }
+
+  return (
+    <>
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        Roles
+      </Typography>
+      <Notification open={open} message={notificationMessage} onClose={() => setOpen(false)} />
+      <RolesForm users={users} />
+      <div className={classes.buttons}>
+        <Button
+          disabled={processing}
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          className={classes.button}
+        >
+          {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
+          Change role
+        </Button>
+      </div>
+    </>
+  )
+}
+
+const ConnectedRolesFormContainer = connect((state: AppState) => ({
+  rolesForm: state.form.rolesForm
+}))(RolesFormContainer)
+
+export { ConnectedRolesFormContainer as RolesFormContainer }

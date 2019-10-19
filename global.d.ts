@@ -65,6 +65,11 @@ export interface UserRequest extends Request {
   user: User
 }
 
+export interface UpdateRoleRequest extends Request {
+  id: string
+  role: string
+}
+
 export interface FileRequest extends Request {
   file: UploadedFile
   user: User
