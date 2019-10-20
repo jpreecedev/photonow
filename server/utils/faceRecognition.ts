@@ -88,7 +88,7 @@ async function verifyFace(image: Buffer) {
         return reject(err)
       }
 
-      resolve(response.FaceDetails.length === 1)
+      return resolve(response.FaceDetails.length === 1)
     })
   })
 }

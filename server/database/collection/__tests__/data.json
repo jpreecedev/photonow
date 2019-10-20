@@ -1,13 +1,27 @@
 {
   "users": [
     {
-      "_id": "5d73d17b2efd821fa43c17b6"
+      "_id": "5d73d17b2efd821fa43c17b6",
+      "role": "Admin"
+    },
+    {
+      "_id": "5dac1640a44770f0715f0fac",
+      "role": "Photographer"
+    },
+    {
+      "_id": "5dac1684306ed43520067e3c",
+      "role": "Photographer"
+    },
+    {
+      "_id": "5dac198c5c3fe2c50b90d64a",
+      "role": "Customer"
     }
   ],
   "moments": [
     {
       "_id": "5d73d69ef390eea3b2bfa4df",
-      "photographerId": "5d73d17b2efd821fa43c17b6",
+      "photographerId": "5dac1640a44770f0715f0fac",
+      "collectionId": "5dab31fb29947cc29e13296b",
       "filename": "Sample File Name",
       "mimeType": "Sample Customer",
       "bucket": "sample@sample.com",
@@ -20,7 +34,8 @@
     },
     {
       "_id": "5d73d6d317fde1fec95d6d1f",
-      "photographerId": "5d73d17b2efd821fa43c17b6",
+      "photographerId": "5dac1640a44770f0715f0fac",
+      "collectionId": "5dab326748f8923dbffbbf92",
       "filename": "Sample 2 File Name",
       "mimeType": "Sample 2 Customer",
       "bucket": "sample2@sample2.com",
@@ -30,18 +45,37 @@
       "resizedLocation": "TT1 1TT",
       "resizedEtag": "Sample 2 State",
       "amount": 333
+    },
+    {
+      "_id": "5dac16d4ebdb9d45d2d7fd05",
+      "collectionId": "5dac16e3b1b72a9298840600",
+      "photographerId": "5dac1684306ed43520067e3c",
+      "filename": "Sample 4 File Name",
+      "mimeType": "Sample 4 Customer",
+      "bucket": "sample4@sample4.com",
+      "contentType": "1 Sample 4 Street",
+      "location": "Sample 4 Area",
+      "originalEtag": "Sample 4 City",
+      "resizedLocation": "TT1 1TT",
+      "resizedEtag": "Sample 4 State",
+      "amount": 444
     }
   ],
   "collections": [
     {
       "_id": "5dab31fb29947cc29e13296b",
-      "userId": "5d73d17b2efd821fa43c17b6",
+      "userId": "5dac1640a44770f0715f0fac",
       "name": "Test Collection 1"
     },
     {
       "_id": "5dab326748f8923dbffbbf92",
-      "userId": "5d73d17b2efd821fa43c17b6",
+      "userId": "5dac1640a44770f0715f0fac",
       "name": "Test Collection 2"
+    },
+    {
+      "_id": "5dac16e3b1b72a9298840600",
+      "userId": "5dac1684306ed43520067e3c",
+      "name": "Test Collection 3"
     }
   ]
 }

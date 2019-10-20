@@ -24,18 +24,47 @@ describe("Get collection tests", () => {
     await dbHelper.cleanup()
   })
 
-  test("should get two collections using userId", async () => {
+  test("should get three collections when using admin user", async () => {
     const userId = Types.ObjectId(testData.users[0]._id)
+    const role = testData.users[0].role
 
-    const collections = await getCollections(userId)
+    const collections = await getCollections(userId, role)
+
+    expect(collections).toBeDefined()
+    expect(collections.length).toEqual(3)
+
+    collections.forEach((collection, index) => {
+      expect(collection._id).not.toBeUndefined()
+      expect(collection._id).toEqual(testData.collections[index]._id)
+      expect(collection.userId).toEqual(testData.collections[index].userId)
+      expect(collection.name).toEqual(testData.collections[index].name)
+    })
+  })
+
+  test("should get two collections when using photographer user", async () => {
+    const userId = Types.ObjectId(testData.users[1]._id)
+    const role = testData.users[1].role
+
+    const collections = await getCollections(userId, role)
 
     expect(collections).toBeDefined()
     expect(collections.length).toEqual(2)
 
     collections.forEach((collection, index) => {
       expect(collection._id).not.toBeUndefined()
+      expect(collection._id).toEqual(testData.collections[index]._id)
       expect(collection.userId).toEqual(testData.collections[index].userId)
       expect(collection.name).toEqual(testData.collections[index].name)
     })
+  })
+
+  test("should get no collections when using customer user", async () => {
+    const userId = Types.ObjectId(testData.users[3]._id)
+    const role = testData.users[3].role
+
+    const collections = await getCollections(userId, role)
+
+    expect(collections).toBeDefined()
+    expect(collections.length).toEqual(0)
   })
 })

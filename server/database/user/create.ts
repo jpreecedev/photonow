@@ -14,10 +14,10 @@ async function createUser({
     const user = await UserModel.findOne({ email })
 
     if (user) {
-      reject("Email is already in use")
+      return reject("Email is already in use")
     }
 
-    resolve(
+    return resolve(
       await UserModel.create({
         providerId,
         provider,

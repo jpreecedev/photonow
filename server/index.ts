@@ -23,7 +23,9 @@ nextApp.prepare().then(() => {
   const app = express()
   app.use(compression())
 
-  init({ dsn: "https://bd58a1b715494744b2bc3b9c444172d1@sentry.io/1727049" })
+  if (!dev) {
+    init({ dsn: "https://bd58a1b715494744b2bc3b9c444172d1@sentry.io/1727049" })
+  }
 
   app.use(Handlers.requestHandler())
   app.use(cors())

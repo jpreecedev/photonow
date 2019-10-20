@@ -17,15 +17,16 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   .exec()
 //   .then((err, res) => console.log(err))
 
-// UserModel.deleteMany({})
+// UserModel.deleteOne({ provider: { $eq: "facebook" } })
 //   .exec()
 //   .then((err, res) => console.log(err))
 
 // UserModel.find({}).exec((err, users) => {
 //   users.forEach(u => console.log(u))
+//   process.exit(0)
 // })
 
-// UserModel.updateOne({ _id: "5da5ade7017b2712fbea929e" }, { role: "Admin" }).exec()
+// UserModel.updateOne({ _id: "5dac1cabb837afb595f1440d" }, { role: "Photographer" }).exec()
 
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 

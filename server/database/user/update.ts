@@ -5,7 +5,7 @@ async function updateRole(id: string, role: string): Promise<boolean | string> {
     const user = await UserModel.findById(id)
 
     if (!user) {
-      reject("Unable to find user")
+      return reject("Unable to find user")
     }
 
     const { ok } = await UserModel.updateOne({ _id: user._id }, { role }).exec()
