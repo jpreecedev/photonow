@@ -60,7 +60,7 @@ const Login: NextPage<LoginProps> = () => {
   return (
     <MainLayout>
       <main className={classes.content}>
-        <Container maxWidth="sm">
+        <Container maxWidth="xs">
           <Paper className={classes.paper} elevation={2}>
             <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
               <Typography component="h1" variant="h4" gutterBottom>

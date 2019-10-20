@@ -87,7 +87,8 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
       }
 
       if (decodedToken.exp <= Date.now() / 1000) {
-        return res.redirect("/login")
+        req.logout()
+        return res.clearCookie("jwt").redirect("/login")
       }
 
       next()

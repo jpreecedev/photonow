@@ -2,13 +2,14 @@ import AWS from "aws-sdk"
 import { Types } from "mongoose"
 import { getMoments } from "../database/moments"
 import { PictureItem } from "../../global"
+import { formatCollectionName } from "./collection"
 
 const rekognition = new AWS.Rekognition({ region: process.env.AWS_REGION })
 AWS.config.region = process.env.AWS_REGION
 
 async function deleteCollection(name: string) {
   return new Promise((resolve, reject) => {
-    rekognition.deleteCollection({ CollectionId: name }, err => {
+    rekognition.deleteCollection({ CollectionId: formatCollectionName(name) }, err => {
       if (err) return reject(err)
 
       return resolve()
@@ -30,13 +31,16 @@ async function listCollections(): Promise<AWS.Rekognition.ListCollectionsRespons
 
 async function createCollection(collectionName: string) {
   return new Promise((resolve, reject) => {
-    rekognition.createCollection({ CollectionId: collectionName }, (err, data) => {
-      if (err) {
-        return reject(err)
-      }
+    rekognition.createCollection(
+      { CollectionId: formatCollectionName(collectionName) },
+      (err, data) => {
+        if (err) {
+          return reject(err)
+        }
 
-      return resolve(data)
-    })
+        return resolve(data)
+      }
+    )
   })
 }
 
@@ -44,7 +48,7 @@ async function recogniseFromBuffer(name: string, image: Buffer): Promise<Picture
   return new Promise((resolve, reject) => {
     rekognition.searchFacesByImage(
       {
-        CollectionId: name,
+        CollectionId: formatCollectionName(name),
         FaceMatchThreshold: 95,
         Image: { Bytes: image },
         MaxFaces: 5
@@ -110,7 +114,7 @@ async function addImageToCollection(
   return new Promise((resolve, reject) => {
     rekognition.indexFaces(
       {
-        CollectionId: name,
+        CollectionId: formatCollectionName(name),
         ExternalImageId: momentId,
         Image: {
           S3Object: {
@@ -134,7 +138,7 @@ async function isCollectionNameAvailable(name: string) {
   const hasCollections =
     collections && collections.CollectionIds && collections.CollectionIds.length
   const collectionIds = hasCollections ? collections.CollectionIds : []
-  const hasCollection = collectionIds.find(c => c === name)
+  const hasCollection = collectionIds.find(c => c === formatCollectionName(name))
 
   return !hasCollection
 }
