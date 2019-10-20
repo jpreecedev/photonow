@@ -8,7 +8,7 @@ import { s3Upload } from "../utils"
 const router = express.Router()
 
 router.post(
-  "/",
+  "/:collectionId",
   passport.authenticate("jwt", { failureRedirect: "/login" }),
   utils.isAuthenticated,
   s3Upload.uploadFromClient(

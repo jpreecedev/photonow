@@ -6,7 +6,15 @@ import { PictureItem } from "../../global"
 const rekognition = new AWS.Rekognition({ region: process.env.AWS_REGION })
 AWS.config.region = process.env.AWS_REGION
 
-const collectionName = process.env.FACE_RECOGNITION_COLLECTION_NAME || ""
+async function deleteCollection(name: string) {
+  return new Promise((resolve, reject) => {
+    rekognition.deleteCollection({ CollectionId: name }, err => {
+      if (err) return reject(err)
+
+      return resolve()
+    })
+  })
+}
 
 async function listCollections(): Promise<AWS.Rekognition.ListCollectionsResponse> {
   return new Promise((resolve, reject) => {
@@ -32,11 +40,11 @@ async function createCollection(collectionName: string) {
   })
 }
 
-async function recogniseFromBuffer(image: Buffer): Promise<PictureItem[]> {
+async function recogniseFromBuffer(name: string, image: Buffer): Promise<PictureItem[]> {
   return new Promise((resolve, reject) => {
     rekognition.searchFacesByImage(
       {
-        CollectionId: collectionName,
+        CollectionId: name,
         FaceMatchThreshold: 95,
         Image: { Bytes: image },
         MaxFaces: 5
@@ -93,13 +101,16 @@ async function verifyFace(image: Buffer) {
   })
 }
 
-async function addImageToCollection(bucket: string, momentId: string, s3Filename: string) {
+async function addImageToCollection(
+  name: string,
+  bucket: string,
+  momentId: string,
+  s3Filename: string
+) {
   return new Promise((resolve, reject) => {
-    const collectionName = process.env.FACE_RECOGNITION_COLLECTION_NAME || ""
-
     rekognition.indexFaces(
       {
-        CollectionId: collectionName,
+        CollectionId: name,
         ExternalImageId: momentId,
         Image: {
           S3Object: {
@@ -118,22 +129,22 @@ async function addImageToCollection(bucket: string, momentId: string, s3Filename
   })
 }
 
-;(async () => {
-  const collectionName = process.env.FACE_RECOGNITION_COLLECTION_NAME
+async function isCollectionNameAvailable(name: string) {
   const collections = await listCollections()
   const hasCollections =
     collections && collections.CollectionIds && collections.CollectionIds.length
   const collectionIds = hasCollections ? collections.CollectionIds : []
-  const hasCollection = collectionIds.find(c => c === collectionName)
+  const hasCollection = collectionIds.find(c => c === name)
 
-  // rekognition.deleteCollection(
-  //   { CollectionId: process.env.FACE_RECOGNITION_COLLECTION_NAME },
-  //   () => {}
-  // )
+  return !hasCollection
+}
 
-  if (!hasCollection) {
-    await createCollection(collectionName)
-  }
-})()
-
-export default { addImageToCollection, recogniseFromBuffer, verifyFace }
+export default {
+  createCollection,
+  addImageToCollection,
+  recogniseFromBuffer,
+  verifyFace,
+  listCollections,
+  deleteCollection,
+  isCollectionNameAvailable
+}

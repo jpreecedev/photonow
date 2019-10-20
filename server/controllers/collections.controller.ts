@@ -1,6 +1,7 @@
 import { Response } from "express"
 import { errorHandler } from "../utils"
 import { ClientResponse, UserRequest, CreateCollectionRequest, Collection } from "../../global"
+import { faceRecognition } from "../utils"
 
 import { getCollections, createCollection } from "../database/collection"
 
@@ -32,6 +33,16 @@ async function post(req: CreateCollectionRequest, res: Response) {
       moments: [],
       name,
       userId
+    }
+
+    const isAvailable = await faceRecognition.isCollectionNameAvailable(name)
+    if (isAvailable) {
+      await faceRecognition.createCollection(name)
+    } else {
+      return res.status(500).json(<ClientResponse<string>>{
+        success: false,
+        data: "Collection name is not available, choose a different name"
+      })
     }
 
     const data = await createCollection(collection)

@@ -2,6 +2,10 @@ import { Types } from "mongoose"
 import { CollectionModel } from "../schema"
 import { ROLES } from "../../../utils/roles"
 
+async function getCollection(userId: Types.ObjectId, collectionId: Types.ObjectId) {
+  return await CollectionModel.findOne({ userId, _id: collectionId }).exec()
+}
+
 async function getCollections(userId: Types.ObjectId, role: string) {
   if (role === ROLES.Admin) {
     return await CollectionModel.find({}).exec()
@@ -14,4 +18,4 @@ async function getCollections(userId: Types.ObjectId, role: string) {
   return []
 }
 
-export { getCollections }
+export { getCollections, getCollection }

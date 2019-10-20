@@ -2,10 +2,14 @@ import { Response } from "express"
 import { createMoment } from "../database/moments"
 import { errorHandler, faceRecognition } from "../utils"
 import { FileRequest, Moment, ClientResponse } from "../../global"
+import { getCollection } from "../database/collection"
+import { Types } from "mongoose"
 
 async function post(req: FileRequest, res: Response) {
   try {
     const { _id: photographerId } = req.user
+    const { collectionId } = req.params
+
     const originalFile = req.file.transforms.find(t => t.id === "original")
     const resizedFile = req.file.transforms.find(t => t.id === "resized")
 
@@ -31,8 +35,13 @@ async function post(req: FileRequest, res: Response) {
     }
 
     const result = await createMoment(moment)
+    const collection = await getCollection(
+      Types.ObjectId(photographerId),
+      Types.ObjectId(collectionId)
+    )
 
     await faceRecognition.addImageToCollection(
+      collection.name,
       originalFile.bucket,
       result._id.toString(),
       originalFile.key

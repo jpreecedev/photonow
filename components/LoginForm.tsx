@@ -86,6 +86,7 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
           variant="contained"
           color="primary"
           className={classes.submit}
+          fullWidth
         >
           {submitting && <CircularProgress size={24} className={classes.buttonProgress} />}
           {submitting ? "Signing in..." : "Sign In"}

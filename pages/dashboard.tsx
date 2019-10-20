@@ -1,26 +1,28 @@
 import React from "react"
 import { NextPage } from "next"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
 import Paper from "@material-ui/core/Paper"
 
-import { MainAppToolbar } from "../components/MainAppToolbar"
 import { RolesFormContainer } from "../components/RolesFormContainer"
 import { FaceCollectionsContainer } from "../components/FaceCollectionsContainer"
 import { ROLES } from "../utils/roles"
 import { getAsync } from "../utils/server"
 
+import { MainLayout } from "../layouts/main"
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex"
   },
-  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto"
+    padding: theme.spacing(1),
+
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(3)
+    }
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -34,7 +36,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   button: {
     margin: theme.spacing(1)
-  }
+  },
+  toolbar: theme.mixins.toolbar
 }))
 
 interface DashboardProps {}
@@ -54,15 +57,12 @@ const Dashboard: NextPage<DashboardProps> = () => {
   }, [])
 
   return (
-    <div className={classes.root}>
-      <AppBar position="absolute">
-        <MainAppToolbar title="Dashboard" />
-      </AppBar>
+    <MainLayout showNavigation={true} title="Dashboard">
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
+        <div className={classes.toolbar} />
         <Container className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={8}>
+          <Grid container>
+            <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <FaceCollectionsContainer />
               </Paper>
@@ -77,7 +77,7 @@ const Dashboard: NextPage<DashboardProps> = () => {
           </Grid>
         </Container>
       </main>
-    </div>
+    </MainLayout>
   )
 }
 

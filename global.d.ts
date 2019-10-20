@@ -80,6 +80,7 @@ export interface UpdateRoleRequest extends Request {
 export interface FileRequest extends Request {
   file: UploadedFile
   user: User
+  collectionName: string
 }
 
 export interface OrderRequest extends Request {

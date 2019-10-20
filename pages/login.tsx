@@ -8,10 +8,11 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Grid from "@material-ui/core/Grid"
 
-import { Main } from "../layouts/main"
+import { MainLayout } from "../layouts/main"
 import { LoginForm } from "../components/LoginForm"
 import { AppState, LoginFormProps } from "../global"
 import * as server from "../utils/server"
+import { Container } from "@material-ui/core"
 
 const useStyles = makeStyles((theme: Theme) => ({
   layout: {
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   error: {
     color: theme.palette.error.main,
     textAlign: "center"
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3)
   }
 }))
 
@@ -53,33 +58,35 @@ const Login: NextPage<LoginProps> = () => {
   }
 
   return (
-    <Main gap maxWidth="sm">
-      <main className={classes.layout}>
-        <Paper className={classes.paper} elevation={2}>
-          <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-            <Typography component="h1" variant="h4" gutterBottom>
-              Login
-            </Typography>
-            <Typography component="p" gutterBottom>
-              Log in to your account dashboard
-            </Typography>
-          </Box>
-          <aside className={classes.error}>
-            {Object.keys(errors).map(error => (
-              <p key={errors[error]}>{errors[error]}</p>
-            ))}
-          </aside>
-          <LoginForm onSubmit={onSubmit} />
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="/register">
-                <a>Don't already have an account?</a>
-              </Link>
+    <MainLayout>
+      <main className={classes.content}>
+        <Container maxWidth="sm">
+          <Paper className={classes.paper} elevation={2}>
+            <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+              <Typography component="h1" variant="h4" gutterBottom>
+                Login
+              </Typography>
+              <Typography component="p" gutterBottom>
+                Log in to your account dashboard
+              </Typography>
+            </Box>
+            <aside className={classes.error}>
+              {Object.keys(errors).map(error => (
+                <p key={errors[error]}>{errors[error]}</p>
+              ))}
+            </aside>
+            <LoginForm onSubmit={onSubmit} />
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="/register">
+                  <a>Don't already have an account?</a>
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>
+          </Paper>
+        </Container>
       </main>
-    </Main>
+    </MainLayout>
   )
 }
 

@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getCollections } from "../get"
+import { getCollections, getCollection } from "../get"
 
 const dbHelper = TestDbHelper()
 
@@ -60,11 +60,32 @@ describe("Get collection tests", () => {
 
   test("should get no collections when using customer user", async () => {
     const userId = Types.ObjectId(testData.users[3]._id)
-    const role = testData.users[3].role
+    const role = testData.users[2].role
 
     const collections = await getCollections(userId, role)
 
     expect(collections).toBeDefined()
     expect(collections.length).toEqual(0)
+  })
+
+  test("should get single collection using userId and collectionId", async () => {
+    const userId = Types.ObjectId(testData.users[2]._id)
+    const collectionId = Types.ObjectId(testData.collections[2]._id)
+
+    const collection = await getCollection(userId, collectionId)
+
+    expect(collection).toBeDefined()
+    expect(collection._id).toEqual(testData.collections[2]._id)
+    expect(collection.userId).toEqual(testData.collections[2].userId)
+    expect(collection.name).toEqual(testData.collections[2].name)
+  })
+
+  test("should not get the given collection when the userId is wrong", async () => {
+    const userId = Types.ObjectId(testData.users[1]._id)
+    const collectionId = Types.ObjectId(testData.collections[2]._id)
+
+    const collection = await getCollection(userId, collectionId)
+
+    expect(collection).toBeNull()
   })
 })

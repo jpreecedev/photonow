@@ -5,6 +5,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Grid from "@material-ui/core/Grid"
 
 import { Collection, AppState } from "../global"
 import { getAsync, postAsync } from "../utils/server"
@@ -12,6 +13,8 @@ import { Dialog } from "../components/Dialog"
 import { NewCollectionForm } from "../components/NewCollectionForm"
 import { FaceCollectionsForm } from "../components/FaceCollectionsForm"
 import { Notification } from "../components/Notification"
+import { Divider } from "@material-ui/core"
+import { FileUpload } from "../components/FileUpload"
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -36,6 +39,7 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
   const classes = useStyles({})
 
   const [collections, setCollections] = React.useState<Collection[]>([])
+  const [selectedCollection, setSelectedCollection] = React.useState<Collection>(null)
   const [processing, setProcessing] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const [notification, setNotification] = React.useState({ open: false, message: "" })
@@ -44,6 +48,7 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
     const { success, data } = await getAsync<Collection[]>("/collections")
     if (success) {
       setCollections(data)
+      setSelectedCollection(data[0])
     } else {
       setCollections([])
     }
@@ -97,19 +102,29 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
       >
         <NewCollectionForm onSubmit={() => handleCreateCollection(true)} />
       </Dialog>
-      <FaceCollectionsForm collections={collections} />
-      <div>
-        <Button
-          disabled={processing}
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          onClick={() => setOpen(true)}
-        >
-          {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
-          Create new collection
-        </Button>
-      </div>
+      <Grid container spacing={5} direction="column">
+        <Grid item>
+          <FaceCollectionsForm
+            collections={collections}
+            onSelectionChanged={setSelectedCollection}
+          />
+          <Button
+            disabled={processing}
+            variant="contained"
+            className={classes.button}
+            onClick={() => setOpen(true)}
+          >
+            {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
+            Create new collection
+          </Button>
+        </Grid>
+        <Grid item>
+          <Typography component="h2" variant="h6" color="primary" gutterBottom>
+            Upload pictures to the selected collection
+          </Typography>
+          <FileUpload collectionId={selectedCollection ? selectedCollection._id : undefined} />
+        </Grid>
+      </Grid>
     </>
   )
 }

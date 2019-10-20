@@ -1,5 +1,14 @@
 import React from "react"
 
-import { LandingPage } from "../layouts/landing-page"
+import { MainLayout } from "../layouts/main"
+import { Splash } from "../components/Splash"
 
-export default () => <LandingPage />
+const HomePage = () => {
+  return (
+    <MainLayout>
+      <Splash />
+    </MainLayout>
+  )
+}
+
+export default HomePage
