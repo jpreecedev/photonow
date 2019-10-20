@@ -65,7 +65,6 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
       <Field
         margin="normal"
         required
-        fullWidth
         id="firstName"
         label="First Name"
         name="firstName"
@@ -76,7 +75,6 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
       <Field
         margin="normal"
         required
-        fullWidth
         id="lastName"
         label="Last Name"
         name="lastName"
@@ -86,7 +84,6 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
       <Field
         margin="normal"
         required
-        fullWidth
         id="email"
         label="Email Address"
         name="email"
@@ -96,7 +93,6 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
       <Field
         margin="normal"
         required
-        fullWidth
         name="password"
         label="Password"
         type="password"
@@ -111,7 +107,6 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
         <Button
           disabled={submitting || process.env.IS_REGISTRATION_DISABLED === "true"}
           type="submit"
-          fullWidth
           variant="contained"
           color="primary"
           className={classes.submit}

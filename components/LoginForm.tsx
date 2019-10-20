@@ -61,7 +61,6 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
       <Field
         margin="normal"
         required
-        fullWidth
         id="email"
         label="Email Address"
         name="email"
@@ -72,7 +71,6 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
       <Field
         margin="normal"
         required
-        fullWidth
         name="password"
         label="Password"
         type="password"
@@ -85,7 +83,6 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
         <Button
           disabled={submitting}
           type="submit"
-          fullWidth
           variant="contained"
           color="primary"
           className={classes.submit}

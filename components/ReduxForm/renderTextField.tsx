@@ -3,7 +3,13 @@ import TextField from "@material-ui/core/TextField"
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...rest }) => {
   return (
-    <TextField label={label} {...input} {...rest} error={touched && typeof error !== "undefined"} />
+    <TextField
+      label={label}
+      {...input}
+      {...rest}
+      fullWidth
+      error={touched && typeof error !== "undefined"}
+    />
   )
 }
 

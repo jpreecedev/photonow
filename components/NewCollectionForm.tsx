@@ -17,14 +17,13 @@ const NewCollectionForm: FunctionComponent<
       <Box>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3} direction="column">
-            <Grid item xs={12} sm={6}>
+            <Grid item>
               <Field
                 autoFocus
                 required
                 id="collectionName"
                 name="collectionName"
                 label="Collection name"
-                fullWidth
                 component={renderTextField}
               />
             </Grid>

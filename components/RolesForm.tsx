@@ -34,7 +34,7 @@ const RolesForm: FunctionComponent<
           <Grid container spacing={3} direction="column">
             <Grid item>
               <FormControl fullWidth>
-                <InputLabel htmlFor="user" shrink required>
+                <InputLabel htmlFor="user" shrink>
                   Select a user
                 </InputLabel>
                 <Field
@@ -57,7 +57,7 @@ const RolesForm: FunctionComponent<
             </Grid>
             <Grid item>
               <FormControl fullWidth>
-                <InputLabel htmlFor="role" shrink required>
+                <InputLabel htmlFor="role" shrink>
                   Select a role
                 </InputLabel>
                 <Field

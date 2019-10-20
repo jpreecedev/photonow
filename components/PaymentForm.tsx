@@ -24,7 +24,6 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
             id="cardName"
             name="cardName"
             label="Name on card"
-            fullWidth
             component={renderTextField}
           />
         </Grid>
@@ -34,7 +33,6 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
             label="Credit Card Number"
             id="cardNumber"
             name="cardNumber"
-            fullWidth
             InputLabelProps={{
               shrink: true
             }}
@@ -51,7 +49,6 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
             required
             id="expDate"
             label="Expiry date"
-            fullWidth
             InputLabelProps={{
               shrink: true
             }}
@@ -69,7 +66,6 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
             id="cvv"
             label="CVV"
             helperText="Last three digits on signature strip"
-            fullWidth
             InputLabelProps={{
               shrink: true
             }}

@@ -36,7 +36,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="firstName"
                 name="firstName"
                 label="First name"
-                fullWidth
                 autoComplete="fname"
                 component={renderTextField}
               />
@@ -47,7 +46,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="lastName"
                 name="lastName"
                 label="Last name"
-                fullWidth
                 autoComplete="lname"
                 component={renderTextField}
               />
@@ -58,7 +56,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="emailAddress"
                 name="emailAddress"
                 label="Email address"
-                fullWidth
                 autoComplete="email"
                 component={renderTextField}
               />
@@ -69,7 +66,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="address1"
                 name="address1"
                 label="Address line 1"
-                fullWidth
                 autoComplete="billing address-line1"
                 component={renderTextField}
               />
@@ -79,7 +75,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="address2"
                 name="address2"
                 label="Address line 2"
-                fullWidth
                 autoComplete="billing address-line2"
                 component={renderTextField}
               />
@@ -90,7 +85,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="city"
                 name="city"
                 label="City"
-                fullWidth
                 autoComplete="billing address-level2"
                 component={renderTextField}
               />
@@ -100,7 +94,6 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="state"
                 name="state"
                 label="State/Province/Region"
-                fullWidth
                 component={renderTextField}
               />
             </Grid>
@@ -110,13 +103,12 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
                 id="postalCode"
                 name="postalCode"
                 label="Zip / Postal code"
-                fullWidth
                 autoComplete="billing postal-code"
                 component={renderTextField}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="country" shrink required>
                   Country
                 </InputLabel>

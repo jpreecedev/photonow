@@ -15,6 +15,7 @@ const renderSelectField = ({
       {...input}
       {...rest}
       {...inputProps}
+      fullWidth
       inputProps={inputProps}
       error={touched && error}
     >

@@ -49,8 +49,12 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
     }
   }
 
-  const handleCreateCollection = async () => {
+  const handleCreateCollection = async (confirm: boolean) => {
     setOpen(false)
+    if (!confirm) {
+      return
+    }
+
     setProcessing(true)
 
     try {
@@ -89,9 +93,9 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
         title="Create a new collection"
         text="Give your collection a meaningful name"
         submitText="Create"
-        onClose={() => handleCreateCollection()}
+        onClose={handleCreateCollection}
       >
-        <NewCollectionForm />
+        <NewCollectionForm onSubmit={() => handleCreateCollection(true)} />
       </Dialog>
       <FaceCollectionsForm collections={collections} />
       <div>

@@ -28,7 +28,7 @@ const Dialog: FunctionComponent<DialogProps> = ({
     setOpen(isOpen)
   }, [isOpen])
 
-  const handleClose = confirm => {
+  const handleClose = (confirm: boolean) => {
     setOpen(false)
     onClose(confirm)
   }
@@ -38,6 +38,8 @@ const Dialog: FunctionComponent<DialogProps> = ({
       open={open}
       onClose={() => handleClose(false)}
       aria-labelledby="form-dialog-title"
+      maxWidth="sm"
+      fullWidth
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
