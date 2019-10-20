@@ -32,6 +32,7 @@ describe("Get moment tests", () => {
     expect(moment).toBeDefined()
     expect(moment._id).not.toBeUndefined()
     expect(moment.photographerId).toEqual(testData.moments[1].photographerId)
+    expect(moment.collectionId).toEqual(testData.moments[1].collectionId)
     expect(moment.filename).toEqual(testData.moments[1].filename)
     expect(moment.mimeType).toEqual(testData.moments[1].mimeType)
     expect(moment.bucket).toEqual(testData.moments[1].bucket)
@@ -57,6 +58,7 @@ describe("Get moment tests", () => {
     moments.forEach((moment, index) => {
       expect(moment._id).not.toBeUndefined()
       expect(moment.photographerId).toEqual(testData.moments[index].photographerId)
+      expect(moment.collectionId).toEqual(testData.moments[index].collectionId)
       expect(moment.filename).toEqual(testData.moments[index].filename)
       expect(moment.mimeType).toEqual(testData.moments[index].mimeType)
       expect(moment.bucket).toEqual(testData.moments[index].bucket)

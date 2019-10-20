@@ -1,11 +1,12 @@
 import { Types } from "mongoose"
-import { Order, Moment, Payment, User } from "../../global"
+import { Order, Moment, Payment, User, Collection } from "../../global"
 
 interface TestData {
   orders?: Order[]
   moments?: Moment[]
   payments?: Payment[]
   users?: User[]
+  collections?: Collection[]
 }
 
 function sanitizeData(testData: TestData) {
@@ -30,12 +31,19 @@ function sanitizeData(testData: TestData) {
     testData.moments.forEach(moment => {
       moment._id = Types.ObjectId(moment._id)
       moment.photographerId = Types.ObjectId((moment.photographerId as unknown) as string)
+      moment.collectionId = Types.ObjectId((moment.collectionId as unknown) as string)
     })
   }
   if (testData.payments && testData.payments.length) {
     testData.payments.forEach(payment => {
       payment._id = Types.ObjectId(payment._id)
       payment.orderId = Types.ObjectId((payment.orderId as unknown) as string)
+    })
+  }
+  if (testData.collections && testData.collections.length) {
+    testData.collections.forEach(collection => {
+      collection._id = Types.ObjectId(collection._id)
+      collection.userId = Types.ObjectId((collection.userId as unknown) as string)
     })
   }
   return testData

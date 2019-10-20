@@ -4,18 +4,10 @@
       "_id": "5d73d17b2efd821fa43c17b6"
     }
   ],
-  "collections": [
-    {
-      "_id": "5dab31fb29947cc29e13296b",
-      "userId": "5d73d17b2efd821fa43c17b6",
-      "name": "Test Collection 1"
-    }
-  ],
   "moments": [
     {
       "_id": "5d73d69ef390eea3b2bfa4df",
       "photographerId": "5d73d17b2efd821fa43c17b6",
-      "collectionId": "5dab31fb29947cc29e13296b",
       "filename": "Sample File Name",
       "mimeType": "Sample Customer",
       "bucket": "sample@sample.com",
@@ -29,7 +21,6 @@
     {
       "_id": "5d73d6d317fde1fec95d6d1f",
       "photographerId": "5d73d17b2efd821fa43c17b6",
-      "collectionId": "5dab31fb29947cc29e13296b",
       "filename": "Sample 2 File Name",
       "mimeType": "Sample 2 Customer",
       "bucket": "sample2@sample2.com",
@@ -39,6 +30,18 @@
       "resizedLocation": "TT1 1TT",
       "resizedEtag": "Sample 2 State",
       "amount": 333
+    }
+  ],
+  "collections": [
+    {
+      "_id": "5dab31fb29947cc29e13296b",
+      "userId": "5d73d17b2efd821fa43c17b6",
+      "name": "Test Collection 1"
+    },
+    {
+      "_id": "5dab326748f8923dbffbbf92",
+      "userId": "5d73d17b2efd821fa43c17b6",
+      "name": "Test Collection 2"
     }
   ]
 }

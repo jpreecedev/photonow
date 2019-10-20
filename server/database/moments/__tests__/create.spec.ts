@@ -28,6 +28,7 @@ describe("Create moment tests", () => {
   test("should create a moment", async () => {
     const moment = <Moment>{
       photographerId: Types.ObjectId(testData.users[0]._id),
+      collectionId: Types.ObjectId(testData.collections[0]._id),
       filename: "Test File Name",
       mimeType: "Test Customer",
       bucket: "test@test.com",
@@ -45,6 +46,7 @@ describe("Create moment tests", () => {
     expect(newMoment._id).not.toBeUndefined()
     expect(newMoment.amount).toEqual(moment.amount)
     expect(newMoment.photographerId).toEqual(moment.photographerId)
+    expect(newMoment.collectionId).toEqual(moment.collectionId)
     expect(newMoment.filename).toEqual(moment.filename)
     expect(newMoment.bucket).toEqual(moment.bucket)
     expect(newMoment.mimeType).toEqual(moment.mimeType)

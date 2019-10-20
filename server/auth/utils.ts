@@ -95,6 +95,22 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
   )
 }
 
+const getUserRole = async (req: Request) => {
+  return new Promise((resolve, reject) => {
+    if (!req.cookies.jwt) {
+      return reject("Unauthorised request")
+    }
+
+    jwt.verify(req.cookies.jwt, process.env.JWT_SECRET, (err: Error, decodedToken: JWTPayload) => {
+      if (err) {
+        return reject(`Unexpected error. ${err}`)
+      }
+
+      return resolve(decodedToken.data.role)
+    })
+  })
+}
+
 const logout = (req: Request) => {
   req.logout()
   req.clearCookie("jwt")
@@ -118,5 +134,6 @@ export {
   hashPassword,
   signToken,
   logout,
-  getRedirectUrl
+  getRedirectUrl,
+  getUserRole
 }

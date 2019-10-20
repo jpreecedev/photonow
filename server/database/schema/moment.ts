@@ -3,6 +3,7 @@ import { Moment } from "../../../global"
 
 const MomentSchema = new Schema({
   photographerId: { type: Schema.Types.ObjectId, ref: "User" },
+  collectionId: { type: Schema.Types.ObjectId, ref: "Collection" },
   filename: String,
   mimeType: String,
   bucket: String,

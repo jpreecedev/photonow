@@ -1,0 +1,42 @@
+import React, { FunctionComponent } from "react"
+import { Field, reduxForm, InjectedFormProps } from "redux-form"
+import Grid from "@material-ui/core/Grid"
+import Box from "@material-ui/core/Box"
+
+import { renderTextField } from "./ReduxForm"
+
+interface NewCollectionFormProps {}
+
+interface NewCollectionDispatchProps {}
+
+const NewCollectionForm: FunctionComponent<
+  NewCollectionDispatchProps & InjectedFormProps<NewCollectionFormProps, NewCollectionDispatchProps>
+> = ({ handleSubmit }) => {
+  return (
+    <>
+      <Box>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={3} direction="column">
+            <Grid item xs={12} sm={6}>
+              <Field
+                autoFocus
+                required
+                id="collectionName"
+                name="collectionName"
+                label="Collection name"
+                fullWidth
+                component={renderTextField}
+              />
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </>
+  )
+}
+
+const ReduxNewCollectionForm = reduxForm<NewCollectionFormProps, NewCollectionDispatchProps>({
+  form: "newCollectionForm"
+})(NewCollectionForm)
+
+export { ReduxNewCollectionForm as NewCollectionForm }

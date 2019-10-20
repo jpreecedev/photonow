@@ -5,6 +5,7 @@ import orderRoutes from "./order.routes"
 import faceRoutes from "./face.routes"
 import authRoutes from "./auth.routes"
 import usersRoutes from "./users.routes"
+import collectionsRoutes from "./collections.routes"
 
 function Router(app: Express) {
   app.use(`${process.env.BASE_API_URL}/moments`, momentsRouter)
@@ -13,6 +14,7 @@ function Router(app: Express) {
   app.use(`${process.env.BASE_API_URL}/face`, faceRoutes)
   app.use(`${process.env.BASE_API_URL}/auth`, authRoutes)
   app.use(`${process.env.BASE_API_URL}/users`, usersRoutes)
+  app.use(`${process.env.BASE_API_URL}/collections`, collectionsRoutes)
 }
 
 export default Router

@@ -8,6 +8,7 @@ declare module "multer-s3-transform"
 
 export interface Moment extends Document {
   photographerId: Types.ObjectId
+  collectionId: Types.ObjectId
   filename: string
   mimeType: string
   bucket: string
@@ -61,6 +62,12 @@ export interface Payment extends Document {
   purchased: Date
 }
 
+export interface Collection extends Document {
+  moments: Types.ObjectId[]
+  userId: Types.ObjectId
+  name: string
+}
+
 export interface UserRequest extends Request {
   user: User
 }
@@ -79,6 +86,11 @@ export interface OrderRequest extends Request {
   user: User
   file: UploadedFile
   params: OrderParams
+}
+
+export interface CreateCollectionRequest extends UserRequest {
+  id: string
+  name: string
 }
 
 export interface UploadedFile {
@@ -121,6 +133,7 @@ export interface JWTPayload {
 
 export interface PictureItem {
   momentId: string
+  collectionId: string
   label: string
   url: string
   price: number
@@ -190,6 +203,11 @@ export interface FacebookProfile extends Profile {
   name: { familyName: string; givenName: string }
   emails: [{ value: string }]
   birthday: string
+}
+
+export interface NewCollection {
+  _id?: string
+  name: string
 }
 
 declare module "*.gif" {

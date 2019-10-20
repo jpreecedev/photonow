@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "flex-end"
   },
   button: {
-    margin: theme.spacing(1)
+    marginTop: theme.spacing(1)
   },
   buttonProgress: {
     position: "absolute",
@@ -67,8 +67,6 @@ const RolesFormContainer: FunctionComponent<RolesFormContainerProps> = ({ rolesF
       const { success, data } = await getAsync<DatabaseUser[]>("/users")
       if (success) {
         setUsers(data)
-      } else {
-        setUsers([])
       }
     }
     fetchData()
