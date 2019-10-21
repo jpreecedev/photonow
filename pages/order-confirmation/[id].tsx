@@ -12,16 +12,16 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
 import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
 import CloudDownload from "@material-ui/icons/CloudDownload"
+import { Container } from "@material-ui/core"
 
 import * as server from "../../utils/server"
 import { Order, Moment } from "../../global"
-import { Main } from "../../layouts/main"
+import { MainLayout } from "../../layouts/main"
 
 const useStyles = makeStyles((theme: Theme) => ({
-  layout: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3)
   },
   paper: {
     padding: theme.spacing(2),
@@ -62,41 +62,43 @@ const OrderConfirmation: NextPage<OrderConfirmationProps> = () => {
   }, [router.query])
 
   return (
-    <Main gap>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" gutterBottom>
-            Your Order
-          </Typography>
-          <Typography component="p" gutterBottom>
-            Use the download buttons to download your high quality pictures
-          </Typography>
-          <List disablePadding>
-            {state.moments &&
-              state.moments.map(moment => (
-                <ListItem className={classes.listItem} key={moment.filename}>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={moment.filename}
-                      src={moment.resizedLocation}
-                      className={classes.avatar}
+    <MainLayout>
+      <main className={classes.content}>
+        <Container>
+          <Paper className={classes.paper}>
+            <Typography component="h1" variant="h4" gutterBottom>
+              Your Order
+            </Typography>
+            <Typography component="p" gutterBottom>
+              Use the download buttons to download your high quality pictures
+            </Typography>
+            <List disablePadding>
+              {state.moments &&
+                state.moments.map(moment => (
+                  <ListItem className={classes.listItem} key={moment.filename}>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={moment.filename}
+                        src={moment.resizedLocation}
+                        className={classes.avatar}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={moment.filename}
+                      secondary="High quality version ready to download."
                     />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={moment.filename}
-                    secondary="High quality version ready to download."
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="Download" href={moment.location}>
-                      <CloudDownload />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-          </List>
-        </Paper>
+                    <ListItemSecondaryAction>
+                      <IconButton edge="end" aria-label="Download" href={moment.location}>
+                        <CloudDownload />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                ))}
+            </List>
+          </Paper>
+        </Container>
       </main>
-    </Main>
+    </MainLayout>
   )
 }
 

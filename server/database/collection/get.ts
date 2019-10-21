@@ -1,21 +1,12 @@
 import { Types } from "mongoose"
 import { CollectionModel } from "../schema"
-import { ROLES } from "../../../utils/roles"
 
-async function getCollection(userId: Types.ObjectId, collectionId: Types.ObjectId) {
-  return await CollectionModel.findOne({ userId, _id: collectionId }).exec()
+async function getCollection(collectionId: Types.ObjectId) {
+  return await CollectionModel.findOne({ _id: collectionId }).exec()
 }
 
-async function getCollections(userId: Types.ObjectId, role: string) {
-  if (role === ROLES.Admin) {
-    return await CollectionModel.find({}).exec()
-  }
-
-  if (role === ROLES.Photographer) {
-    return await CollectionModel.find({ userId }).exec()
-  }
-
-  return []
+async function getCollections() {
+  return await CollectionModel.find({}).exec()
 }
 
 export { getCollections, getCollection }

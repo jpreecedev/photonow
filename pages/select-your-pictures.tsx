@@ -12,16 +12,16 @@ import Paper from "@material-ui/core/Paper"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles, Theme } from "@material-ui/core/styles"
+import { Container } from "@material-ui/core"
 
 import { AppState, PictureItem } from "../global"
-import { Main } from "../layouts/main"
+import { MainLayout } from "../layouts/main"
 import { actions } from "../store"
 
 const useStyles = makeStyles((theme: Theme) => ({
-  layout: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3)
   },
   paper: {
     padding: theme.spacing(2),
@@ -87,7 +87,7 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
         </Typography>
       </Box>
       <Box display="flex" justifyContent="center" mt={3}>
-        <Link href="/getting-started">
+        <Link href="/select-gallery">
           <Button size="large" color="primary" variant="contained">
             Try again
           </Button>
@@ -164,13 +164,15 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
   }
 
   return (
-    <Main gap>
-      <main className={classes.layout}>
-        <Paper className={classes.paper} elevation={2}>
-          {pictures && pictures.length > 0 ? renderPictures() : renderNoPicturesFound()}
-        </Paper>
+    <MainLayout>
+      <main className={classes.content}>
+        <Container maxWidth="md">
+          <Paper className={classes.paper} elevation={2}>
+            {pictures && pictures.length > 0 ? renderPictures() : renderNoPicturesFound()}
+          </Paper>
+        </Container>
       </main>
-    </Main>
+    </MainLayout>
   )
 }
 

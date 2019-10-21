@@ -7,9 +7,7 @@ import { getCollections, createCollection } from "../database/collection"
 
 async function get(req: UserRequest, res: Response) {
   try {
-    const { _id: userId, role } = req.user
-
-    const data = await getCollections(userId, role)
+    const data = await getCollections()
 
     return res.status(200).json(<ClientResponse<Collection[]>>{
       success: true,

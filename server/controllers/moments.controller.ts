@@ -35,10 +35,7 @@ async function post(req: FileRequest, res: Response) {
     }
 
     const result = await createMoment(moment)
-    const collection = await getCollection(
-      Types.ObjectId(photographerId),
-      Types.ObjectId(collectionId)
-    )
+    const collection = await getCollection(Types.ObjectId(collectionId))
 
     await faceRecognition.addImageToCollection(
       collection.name,

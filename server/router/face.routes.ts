@@ -2,18 +2,28 @@ import express, { Response } from "express"
 import multer from "multer"
 import { faceRecognition } from "../utils"
 import { ClientResponse, PictureItem } from "../../global"
+import { getCollection } from "../database/collection"
 
 const router = express.Router()
 const upload = multer()
 
 // @ts-ignore
-router.post("/", upload.single("photo"), async (req: FileRequest, res: Response) => {
+router.post("/:collectionId", upload.single("photo"), async (req: FileRequest, res: Response) => {
   const response = await faceRecognition.verifyFace(req.file.buffer)
   if (response) {
     try {
-      const { collectionName } = req.body
+      const { collectionId } = req.params
+      const collection = await getCollection(collectionId)
+
+      if (!collection) {
+        return res.status(404).json(<ClientResponse<String>>{
+          success: false,
+          data: "Collection was not found"
+        })
+      }
+
       const recogniseFromBuffer = await faceRecognition.recogniseFromBuffer(
-        collectionName,
+        collection.name,
         req.file.buffer
       )
 

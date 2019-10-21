@@ -63,7 +63,7 @@ const Splash = () => {
       <Typography align="center" component="p" variant="h4" className={classes.subTitle}>
         Use our face scanning tool to find pictures of yourself in a crowd
       </Typography>
-      <Link href="/getting-started">
+      <Link href="/select-gallery">
         <Button variant="contained" color="primary" size="large">
           Get Started
         </Button>

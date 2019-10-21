@@ -118,12 +118,14 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
             Create new collection
           </Button>
         </Grid>
-        <Grid item>
-          <Typography component="h2" variant="h6" color="primary" gutterBottom>
-            Upload pictures to the selected collection
-          </Typography>
-          <FileUpload collectionId={selectedCollection ? selectedCollection._id : undefined} />
-        </Grid>
+        {selectedCollection && (
+          <Grid item>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom>
+              Upload pictures to the "{selectedCollection.name}" collection
+            </Typography>
+            <FileUpload collectionId={selectedCollection ? selectedCollection._id : undefined} />
+          </Grid>
+        )}
       </Grid>
     </>
   )

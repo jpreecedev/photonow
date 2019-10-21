@@ -29,6 +29,7 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
+            fullWidth
             required
             label="Credit Card Number"
             id="cardNumber"
@@ -46,6 +47,7 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
+            fullWidth
             required
             id="expDate"
             label="Expiry date"
@@ -63,6 +65,7 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
         <Grid item xs={12} md={6}>
           <TextField
             required
+            fullWidth
             id="cvv"
             label="CVV"
             helperText="Last three digits on signature strip"

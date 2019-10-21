@@ -2,15 +2,15 @@ import React from "react"
 import { NextPage } from "next"
 import { connect, DispatchProp } from "react-redux"
 import dynamic from "next/dynamic"
-import Router from "next/router"
+import { useRouter } from "next/router"
 import { Typography } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Container } from "@material-ui/core"
 
-import * as server from "../utils/server"
-import { MainLayout } from "../layouts/main"
-import { actions } from "../store"
-import { PictureItem } from "../global"
+import * as server from "../../utils/server"
+import { MainLayout } from "../../layouts/main"
+import { actions } from "../../store"
+import { PictureItem } from "../../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -19,20 +19,25 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const Webcam = dynamic(import("../components/Webcam").then(instance => instance.Webcam), {
+const Webcam = dynamic(import("../../components/Webcam").then(instance => instance.Webcam), {
   ssr: false
 })
 
 const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
   const classes = useStyles({})
+  const router = useRouter()
   const [uploading, setUploading] = React.useState(false)
 
   const processImage = async (blob: Blob) => {
     setUploading(true)
-    const { success, data } = await server.uploadPhotoAsync<PictureItem[]>("/face", "A Face", blob)
+    const { success, data } = await server.uploadPhotoAsync<PictureItem[]>(
+      `/face/${router.query.collectionId}`,
+      "A Face",
+      blob
+    )
     if (success) {
       data.forEach(picture => dispatch(actions.pictures.addPicture(picture)))
-      Router.push("/select-your-pictures")
+      router.push("/select-your-pictures")
     }
     setUploading(false)
   }
@@ -40,7 +45,7 @@ const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
   return (
     <MainLayout>
       <main className={classes.content}>
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Typography component="h1" variant="h4" gutterBottom>
             Upload your face
           </Typography>

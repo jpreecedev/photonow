@@ -6,15 +6,15 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
+import { Container } from "@material-ui/core"
 
 import { CheckoutForm } from "../components/CheckoutForm"
-import { Main } from "../layouts/main"
+import { MainLayout } from "../layouts/main"
 
 const useStyles = makeStyles((theme: Theme) => ({
-  layout: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3)
   },
   paper: {
     padding: theme.spacing(2),
@@ -46,35 +46,40 @@ const Checkout: NextPage<CheckoutProps> = () => {
   }, [])
 
   return (
-    <Main gap>
+    <>
       <Head>
         <script src="https://js.stripe.com/v3/"></script>
       </Head>
-      <main className={classes.layout}>
-        <Paper className={classes.paper} elevation={2}>
-          <StripeProvider stripe={state.stripe}>
-            <Elements>
-              <>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  flexDirection="column"
-                >
-                  <Typography component="h1" variant="h4" gutterBottom>
-                    Checkout
-                  </Typography>
-                  <Typography component="p" gutterBottom>
-                    Purchase your selected pictures using the checkout form below
-                  </Typography>
-                </Box>
-                <CheckoutForm />
-              </>
-            </Elements>
-          </StripeProvider>
-        </Paper>
-      </main>
-    </Main>
+
+      <MainLayout>
+        <main className={classes.content}>
+          <Container maxWidth="md">
+            <Paper className={classes.paper} elevation={2}>
+              <StripeProvider stripe={state.stripe}>
+                <Elements>
+                  <>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      flexDirection="column"
+                    >
+                      <Typography component="h1" variant="h4" gutterBottom>
+                        Checkout
+                      </Typography>
+                      <Typography component="p" gutterBottom>
+                        Purchase your selected pictures using the checkout form below
+                      </Typography>
+                    </Box>
+                    <CheckoutForm />
+                  </>
+                </Elements>
+              </StripeProvider>
+            </Paper>
+          </Container>
+        </main>
+      </MainLayout>
+    </>
   )
 }
 
