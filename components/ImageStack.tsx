@@ -3,12 +3,20 @@ import React, { FunctionComponent } from "react"
 interface ImageStackProps {
   imgSrc: string
   caption: string
-  onClick: Function
+  onClick?: Function
+  size?: 250 | 150
+  selected?: boolean
 }
 
-const ImageStack: FunctionComponent<ImageStackProps> = ({ imgSrc, caption, onClick }) => {
+const ImageStack: FunctionComponent<ImageStackProps> = ({
+  imgSrc,
+  caption,
+  onClick,
+  size = 250,
+  selected = false
+}) => {
   return (
-    <div className="stack" onClick={() => onClick()}>
+    <div className="stack" onClick={() => onClick && onClick()}>
       <div className="image"></div>
       <span>{caption}</span>
       <style jsx>{`
@@ -22,7 +30,7 @@ const ImageStack: FunctionComponent<ImageStackProps> = ({ imgSrc, caption, onCli
         .stack {
           margin: 50px auto;
           position: relative;
-          cursor: pointer;
+          cursor: ${onClick ? "pointer" : "default"};
         }
         .stack:before {
           background: #eff4de;
@@ -39,9 +47,9 @@ const ImageStack: FunctionComponent<ImageStackProps> = ({ imgSrc, caption, onCli
         .stack,
         .stack:before,
         .stack:after {
-          border: 6px solid #fff;
-          width: 250px;
-          height: 180px;
+          border: 6px solid ${selected ? "limegreen" : "white"};
+          width: ${size}px;
+          height: ${size * 0.8}px;
           box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
         .stack:before,

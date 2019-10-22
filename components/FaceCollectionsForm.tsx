@@ -6,11 +6,11 @@ import FormControl from "@material-ui/core/FormControl"
 import InputLabel from "@material-ui/core/InputLabel"
 import Select from "@material-ui/core/Select"
 
-import { NewCollection } from "../global"
+import { Collection } from "../global"
 
 interface FaceCollectionsFormProps {
-  onSelectionChanged: (collection: NewCollection) => void
-  collections: NewCollection[]
+  onSelectionChanged: (collection: Collection) => void
+  collections: Collection[]
 }
 
 const useStyles = makeStyles((theme: Theme) => ({

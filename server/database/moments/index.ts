@@ -1,4 +1,4 @@
 import { createMoment } from "./create"
-import { getMoment, getMoments } from "./get"
+import { getMoment, getMoments, getMomentsByCollectionId } from "./get"
 
-export { createMoment, getMoment, getMoments }
+export { createMoment, getMoment, getMoments, getMomentsByCollectionId }

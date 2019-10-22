@@ -13,4 +13,10 @@ async function getMoments(ids: Types.ObjectId[]) {
   }).exec()
 }
 
-export { getMoment, getMoments }
+async function getMomentsByCollectionId(collectionId: Types.ObjectId) {
+  return await MomentModel.find({
+    collectionId
+  }).exec()
+}
+
+export { getMoment, getMoments, getMomentsByCollectionId }

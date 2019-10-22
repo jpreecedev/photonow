@@ -7,6 +7,12 @@ import { s3Upload } from "../utils"
 
 const router = express.Router()
 
+router.get(
+  "/:collectionId",
+  passport.authenticate("jwt", { failureRedirect: "/login" }),
+  // @ts-ignore
+  MomentsController.get
+)
 router.post(
   "/:collectionId",
   passport.authenticate("jwt", { failureRedirect: "/login" }),

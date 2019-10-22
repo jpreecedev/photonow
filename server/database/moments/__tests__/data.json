@@ -39,6 +39,20 @@
       "resizedLocation": "TT1 1TT",
       "resizedEtag": "Sample 2 State",
       "amount": 333
+    },
+    {
+      "_id": "5daf50d1d1eeaa57986399a5",
+      "photographerId": "5d73d17b2efd821fa43c17b6",
+      "collectionId": "5daf50c5d5cc390c47f3d36e",
+      "filename": "Sample 3 File Name",
+      "mimeType": "Sample 3 Customer",
+      "bucket": "sample3@sample3.com",
+      "contentType": "1 Sample 3 Street",
+      "location": "Sample 3 Area",
+      "originalEtag": "Sample 3 City",
+      "resizedLocation": "TT1 1TT",
+      "resizedEtag": "Sample 3 State",
+      "amount": 444
     }
   ]
 }

@@ -1,9 +1,25 @@
-import { Response } from "express"
-import { createMoment } from "../database/moments"
+import { Response, Request } from "express"
+import { createMoment, getMomentsByCollectionId } from "../database/moments"
 import { errorHandler, faceRecognition } from "../utils"
 import { FileRequest, Moment, ClientResponse } from "../../global"
 import { getCollection } from "../database/collection"
 import { Types } from "mongoose"
+
+async function get(req: Request, res: Response) {
+  try {
+    const { collectionId } = req.params
+
+    const data = await getMomentsByCollectionId(Types.ObjectId(collectionId))
+
+    return res.status(200).json(<ClientResponse<Moment[]>>{ success: true, data })
+  } catch (e) {
+    errorHandler.handle(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
+  }
+}
 
 async function post(req: FileRequest, res: Response) {
   try {
@@ -24,6 +40,7 @@ async function post(req: FileRequest, res: Response) {
 
     const moment = <Moment>{
       photographerId,
+      collectionId: Types.ObjectId(collectionId),
       filename: originalname,
       mimeType: mimetype,
       bucket: originalFile.bucket,
@@ -54,4 +71,4 @@ async function post(req: FileRequest, res: Response) {
   }
 }
 
-export default { post }
+export default { post, get }

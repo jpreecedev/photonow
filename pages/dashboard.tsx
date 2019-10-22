@@ -63,9 +63,7 @@ const Dashboard: NextPage<DashboardProps> = () => {
         <Container className={classes.container}>
           <Grid container>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <FaceCollectionsContainer />
-              </Paper>
+              <FaceCollectionsContainer />
             </Grid>
             {role === ROLES.Admin && (
               <Grid item xs={4}>

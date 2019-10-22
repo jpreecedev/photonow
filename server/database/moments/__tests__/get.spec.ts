@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getMoment, getMoments } from "../get"
+import { getMoment, getMomentsByCollectionId } from "../get"
 
 const dbHelper = TestDbHelper()
 
@@ -44,13 +44,10 @@ describe("Get moment tests", () => {
     expect(moment.amount).toEqual(testData.moments[1].amount)
   })
 
-  test("should get two moments", async () => {
-    const momentIds = [
-      Types.ObjectId(testData.moments[0]._id),
-      Types.ObjectId(testData.moments[1]._id)
-    ]
+  test("should get two moments using collection Id", async () => {
+    const collectionId = Types.ObjectId(testData.collections[0]._id)
 
-    const moments = await getMoments(momentIds)
+    const moments = await getMomentsByCollectionId(collectionId)
 
     expect(moments).toBeDefined()
     expect(moments.length).toEqual(2)
