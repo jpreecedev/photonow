@@ -3,7 +3,7 @@ import { errorHandler } from "../utils"
 import { ClientResponse, UserRequest, CreateCollectionRequest, Collection } from "../../global"
 import { faceRecognition } from "../utils"
 
-import { getCollections, createCollection } from "../database/collection"
+import { getCollections, createCollection, addCoverPhoto } from "../database/collection"
 
 async function get(req: UserRequest, res: Response) {
   try {
@@ -12,6 +12,26 @@ async function get(req: UserRequest, res: Response) {
     return res.status(200).json(<ClientResponse<Collection[]>>{
       success: true,
       data
+    })
+  } catch (e) {
+    errorHandler.handle(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
+  }
+}
+
+async function put(req: UserRequest, res: Response) {
+  try {
+    const { _id: userId } = req.user
+    const { collectionId, coverPhoto } = req.body
+
+    const data = await addCoverPhoto({ collectionId, coverPhoto, userId })
+
+    return res.status(200).json(<ClientResponse<boolean>>{
+      success: data,
+      data: null
     })
   } catch (e) {
     errorHandler.handle(e)
@@ -58,4 +78,4 @@ async function post(req: CreateCollectionRequest, res: Response) {
   }
 }
 
-export default { get, post }
+export default { get, post, put }

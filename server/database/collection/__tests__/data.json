@@ -65,6 +65,7 @@
     {
       "_id": "5dab31fb29947cc29e13296b",
       "userId": "5dac1640a44770f0715f0fac",
+      "coverPhoto": "5d73d69ef390eea3b2bfa4df",
       "name": "Test Collection 1"
     },
     {
@@ -75,6 +76,7 @@
     {
       "_id": "5dac16e3b1b72a9298840600",
       "userId": "5dac1684306ed43520067e3c",
+      "coverPhoto": "5dac16d4ebdb9d45d2d7fd05",
       "name": "Test Collection 3"
     }
   ]

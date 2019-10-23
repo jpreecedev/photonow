@@ -65,6 +65,7 @@ export interface Payment extends Document {
 export interface Collection extends Document {
   moments: Types.ObjectId[]
   userId: Types.ObjectId
+  coverPhoto?: Types.ObjectId
   name: string
 }
 

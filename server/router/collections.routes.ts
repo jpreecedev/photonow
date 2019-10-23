@@ -16,4 +16,12 @@ router.post(
   CollectionsController.post
 )
 
+router.put(
+  "/cover",
+  passport.authenticate("jwt", { failureRedirect: "/login" }),
+  utils.checkIsInRole(ROLES.Admin, ROLES.Photographer),
+  // @ts-ignore
+  CollectionsController.put
+)
+
 export default router

@@ -1,5 +1,5 @@
 import { Types } from "mongoose"
-import { createCollection } from "../create"
+import { createCollection, addCoverPhoto } from "../create"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
 import { Collection } from "../../../../global"
@@ -46,5 +46,15 @@ describe("Create collection tests", () => {
     collection.moments.forEach((moment, index) => {
       expect(moment).toEqual(newCollection.moments[index])
     })
+  })
+
+  test("should set the cover photo", async () => {
+    const collectionId = Types.ObjectId("5dab326748f8923dbffbbf92")
+    const coverPhoto = Types.ObjectId("5d73d6d317fde1fec95d6d1f")
+    const userId = Types.ObjectId("5dac1640a44770f0715f0fac")
+
+    const updatedCollection = await addCoverPhoto({ collectionId, coverPhoto, userId })
+
+    expect(updatedCollection).toEqual(true)
   })
 })

@@ -1,24 +1,45 @@
 import React, { FunctionComponent } from "react"
+import { Types } from "mongoose"
 import { Typography } from "@material-ui/core"
+import Grid from "@material-ui/core/Grid"
 
-import { ImageGallery } from "../components/ImageGallery"
+import { ImageStack } from "../components/ImageStack"
 import { Moment } from "../global"
-import { getAsync } from "../utils/server"
+import * as server from "../utils/server"
 
 interface CoverPhotoSelectorProps {
   selectedCollectionId: string
+  coverPhoto: Types.ObjectId
 }
 
 const CoverPhotoSelector: FunctionComponent<CoverPhotoSelectorProps> = ({
-  selectedCollectionId
+  selectedCollectionId,
+  coverPhoto
 }) => {
   const [moments, setMoments] = React.useState<Moment[]>([])
+  const [selectedCoverPhoto, setSelectedCoverPhoto] = React.useState<Moment>(null)
+
+  const handleSetCover = async (selectedMoment: Moment) => {
+    try {
+      const { success } = await server.putAsync<boolean>("/collections/cover", {
+        collectionId: selectedCollectionId,
+        coverPhoto: selectedMoment
+      })
+
+      if (success) {
+        setSelectedCoverPhoto(selectedMoment)
+      }
+    } catch (error) {
+      // TODO
+    }
+  }
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const { success, data } = await getAsync<Moment[]>(`/moments/${selectedCollectionId}`)
+      const { success, data } = await server.getAsync<Moment[]>(`/moments/${selectedCollectionId}`)
       if (success) {
         setMoments(data)
+        setSelectedCoverPhoto(data.find(photo => photo._id === coverPhoto))
       } else {
         setMoments([])
       }
@@ -36,13 +57,19 @@ const CoverPhotoSelector: FunctionComponent<CoverPhotoSelectorProps> = ({
   }
 
   return (
-    <ImageGallery
-      images={moments.map(moment => ({
-        key: moment._id,
-        name: moment.filename,
-        imgSrc: moment.resizedLocation
-      }))}
-    />
+    <Grid container spacing={3}>
+      {moments.map(moment => (
+        <Grid item xs={12} md={3} key={moment._id}>
+          <ImageStack
+            imgSrc={moment.resizedLocation}
+            caption={moment.filename}
+            size={150}
+            onClick={() => handleSetCover(moment)}
+            selected={selectedCoverPhoto && moment._id === selectedCoverPhoto._id}
+          />
+        </Grid>
+      ))}
+    </Grid>
   )
 }
 

@@ -1,9 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { connect } from "react-redux"
 import { FormState } from "redux-form"
-import { makeStyles, Theme } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
-import Grid from "@material-ui/core/Grid"
 
 import { Collection, AppState } from "../global"
 
@@ -35,11 +33,10 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
           <Typography component="p" gutterBottom>
             The currently active cover photo is highlighted in green
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item>
-              <CoverPhotoSelector selectedCollectionId={selectedCollection._id} />
-            </Grid>
-          </Grid>
+          <CoverPhotoSelector
+            selectedCollectionId={selectedCollection._id}
+            coverPhoto={selectedCollection.coverPhoto}
+          />
         </>
       )}
     </>
