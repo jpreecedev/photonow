@@ -7,7 +7,8 @@ import { getCollections, createCollection, addCoverPhoto } from "../database/col
 
 async function get(req: UserRequest, res: Response) {
   try {
-    const data = await getCollections()
+    const { populate } = req.query
+    const data = await getCollections(populate)
 
     return res.status(200).json(<ClientResponse<Collection[]>>{
       success: true,

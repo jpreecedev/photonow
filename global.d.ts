@@ -69,6 +69,10 @@ export interface Collection extends Document {
   name: string
 }
 
+export interface CollectionWithCoverPhoto extends Collection {
+  coverPhoto?: Moment
+}
+
 export interface UserRequest extends Request {
   user: User
 }
