@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from "react"
-import Router from "next/router"
-import { connect, DispatchProp } from "react-redux"
+import { DispatchProp, connect } from "react-redux"
 import { FormState } from "redux-form"
-import { injectStripe, ReactStripeElements } from "react-stripe-elements"
+import { ReactStripeElements } from "react-stripe-elements"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Button from "@material-ui/core/Button"
 import CircularProgress from "@material-ui/core/CircularProgress"
@@ -10,9 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 import { AddressForm } from "./AddressForm"
 import { PaymentForm } from "./PaymentForm"
 import { Review } from "./Review"
-import { AppState, PictureItem } from "../global"
-import * as server from "../utils/server"
-import { actions } from "../store"
+import { PictureItem, BillingDetails, AppState } from "../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttons: {
@@ -36,54 +33,42 @@ interface CheckoutFormProps {
   addressForm: FormState
   paymentForm: FormState
   pictures: PictureItem[]
+  processing: boolean
+  handleOrder: (token: stripe.Token, billingDetails: BillingDetails) => void
 }
 
 const CheckoutForm: FunctionComponent<
   ReactStripeElements.InjectedStripeProps & CheckoutFormProps & DispatchProp<any>
-> = ({ stripe, addressForm, paymentForm, pictures, dispatch }) => {
-  const [processing, setProcessing] = React.useState(false)
+> = ({ stripe, addressForm, paymentForm, processing, handleOrder }) => {
   const classes = useStyles({})
 
-  const handleOrder = async () => {
-    setProcessing(true)
-
-    try {
-      const billingDetails = {
-        name: paymentForm.values.cardName,
-        email: addressForm.values.emailAddress,
-        addressLine1: addressForm.values.address1,
-        addressLine2: addressForm.values.address2,
-        city: addressForm.values.city,
-        postalCode: addressForm.values.postalCode,
-        state: addressForm.values.state,
-        country: addressForm.values.country
-      }
-
-      const { token } = await stripe.createToken({
-        type: "card",
-        name: billingDetails.name,
-        address_line1: billingDetails.addressLine1,
-        address_line2: billingDetails.addressLine2,
-        address_city: billingDetails.city,
-        address_state: billingDetails.state,
-        address_zip: billingDetails.postalCode,
-        address_country: billingDetails.country
-      })
-
-      const { success, data } = await server.postAsync<string>("/payment", {
-        tokenId: token.id,
-        billingDetails,
-        pictures: pictures.filter(picture => picture.addedToBasket)
-      })
-
-      if (success) {
-        dispatch(actions.pictures.clearBasket())
-        Router.push(data)
-        return
-      }
-    } finally {
-      setProcessing(false)
+  const getOrderDetails = async (): Promise<{
+    token: stripe.Token
+    billingDetails: BillingDetails
+  }> => {
+    const billingDetails = {
+      name: paymentForm.values.cardName,
+      email: addressForm.values.emailAddress,
+      addressLine1: addressForm.values.address1,
+      addressLine2: addressForm.values.address2,
+      city: addressForm.values.city,
+      postalCode: addressForm.values.postalCode,
+      state: addressForm.values.state,
+      country: addressForm.values.country
     }
+
+    const { token } = await stripe.createToken({
+      type: "card",
+      name: billingDetails.name,
+      address_line1: billingDetails.addressLine1,
+      address_line2: billingDetails.addressLine2,
+      address_city: billingDetails.city,
+      address_state: billingDetails.state,
+      address_zip: billingDetails.postalCode,
+      address_country: billingDetails.country
+    })
+
+    return { token, billingDetails }
   }
 
   return (
@@ -99,7 +84,10 @@ const CheckoutForm: FunctionComponent<
           disabled={processing}
           variant="contained"
           color="primary"
-          onClick={handleOrder}
+          onClick={async () => {
+            const { token, billingDetails } = await getOrderDetails()
+            await handleOrder(token, billingDetails)
+          }}
           className={classes.button}
         >
           {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
@@ -116,6 +104,4 @@ const ConnectedCheckoutForm = connect((state: AppState) => ({
   paymentForm: state.form.paymentForm
 }))(CheckoutForm)
 
-const InjectedCheckoutForm = injectStripe(ConnectedCheckoutForm)
-
-export { InjectedCheckoutForm as CheckoutForm }
+export { ConnectedCheckoutForm as CheckoutForm }

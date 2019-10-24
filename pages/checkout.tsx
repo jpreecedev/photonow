@@ -1,20 +1,24 @@
 import React from "react"
-import { Elements, StripeProvider } from "react-stripe-elements"
 import { NextPage } from "next"
-import Head from "next/head"
 import { makeStyles, Theme } from "@material-ui/core/styles"
+import Head from "next/head"
 import Paper from "@material-ui/core/Paper"
 import Box from "@material-ui/core/Box"
 import Typography from "@material-ui/core/Typography"
+import { Elements, StripeProvider } from "react-stripe-elements"
 import { Container } from "@material-ui/core"
 
-import { CheckoutForm } from "../components/CheckoutForm"
 import { MainLayout } from "../layouts/main"
+import { CheckoutFormContainer } from "../components/CheckoutFormContainer"
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      padding: theme.spacing(3)
+    }
   },
   paper: {
     padding: theme.spacing(2),
@@ -29,15 +33,14 @@ interface CheckoutProps {}
 
 const Checkout: NextPage<CheckoutProps> = () => {
   const classes = useStyles({})
-
-  const [state, setState] = React.useState({ stripe: null })
   const watchRef = React.useRef(false)
+  const [stripe, setStripe] = React.useState(null)
 
   React.useEffect(() => {
     if (!watchRef.current) {
       const interval = setInterval(() => {
         if (window && window.Stripe) {
-          setState({ stripe: window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY) })
+          setStripe(window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY))
           clearInterval(interval)
         }
       }, 100)
@@ -50,29 +53,26 @@ const Checkout: NextPage<CheckoutProps> = () => {
       <Head>
         <script src="https://js.stripe.com/v3/"></script>
       </Head>
-
       <MainLayout>
         <main className={classes.content}>
           <Container maxWidth="md">
             <Paper className={classes.paper} elevation={2}>
-              <StripeProvider stripe={state.stripe}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                flexDirection="column"
+              >
+                <Typography component="h1" variant="h4" gutterBottom>
+                  Checkout
+                </Typography>
+                <Typography component="p" gutterBottom>
+                  Purchase your selected pictures using the checkout form below
+                </Typography>
+              </Box>
+              <StripeProvider stripe={stripe}>
                 <Elements>
-                  <>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      flexDirection="column"
-                    >
-                      <Typography component="h1" variant="h4" gutterBottom>
-                        Checkout
-                      </Typography>
-                      <Typography component="p" gutterBottom>
-                        Purchase your selected pictures using the checkout form below
-                      </Typography>
-                    </Box>
-                    <CheckoutForm />
-                  </>
+                  <CheckoutFormContainer />
                 </Elements>
               </StripeProvider>
             </Paper>

@@ -3,6 +3,7 @@ import { Profile } from "passport-google-oauth"
 import { Document, Types } from "mongoose"
 import { Reducer, AnyAction } from "redux"
 import { FormStateMap } from "redux-form"
+import { ReactStripeElements } from "react-stripe-elements"
 
 declare module "multer-s3-transform"
 
@@ -92,6 +93,17 @@ export interface OrderRequest extends Request {
   user: User
   file: UploadedFile
   params: OrderParams
+}
+
+export interface BillingDetails {
+  name: string
+  email: string
+  addressLine1: string
+  addressLine2: string
+  city: string
+  postalCode: string
+  state: string
+  country: string
 }
 
 export interface CreateCollectionRequest extends UserRequest {
