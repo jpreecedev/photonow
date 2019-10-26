@@ -125,7 +125,7 @@ const ManageCollections: FunctionComponent<ManageCollectionsProps> = ({
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
               Upload pictures to the "{selectedCollection.name}" collection
             </Typography>
-            <FileUpload collectionId={selectedCollection ? selectedCollection._id : undefined} />
+            <FileUpload url={`/api/moments/${selectedCollection._id}`} />
           </Grid>
         )}
       </Grid>

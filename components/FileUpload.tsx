@@ -16,27 +16,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-interface FileUploadProps {
-  collectionId: string
+type FileUploadProps<T extends object> = {
+  url: string
+  allowMultiple?: boolean
+  onUploaded?: (data: T) => void
 }
 
-const FileUpload: FunctionComponent<FileUploadProps> = ({ collectionId }) => {
+const FileUpload = <T extends object>({ url, allowMultiple, onUploaded }: FileUploadProps<T>) => {
   const [state, setState] = React.useState([])
   const classes = useStyles({})
 
-  const [server, setServer] = React.useState(`/api/moments/${collectionId}`)
+  const [server, setServer] = React.useState(url)
 
   React.useEffect(() => {
-    setServer(`/api/moments/${collectionId}`)
-  }, [collectionId])
+    setServer(url)
+  }, [url])
 
   return (
     <section id="upload" className={classes.container}>
       <FilePond
-        metadata={{ collectionId }}
         files={state}
-        allowMultiple={true}
+        allowMultiple={allowMultiple}
         server={server}
+        onprocessfile={(error, response) => {
+          if (onUploaded && !error) {
+            onUploaded(JSON.parse((response as any).serverId).data)
+          }
+        }}
+        name="filepond"
         onupdatefiles={items => {
           setState(items.map(item => item.file))
         }}

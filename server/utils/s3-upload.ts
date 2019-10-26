@@ -2,7 +2,6 @@ import aws from "aws-sdk"
 import multer from "multer"
 import multerS3 from "multer-s3-transform"
 import sharp, { Sharp } from "sharp"
-import { join } from "path"
 import { Request, Response, NextFunction } from "express"
 import { MulterFile } from "../../global"
 

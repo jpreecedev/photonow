@@ -9,6 +9,7 @@ import { DefaultButton } from "./DefaultButton"
 
 interface WebcamProps {
   onCapture: (blob: Blob) => void
+  onWebcamUnavailable: () => void
   isUploading: boolean
 }
 
@@ -60,7 +61,11 @@ const b64toBlob = (b64Data: string, contentType = "", sliceSize = 512) => {
   return new Blob(byteArrays, { type: contentType })
 }
 
-const Webcam: FunctionComponent<WebcamProps> = ({ onCapture, isUploading }) => {
+const Webcam: FunctionComponent<WebcamProps> = ({
+  onCapture,
+  onWebcamUnavailable,
+  isUploading
+}) => {
   const theme: Theme = useTheme()
   const classes = useStyles({})
 
@@ -108,6 +113,7 @@ const Webcam: FunctionComponent<WebcamProps> = ({ onCapture, isUploading }) => {
         width={videoConstraints.width}
         videoConstraints={videoConstraints}
         screenshotQuality={1}
+        onUserMediaError={onWebcamUnavailable}
       />
       <div className={classes.wrapper}>
         <DefaultButton
