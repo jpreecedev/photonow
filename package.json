@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "pm2 deploy ecosystem.config.js production",
     "dev": "nodemon",
     "build:next": "next build",
     "build:server": "cross-env NODE_ENV=production tsc --project tsconfig.server.json",
