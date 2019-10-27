@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "pm2 deploy ecosystem.config.js production",
     "dev": "nodemon",
-    "build:next": "next build",
+    "build:next": "cross-env NODE_OPTIONS=--max_old_space_size=4096next build",
     "build:server": "cross-env NODE_ENV=production tsc --project tsconfig.server.json",
     "start:server": "cross-env NODE_ENV=production node dist/server/index.js",
     "start": "npm run build:next && npm run build:server && npm run start:server",
