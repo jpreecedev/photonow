@@ -2,7 +2,10 @@ module.exports = {
   apps: [
     {
       name: "PhotoNow",
-      script: "./dist/server/index.js"
+      script: "./dist/server/index.js",
+      env: {
+        NODE_ENV: "production"
+      }
     }
   ],
   deploy: {
