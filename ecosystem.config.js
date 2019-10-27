@@ -17,7 +17,7 @@ module.exports = {
       repo: "git@github.com:jpreecedev/photonow.git",
       path: "/home/root/source/photonow",
       "post-deploy":
-        "npm install && npm run build:next && npm run build:server pm2 startOrRestart ecosystem.config.js"
+        "npm install && npm run build:next && npm run build:server && pm2 startOrRestart ecosystem.config.js"
     }
   }
 }
