@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "restart": "pm2 startOrRestart ecosystem.config.js",
     "deploy": "pm2 deploy ecosystem.config.js production",
     "dev": "nodemon",
     "build:next": "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build",
