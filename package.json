@@ -7,10 +7,9 @@
     "restart": "pm2 startOrRestart ecosystem.config.js",
     "deploy": "pm2 deploy ecosystem.config.js production",
     "dev": "nodemon",
-    "build:next": "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build",
-    "build:server": "cross-env NODE_ENV=production tsc --project tsconfig.server.json",
+    "build": "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build && cross-env NODE_ENV=production tsc --project tsconfig.server.json",
     "start:server": "cross-env NODE_ENV=production node dist/server/index.js",
-    "start": "npm run build:next && npm run build:server && npm run start:server",
+    "start": "npm run build && npm run start:server",
     "test": "npm run test:server && npm run test:client",
     "test:server": "jest --config ./jest.server.config.js",
     "test:client": "jest --config ./jest.client.config.js",
@@ -66,7 +65,12 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "@babel/core": "^7.6.4",
+    "@semantic-release/commit-analyzer": "^6.3.1",
+    "@semantic-release/exec": "^3.3.8",
+    "@semantic-release/release-notes-generator": "^7.3.2",
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
     "@types/aws-sdk": "^2.7.0",
@@ -99,6 +103,8 @@
     "@types/sharp": "^0.23.0",
     "@types/stripe": "^7.10.3",
     "@types/uuid": "^3.4.5",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
     "cross-env": "^6.0.3",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
@@ -107,6 +113,7 @@
     "nodemon": "^1.19.4",
     "pm2": "^4.1.2",
     "prettier": "^1.18.2",
+    "semantic-release": "^15.13.28",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
@@ -114,6 +121,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "npm test"
     }
   },
@@ -122,5 +130,23 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/exec",
+        {
+          "verifyConditionsCmd": "npm run build && npm run test",
+          "publishCmd": "npm run deploy"
+        }
+      ]
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
