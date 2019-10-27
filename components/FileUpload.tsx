@@ -22,7 +22,11 @@ type FileUploadProps<T extends object> = {
   onUploaded?: (data: T) => void
 }
 
-const FileUpload = <T extends object>({ url, allowMultiple, onUploaded }: FileUploadProps<T>) => {
+const FileUpload = <T extends object>({
+  url,
+  allowMultiple = true,
+  onUploaded
+}: FileUploadProps<T>) => {
   const [state, setState] = React.useState([])
   const classes = useStyles({})
 
