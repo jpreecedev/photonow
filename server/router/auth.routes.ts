@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express"
+import passport from "passport"
 import { to } from "await-to-js"
 import { utils } from "../auth"
 import { login } from "../auth/strategies/jwt"
@@ -7,6 +8,14 @@ import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../globa
 import { ROLES } from "../../utils/roles"
 
 const router = express.Router()
+
+router.get("/", passport.authenticate("jwt"), (req: Request, res: Response) => {
+  if (req.user) {
+    return res.status(200).json(<ClientResponse<{}>>{ success: true, data: null })
+  }
+
+  return res.status(403).json(<ClientResponse<{}>>{ success: false, data: null })
+})
 
 router.get("/logout", async (req: Request, res: Response) => {
   return res

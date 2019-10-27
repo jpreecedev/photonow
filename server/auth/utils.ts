@@ -123,7 +123,7 @@ const getRedirectUrl = (role: string) => {
     case ROLES.Photographer:
       return "/dashboard"
   }
-  return "/getting-started"
+  return "/select-gallery"
 }
 
 export {

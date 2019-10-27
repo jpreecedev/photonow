@@ -98,7 +98,7 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
             color="inherit"
             onClick={() => {
               if (addedToBasket === 0) {
-                Router.push("/getting-started")
+                Router.push("/select-gallery")
                 return
               }
               Router.push("/select-your-pictures")
