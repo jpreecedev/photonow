@@ -10,7 +10,7 @@ const uploadPhotoAsync = async <T>(
   blob: Blob
 ): Promise<ClientResponse<T>> => {
   const formData = new FormData()
-  formData.append("photo", blob, filename)
+  formData.append("filepond", blob, filename)
 
   const options = {
     method: "POST",
