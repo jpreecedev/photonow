@@ -179,7 +179,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
         </nav>
       )}
       <Container maxWidth={maxWidth}>
-        <Box m={5} flexGrow={1}>
+        <Box mt={5} mb={5} flexGrow={1}>
           {showNavigation && <div className={classes.toolbar} />}
           {title && (
             <Typography variant="h4" component="h1" gutterBottom>

@@ -6,11 +6,12 @@ import { BillingDetails } from "../global"
 interface StripePaymentButtonProps {
   loaded: (success: boolean) => void
   handleOrder: (token: stripe.Token, billingDetails: BillingDetails) => void
+  orderTotal: number
 }
 
 const StripePaymentButton: FunctionComponent<
   ReactStripeElements.InjectedStripeProps & StripePaymentButtonProps
-> = ({ stripe, handleOrder, loaded }) => {
+> = ({ stripe, handleOrder, loaded, orderTotal }) => {
   const paymentRequestRef = React.useRef(null)
 
   const [canMakePayment, setCanMakePayment] = React.useState<boolean>(false)
@@ -24,8 +25,8 @@ const StripePaymentButton: FunctionComponent<
       country: "GB",
       currency: "gbp",
       total: {
-        label: "Demo total",
-        amount: 1
+        label: "Purchase of precious moments from PhotoNow.io",
+        amount: orderTotal
       },
       requestPayerName: true,
       requestPayerEmail: true

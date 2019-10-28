@@ -24,7 +24,7 @@ async function getRole(req: Request, res: Response) {
   try {
     const role = await utils.getUserRole(req)
 
-    return res.status(200).json(<ClientResponse<DatabaseUser[]>>{
+    return res.status(200).json(<ClientResponse<string>>{
       success: true,
       data: role
     })

@@ -60,17 +60,18 @@ const CheckoutFormContainer: FunctionComponent<
   return (
     <>
       {success && (
-        <>
+        <Box mt={5}>
           <Typography component="h2" variant="h5" gutterBottom>
             Express checkout
           </Typography>
           <Typography component="p" gutterBottom>
             Pay for your pictures faster with express checkout
           </Typography>
-        </>
+        </Box>
       )}
       <Box mb={5}>
         <StripePaymentButton
+          orderTotal={pictures.reduce((acc, current) => (acc += current.price), 0)}
           stripe={stripe}
           handleOrder={handleOrder}
           loaded={success => {

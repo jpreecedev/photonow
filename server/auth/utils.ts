@@ -96,7 +96,7 @@ const isAuthenticated = async (req: Request, res: Response, next: NextFunction) 
   )
 }
 
-const getUserRole = async (req: Request) => {
+const getUserRole = async (req: Request): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (!req.cookies.jwt) {
       return reject("Unauthorised request")
