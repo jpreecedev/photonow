@@ -29,8 +29,7 @@
       "location": "Sample Area",
       "originalEtag": "Sample City",
       "resizedLocation": "TT1 1TT",
-      "resizedEtag": "Sample State",
-      "amount": 222
+      "resizedEtag": "Sample State"
     },
     {
       "_id": "5d73d6d317fde1fec95d6d1f",
@@ -43,8 +42,7 @@
       "location": "Sample 2 Area",
       "originalEtag": "Sample 2 City",
       "resizedLocation": "TT1 1TT",
-      "resizedEtag": "Sample 2 State",
-      "amount": 333
+      "resizedEtag": "Sample 2 State"
     },
     {
       "_id": "5dac16d4ebdb9d45d2d7fd05",
@@ -57,8 +55,7 @@
       "location": "Sample 4 Area",
       "originalEtag": "Sample 4 City",
       "resizedLocation": "TT1 1TT",
-      "resizedEtag": "Sample 4 State",
-      "amount": 444
+      "resizedEtag": "Sample 4 State"
     }
   ],
   "collections": [
@@ -66,18 +63,21 @@
       "_id": "5dab31fb29947cc29e13296b",
       "userId": "5dac1640a44770f0715f0fac",
       "coverPhoto": "5d73d69ef390eea3b2bfa4df",
-      "name": "Test Collection 1"
+      "name": "Test Collection 1",
+      "price": 599
     },
     {
       "_id": "5dab326748f8923dbffbbf92",
       "userId": "5dac1640a44770f0715f0fac",
-      "name": "Test Collection 2"
+      "name": "Test Collection 2",
+      "price": 699
     },
     {
       "_id": "5dac16e3b1b72a9298840600",
       "userId": "5dac1684306ed43520067e3c",
       "coverPhoto": "5dac16d4ebdb9d45d2d7fd05",
-      "name": "Test Collection 3"
+      "name": "Test Collection 3",
+      "price": 799
     }
   ]
 }

@@ -41,7 +41,6 @@ describe("Get moment tests", () => {
     expect(moment.originalEtag).toEqual(testData.moments[1].originalEtag)
     expect(moment.resizedLocation).toEqual(testData.moments[1].resizedLocation)
     expect(moment.resizedEtag).toEqual(testData.moments[1].resizedEtag)
-    expect(moment.amount).toEqual(testData.moments[1].amount)
   })
 
   test("should get two moments using collection Id", async () => {
@@ -64,7 +63,6 @@ describe("Get moment tests", () => {
       expect(moment.originalEtag).toEqual(testData.moments[index].originalEtag)
       expect(moment.resizedLocation).toEqual(testData.moments[index].resizedLocation)
       expect(moment.resizedEtag).toEqual(testData.moments[index].resizedEtag)
-      expect(moment.amount).toEqual(testData.moments[index].amount)
     })
   })
 })

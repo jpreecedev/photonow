@@ -32,7 +32,8 @@ describe("Create collection tests", () => {
         Types.ObjectId("5d73d6d317fde1fec95d6d1f")
       ],
       userId: Types.ObjectId("5d73d17b2efd821fa43c17b6"),
-      name: "Some Test Collection"
+      name: "Some Test Collection",
+      price: 799
     }
 
     const newCollection = await createCollection(collection)
@@ -42,6 +43,7 @@ describe("Create collection tests", () => {
     expect(newCollection.userId).toEqual(collection.userId)
     expect(newCollection.moments).toHaveLength(2)
     expect(newCollection.name).toEqual(collection.name)
+    expect(newCollection.price).toEqual(collection.price)
 
     collection.moments.forEach((moment, index) => {
       expect(moment).toEqual(newCollection.moments[index])

@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { NextPage } from "next"
 import Link from "next/link"
-import { Box } from "@material-ui/core"
+import { Box, Paper, Typography, Grid } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
 import { MainLayout } from "../layouts/main"

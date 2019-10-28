@@ -71,13 +71,6 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
 router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res: Response) => {
   const { firstName, lastName, email, password } = req.body
 
-  if (process.env.IS_REGISTRATION_DISABLED === "true") {
-    return res.status(500).json(<ClientResponse<string>>{
-      success: false,
-      data: "Sorry, registration is currently closed."
-    })
-  }
-
   if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(email)) {
     return res
       .status(500)

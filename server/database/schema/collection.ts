@@ -5,7 +5,8 @@ const CollectionSchema = new Schema({
   moments: [{ type: Schema.Types.ObjectId, ref: "Moment" }],
   userId: { type: Schema.Types.ObjectId, ref: "User" },
   coverPhoto: { type: Schema.Types.ObjectId, ref: "Moment" },
-  name: String
+  name: String,
+  price: Number
 })
 
 const CollectionModel: Model<Collection> = model<Collection>("Collection", CollectionSchema)

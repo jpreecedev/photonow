@@ -41,7 +41,7 @@ const verifyFace = async (req: FileRequest, res: Response) => {
       }
 
       const recogniseFromBuffer = await faceRecognition.recogniseFromBuffer(
-        collection.name,
+        collection,
         req.file.buffer
       )
 

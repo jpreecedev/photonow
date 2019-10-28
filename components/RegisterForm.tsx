@@ -99,11 +99,8 @@ const RegisterForm: FunctionComponent<InjectedFormProps<RegisterFormProps>> = ({
         component={renderTextField}
       />
       <Box mb={6}>
-        {process.env.IS_REGISTRATION_DISABLED === "true" && (
-          <p className={classes.error}>Sorry, registration is currently closed.</p>
-        )}
         <Button
-          disabled={submitting || process.env.IS_REGISTRATION_DISABLED === "true"}
+          disabled={submitting}
           type="submit"
           variant="contained"
           color="primary"

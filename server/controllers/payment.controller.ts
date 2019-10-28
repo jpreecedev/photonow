@@ -2,11 +2,20 @@ import { Response } from "express"
 import Stripe from "stripe"
 import { Types } from "mongoose"
 
+import {
+  Moment,
+  UserRequest,
+  Order,
+  Payment,
+  PictureItem,
+  ClientResponse,
+  Collection
+} from "../../global"
 import { createPayment } from "../database/payment"
 import { createOrder } from "../database/order"
 import { getMoments } from "../database/moments"
 import { errorHandler } from "../utils"
-import { Moment, UserRequest, Order, Payment, PictureItem, ClientResponse } from "../../global"
+import { getCollection } from "../database/collection"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
@@ -16,8 +25,8 @@ interface PaymentRequest {
   pictures: PictureItem[]
 }
 
-function calculateOrderAmount(moments: Moment[]) {
-  return moments.length * Number.parseInt(process.env.DEFAULT_MOMENT_PRICE, 10)
+function calculateOrderAmount(collection: Collection, moments: Moment[]) {
+  return moments.length * collection.price
 }
 
 async function post(req: UserRequest, res: Response) {
@@ -42,7 +51,10 @@ async function post(req: UserRequest, res: Response) {
       []
     )
 
-    const amount = calculateOrderAmount(await getMoments(momentIds))
+    const moments = await getMoments(momentIds)
+    const collection = await getCollection(moments[0].collectionId)
+
+    const amount = calculateOrderAmount(collection, moments)
 
     const newOrder = <Order>{
       moments: momentIds,

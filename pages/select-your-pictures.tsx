@@ -126,7 +126,7 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
                 <CardContent className={classes.cardContent}>
                   <Typography>
                     Your picture is available for purchase for only &pound;
-                    {Number.parseInt(process.env.DEFAULT_MOMENT_PRICE) / 100}
+                    {picture.price / 100}
                   </Typography>
                 </CardContent>
                 <CardActions>

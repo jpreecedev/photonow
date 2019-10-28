@@ -36,15 +36,13 @@ describe("Create moment tests", () => {
       location: "Test Area",
       originalEtag: "Test City",
       resizedLocation: "TT1 1TT",
-      resizedEtag: "Test State",
-      amount: 100
+      resizedEtag: "Test State"
     }
 
     const newMoment = await createMoment(moment)
 
     expect(newMoment).toBeDefined()
     expect(newMoment._id).not.toBeUndefined()
-    expect(newMoment.amount).toEqual(moment.amount)
     expect(newMoment.photographerId).toEqual(moment.photographerId)
     expect(newMoment.collectionId).toEqual(moment.collectionId)
     expect(newMoment.filename).toEqual(moment.filename)

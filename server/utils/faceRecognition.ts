@@ -1,7 +1,7 @@
 import AWS from "aws-sdk"
 import { Types } from "mongoose"
 import { getMoments } from "../database/moments"
-import { PictureItem } from "../../global"
+import { PictureItem, Collection } from "../../global"
 import { formatCollectionName } from "./collection"
 
 const rekognition = new AWS.Rekognition({ region: process.env.AWS_REGION })
@@ -44,11 +44,11 @@ async function createCollection(collectionName: string) {
   })
 }
 
-async function recogniseFromBuffer(name: string, image: Buffer): Promise<PictureItem[]> {
+async function recogniseFromBuffer(collection: Collection, image: Buffer): Promise<PictureItem[]> {
   return new Promise((resolve, reject) => {
     rekognition.searchFacesByImage(
       {
-        CollectionId: formatCollectionName(name),
+        CollectionId: formatCollectionName(collection.name),
         FaceMatchThreshold: 95,
         Image: { Bytes: image },
         MaxFaces: 5
@@ -70,10 +70,6 @@ async function recogniseFromBuffer(name: string, image: Buffer): Promise<Picture
             Array.from(matchSet).map((c: string) => Types.ObjectId(c))
           )
 
-          moments.forEach(
-            moment => (moment.amount = Number.parseInt(process.env.DEFAULT_MOMENT_PRICE))
-          )
-
           return resolve(
             moments.map(
               moment =>
@@ -81,7 +77,7 @@ async function recogniseFromBuffer(name: string, image: Buffer): Promise<Picture
                   momentId: moment._id,
                   label: moment.filename,
                   url: moment.resizedLocation,
-                  price: moment.amount,
+                  price: collection.price || Number.parseInt(process.env.DEFAULT_MOMENT_PRICE, 10),
                   addedToBasket: false
                 }
             )

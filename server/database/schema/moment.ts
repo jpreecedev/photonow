@@ -11,8 +11,7 @@ const MomentSchema = new Schema({
   location: String,
   originalEtag: String,
   resizedLocation: String,
-  resizedEtag: String,
-  amount: Number // Calculated field and almost certainly wrong!
+  resizedEtag: String
 })
 
 const MomentModel: Model<Moment> = model<Moment>("Moment", MomentSchema)

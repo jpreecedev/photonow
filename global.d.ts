@@ -18,7 +18,6 @@ export interface Moment extends Document {
   originalEtag: string
   resizedLocation: string
   resizedEtag: string
-  amount: number
 }
 
 export interface User extends Document {
@@ -68,6 +67,7 @@ export interface Collection extends Document {
   userId: Types.ObjectId
   coverPhoto?: Types.ObjectId
   name: string
+  price: number
 }
 
 export interface CollectionWithCoverPhoto extends Collection {
@@ -156,6 +156,7 @@ export interface PictureItem {
   url: string
   price: number
   addedToBasket: boolean
+  price: number
 }
 
 export interface AddPictureAction {
