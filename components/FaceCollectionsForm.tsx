@@ -48,7 +48,7 @@ const FaceCollectionsForm: FunctionComponent<FaceCollectionsFormProps> = ({
               }}
               fullWidth
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 -- Please Select --
               </option>
               {collections.map(option => (

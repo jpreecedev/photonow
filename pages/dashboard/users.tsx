@@ -5,8 +5,6 @@ import { Grid } from "@material-ui/core"
 import { Paper } from "@material-ui/core"
 
 import { RolesFormContainer } from "../../components/RolesFormContainer"
-import { ROLES } from "../../utils/roles"
-import { getAsync } from "../../utils/server"
 
 import { MainLayout } from "../../layouts/main"
 
@@ -31,27 +29,14 @@ interface CollectionsProps {}
 
 const Collections: NextPage<CollectionsProps> = () => {
   const classes = useStyles({})
-  const [role, setRole] = React.useState<string>(ROLES.Customer)
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const { success, data } = await getAsync<string>("/users/role")
-      if (success) {
-        setRole(data)
-      }
-    }
-    fetchData()
-  }, [])
 
   return (
     <MainLayout showNavigation={true} title="Users" maxWidth={false}>
-      {role === ROLES.Admin && (
-        <Grid item xs={4}>
-          <Paper className={classes.paper}>
-            <RolesFormContainer />
-          </Paper>
-        </Grid>
-      )}
+      <Grid item xs={4}>
+        <Paper className={classes.paper}>
+          <RolesFormContainer />
+        </Paper>
+      </Grid>
     </MainLayout>
   )
 }

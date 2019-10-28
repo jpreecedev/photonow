@@ -1,18 +1,22 @@
 import React, { FunctionComponent } from "react"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
-import { Drawer } from "@material-ui/core"
-import { Container } from "@material-ui/core"
-import { List } from "@material-ui/core"
-import { ListItem } from "@material-ui/core"
-import { ListItemIcon } from "@material-ui/core"
-import { ListItemText } from "@material-ui/core"
-import { Box } from "@material-ui/core"
-import { Typography } from "@material-ui/core"
-import { Hidden } from "@material-ui/core"
+import {
+  Drawer,
+  Container,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Typography,
+  Hidden
+} from "@material-ui/core"
 import DashboardIcon from "@material-ui/icons/Dashboard"
 import FacesIcon from "@material-ui/icons/TagFaces"
 import SupervisorIcon from "@material-ui/icons/SupervisorAccount"
 import { MainAppToolbar } from "../components/MainAppToolbar"
+import { ROLES } from "../utils/roles"
+import { getAsync } from "../utils/server"
 
 const drawerWidth = 240
 
@@ -65,6 +69,17 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
 }) => {
   const classes = useStyles({})
   const [mobileOpen, setMobileOpen] = React.useState(false)
+  const [role, setRole] = React.useState<string>(ROLES.Customer)
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const { success, data } = await getAsync<string>("/users/role")
+      if (success) {
+        setRole(data)
+      }
+    }
+    fetchData()
+  }, [])
 
   const handleDrawerToggle = (event = null) => {
     if (
@@ -93,12 +108,14 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
         </ListItemIcon>
         <ListItemText primary="Collections" />
       </ListItem>
-      <ListItem button component="a" href="/dashboard/users">
-        <ListItemIcon className={classes.icon}>
-          <SupervisorIcon />
-        </ListItemIcon>
-        <ListItemText primary="Users" />
-      </ListItem>
+      {role === ROLES.Admin && (
+        <ListItem button component="a" href="/dashboard/users">
+          <ListItemIcon className={classes.icon}>
+            <SupervisorIcon />
+          </ListItemIcon>
+          <ListItemText primary="Users" />
+        </ListItem>
+      )}
     </List>
   )
 
