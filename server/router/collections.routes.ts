@@ -24,4 +24,12 @@ router.put(
   CollectionsController.put
 )
 
+router.put(
+  "/price",
+  passport.authenticate("jwt", { failureRedirect: "/login" }),
+  utils.checkIsInRole(ROLES.Admin, ROLES.Photographer),
+  // @ts-ignore
+  CollectionsController.putPrice
+)
+
 export default router

@@ -6,34 +6,30 @@ import { renderTextField } from "./ReduxForm"
 
 interface NewCollectionFormProps {}
 
-interface NewCollectionDispatchProps {}
-
-const NewCollectionForm: FunctionComponent<
-  NewCollectionDispatchProps & InjectedFormProps<NewCollectionFormProps, NewCollectionDispatchProps>
-> = ({ handleSubmit }) => {
+const NewCollectionForm: FunctionComponent<InjectedFormProps<NewCollectionFormProps>> = ({
+  handleSubmit
+}) => {
   return (
-    <>
-      <Box>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={3} direction="column">
-            <Grid item>
-              <Field
-                autoFocus
-                required
-                id="collectionName"
-                name="collectionName"
-                label="Collection name"
-                component={renderTextField}
-              />
-            </Grid>
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3} direction="column">
+          <Grid item>
+            <Field
+              autoFocus
+              required
+              id="collectionName"
+              name="collectionName"
+              label="Collection name"
+              component={renderTextField}
+            />
           </Grid>
-        </form>
-      </Box>
-    </>
+        </Grid>
+      </form>
+    </Box>
   )
 }
 
-const ReduxNewCollectionForm = reduxForm<NewCollectionFormProps, NewCollectionDispatchProps>({
+const ReduxNewCollectionForm = reduxForm<NewCollectionFormProps>({
   form: "newCollectionForm"
 })(NewCollectionForm)
 

@@ -26,14 +26,9 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   process.exit(0)
 // })
 
-// CollectionModel.updateMany(
-//   {
-//     _id: "5db09de73ee2bd52c0bc733a"
-//   },
-//   {
-//     coverPhoto: undefined
-//   }
-// ).exec()
+// CollectionModel.updateMany({
+//   price: 799
+// }).exec()
 
 // UserModel.updateOne({ _id: "5dac1cabb837afb595f1440d" }, { role: "Photographer" }).exec()
 

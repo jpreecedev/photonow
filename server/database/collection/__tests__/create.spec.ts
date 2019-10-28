@@ -1,5 +1,5 @@
 import { Types } from "mongoose"
-import { createCollection, addCoverPhoto } from "../create"
+import { createCollection, addCoverPhoto, updatePrice } from "../create"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
 import { Collection } from "../../../../global"
@@ -58,5 +58,25 @@ describe("Create collection tests", () => {
     const updatedCollection = await addCoverPhoto({ collectionId, coverPhoto, userId })
 
     expect(updatedCollection).toEqual(true)
+  })
+
+  test("should update the price", async () => {
+    const collectionId = Types.ObjectId("5dab326748f8923dbffbbf92")
+    const userId = Types.ObjectId("5dac1640a44770f0715f0fac")
+    const price = 999
+
+    const updatedCollection = await updatePrice({ collectionId, price, userId })
+
+    expect(updatedCollection).toEqual(updatedCollection)
+  })
+
+  test("should not update the price", async () => {
+    const collectionId = Types.ObjectId("5dab326748f8923dbffbbf92")
+    const userId = Types.ObjectId("5dac1640a44770f2715f0fac")
+    const price = 999
+
+    const updatedCollection = await updatePrice({ collectionId, price, userId })
+
+    expect(updatedCollection).toBeFalsy()
   })
 })

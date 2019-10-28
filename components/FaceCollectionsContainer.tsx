@@ -11,6 +11,7 @@ import { getAsync, postAsync } from "../utils/server"
 import { Dialog } from "../components/Dialog"
 import { NewCollectionForm } from "../components/NewCollectionForm"
 import { FaceCollectionsForm } from "../components/FaceCollectionsForm"
+import { CollectionPriceFormContainer } from "../components/CollectionPriceFormContainer"
 import { Notification } from "../components/Notification"
 import { FileUpload } from "../components/FileUpload"
 
@@ -116,6 +117,19 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
       </Button>
       {selectedCollection && (
         <>
+          <Box mt={5}>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom>
+              Set a price for this collection
+            </Typography>
+            <Typography component="p" gutterBottom>
+              Applies to all pictures in this collection. Price must be specified in GBX (Great
+              British Pence, not Great British Pounds)
+            </Typography>
+            <CollectionPriceFormContainer
+              collectionId={selectedCollection._id}
+              price={selectedCollection.price}
+            />
+          </Box>
           <Box mt={5}>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
               Pictures currently in this gallery

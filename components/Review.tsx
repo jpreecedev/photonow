@@ -41,7 +41,6 @@ interface ReviewProps {
 const Review: FunctionComponent<DispatchProp<any> & ReviewProps> = ({ pictures, dispatch }) => {
   const classes = useStyles({})
   const picturesInBasket = pictures.filter(picture => picture.addedToBasket)
-  debugger
   return (
     <>
       <Typography component="h2" variant="h5" gutterBottom>

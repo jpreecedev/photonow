@@ -15,15 +15,35 @@ async function addCoverPhoto({
   coverPhoto: Types.ObjectId
   userId: Types.ObjectId
 }): Promise<boolean> {
-  const { ok } = await CollectionModel.updateOne(
+  const { nModified } = await CollectionModel.updateOne(
     { _id: collectionId, userId },
     { coverPhoto }
   ).exec()
-  if (ok === 1) {
+  if (nModified === 1) {
     return true
   }
 
   return false
 }
 
-export { createCollection, addCoverPhoto }
+async function updatePrice({
+  collectionId,
+  price,
+  userId
+}: {
+  collectionId: Types.ObjectId
+  price: number
+  userId: Types.ObjectId
+}): Promise<Collection | boolean> {
+  const { nModified } = await CollectionModel.updateOne(
+    { _id: { $eq: collectionId }, userId: { $eq: userId } },
+    { price }
+  ).exec()
+  if (nModified === 1) {
+    return await CollectionModel.findById(collectionId).exec()
+  }
+
+  return false
+}
+
+export { createCollection, addCoverPhoto, updatePrice }
