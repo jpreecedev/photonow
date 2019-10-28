@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb"
 import mongoose from "mongoose"
 import { MongoMemoryServer } from "mongodb-memory-server"
+import { log } from "../server/utils"
 
 // Extend the default timeout so MongoDB binaries can download when first run
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000
@@ -15,7 +16,9 @@ export default () => {
     connection = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     db = connection.db(await server.getDbName())
     await mongoose.connect(url, { useNewUrlParser: true }, err => {
-      if (err) console.error(err)
+      if (err) {
+        log(err.message, "error")
+      }
     })
   }
 

@@ -6,6 +6,7 @@ import { login } from "../auth/strategies/jwt"
 import { createUser, getUserByEmail } from "../database/user"
 import { LogInRequest, RegisterRequest, User, ClientResponse } from "../../global"
 import { ROLES } from "../../utils/roles"
+import { log } from "../utils"
 
 const router = express.Router()
 
@@ -35,24 +36,24 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
   }
 
   if (err || !user) {
-    console.error("Unable to find user")
+    log("Unable to find user", "error")
     return authenticationError()
   }
 
   if (!password || !user.password) {
-    console.error("Probably should be using social login")
+    log("Probably should be using social login", "error")
     return authenticationError()
   }
 
   if (!(await utils.verifyPassword(password, user.password))) {
-    console.error("Passwords do not match")
+    log("Passwords do not match", "error")
     return authenticationError()
   }
 
   const [loginErr, token] = await to(login(req, user))
 
   if (loginErr) {
-    console.error("Log in error", loginErr)
+    log(`Log in error: ${loginErr}`, "error")
     return authenticationError()
   }
 
@@ -107,7 +108,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
   const [loginErr, token] = await to(login(<LogInRequest>req, user))
 
   if (loginErr) {
-    console.error(loginErr)
+    log(loginErr, "error")
     return res
       .status(500)
       .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })

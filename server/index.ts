@@ -13,6 +13,7 @@ import router from "./router"
 import { connectToDatabase } from "./database/connection"
 import { initialiseAuthentication, utils } from "./auth"
 import { ROLES } from "../utils/roles"
+import { log } from "./utils"
 
 const port = parseInt(process.env.PORT || "", 10) || 3000
 const dev = process.env.NODE_ENV !== "production"
@@ -68,7 +69,7 @@ nextApp.prepare().then(() => {
 
   app.listen(port, err => {
     if (err) throw err
-    console.log(`> Ready on ${process.env.SERVER_URL}`)
-    console.log(`${process.env.NODE_ENV}`)
+    log(`> Ready on ${process.env.SERVER_URL}`)
+    log(`${process.env.NODE_ENV}`)
   })
 })
