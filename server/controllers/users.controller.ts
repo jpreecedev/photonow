@@ -29,7 +29,6 @@ async function getRole(req: Request, res: Response) {
       data: role
     })
   } catch (e) {
-    errorHandler.handle(e)
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
       data: e
