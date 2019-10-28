@@ -1,35 +1,20 @@
 import React, { FunctionComponent } from "react"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
 import { Drawer } from "@material-ui/core"
-import { Container } from "@material-ui/core"
 import { List } from "@material-ui/core"
 import { ListItem } from "@material-ui/core"
 import { ListItemIcon } from "@material-ui/core"
 import { ListItemText } from "@material-ui/core"
 import { Box } from "@material-ui/core"
-import { Typography } from "@material-ui/core"
 import { Hidden } from "@material-ui/core"
-import DashboardIcon from "@material-ui/icons/Dashboard"
+import HomeIcon from "@material-ui/icons/Home"
 import FacesIcon from "@material-ui/icons/TagFaces"
-import SupervisorIcon from "@material-ui/icons/SupervisorAccount"
 import { MainAppToolbar } from "../components/MainAppToolbar"
 
 const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4)
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(1),
-
-      [theme.breakpoints.up("md")]: {
-        padding: theme.spacing(3)
-      }
-    },
     drawer: {
       [theme.breakpoints.up("sm")]: {
         width: drawerWidth,
@@ -49,19 +34,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-interface MainLayoutProps {
-  showNavigation?: boolean
+interface MinimalLayoutProps {
   title?: string
-  subtitle?: string
-  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false
+  showNavigation?: boolean
 }
 
-const MainLayout: FunctionComponent<MainLayoutProps> = ({
+const MinimalLayout: FunctionComponent<MinimalLayoutProps> = ({
   children,
-  showNavigation = false,
-  title = null,
-  subtitle = null,
-  maxWidth = "md"
+  title,
+  showNavigation = false
 }) => {
   const classes = useStyles({})
   const [mobileOpen, setMobileOpen] = React.useState(false)
@@ -81,23 +62,17 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
 
   const drawerContent = (
     <List>
-      <ListItem button component="a" href="/dashboard">
+      <ListItem button>
         <ListItemIcon className={classes.icon}>
-          <DashboardIcon />
+          <HomeIcon />
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText primary="Overview" />
       </ListItem>
-      <ListItem button component="a" href="/dashboard/collections">
+      <ListItem button>
         <ListItemIcon className={classes.icon}>
           <FacesIcon />
         </ListItemIcon>
         <ListItemText primary="Collections" />
-      </ListItem>
-      <ListItem button component="a" href="/dashboard/users">
-        <ListItemIcon className={classes.icon}>
-          <SupervisorIcon />
-        </ListItemIcon>
-        <ListItemText primary="Users" />
       </ListItem>
     </List>
   )
@@ -161,24 +136,9 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
           {drawer}
         </nav>
       )}
-      <Container maxWidth={maxWidth}>
-        <Box m={5} flexGrow={1}>
-          {showNavigation && <div className={classes.toolbar} />}
-          {title && (
-            <Typography variant="h4" component="h1" gutterBottom>
-              {title}
-            </Typography>
-          )}
-          {title && subtitle && (
-            <Typography component="p" gutterBottom>
-              {subtitle}
-            </Typography>
-          )}
-          <main>{children}</main>
-        </Box>
-      </Container>
+      {children}
     </Box>
   )
 }
 
-export { MainLayout }
+export { MinimalLayout }

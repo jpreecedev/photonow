@@ -1,5 +1,5 @@
 import React from "react"
-import TextField from "@material-ui/core/TextField"
+import { TextField } from "@material-ui/core"
 
 const renderTextField = ({ input, label, meta: { touched, error }, ...rest }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { connect } from "react-redux"
 import { FormState } from "redux-form"
-import Typography from "@material-ui/core/Typography"
+import { Typography } from "@material-ui/core"
 
 import { Collection, AppState } from "../global"
 

@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import Typography from "@material-ui/core/Typography"
+import { Typography } from "@material-ui/core"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Button } from "@material-ui/core"
 

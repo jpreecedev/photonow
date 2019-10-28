@@ -3,17 +3,17 @@ import { connect } from "react-redux"
 import Router from "next/router"
 import Link from "next/link"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import IconButton from "@material-ui/core/IconButton"
-import Typography from "@material-ui/core/Typography"
-import Badge from "@material-ui/core/Badge"
+import { AppBar } from "@material-ui/core"
+import { Toolbar } from "@material-ui/core"
+import { IconButton } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
+import { Badge } from "@material-ui/core/"
 import AccountCircle from "@material-ui/icons/AccountCircle"
 import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 import Camera from "@material-ui/icons/Camera"
 import MenuIcon from "@material-ui/icons/Menu"
-import Hidden from "@material-ui/core/Hidden"
+import { Hidden } from "@material-ui/core"
 
 import { AppState, PictureItem } from "../global"
 
@@ -48,7 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface MainAppToolbarProps {
   pictures?: PictureItem[]
-  title?: string
   fixed: boolean
   handleDrawerToggle: Function
   showDrawerToggle: boolean
@@ -56,7 +55,6 @@ interface MainAppToolbarProps {
 
 export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = ({
   pictures,
-  title = "PhotoNow",
   fixed = false,
   handleDrawerToggle,
   showDrawerToggle = false
@@ -87,7 +85,7 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
         <Link href="/">
           <Typography className={classes.title} variant="h6" component="a">
             <Camera className={classes.icon} />
-            {title}
+            PhotoNow
           </Typography>
         </Link>
         <div className={classes.grow} />

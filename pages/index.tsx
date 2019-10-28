@@ -1,13 +1,13 @@
 import React from "react"
 
-import { MainLayout } from "../layouts/main"
+import { MinimalLayout } from "../layouts/minimal"
 import { Splash } from "../components/Splash"
 
 const HomePage = () => {
   return (
-    <MainLayout>
+    <MinimalLayout>
       <Splash />
-    </MainLayout>
+    </MinimalLayout>
   )
 }
 

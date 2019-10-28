@@ -3,12 +3,11 @@ import { connect } from "react-redux"
 import { InjectedFormProps, FormState } from "redux-form"
 import { NextPage } from "next"
 import Link from "next/link"
-import Typography from "@material-ui/core/Typography"
-import Box from "@material-ui/core/Box"
+import { Typography } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import Paper from "@material-ui/core/Paper"
-import Grid from "@material-ui/core/Grid"
-import { Container } from "@material-ui/core"
+import { Paper } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
 
 import * as server from "../utils/server"
 import { MainLayout } from "../layouts/main"
@@ -58,34 +57,30 @@ const Register: NextPage<RegisterProps> = () => {
   }
 
   return (
-    <MainLayout>
-      <main className={classes.content}>
-        <Container maxWidth="sm">
-          <Paper className={classes.paper} elevation={2}>
-            <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
-              <Typography component="h1" variant="h4" gutterBottom>
-                Register
-              </Typography>
-              <Typography component="p" gutterBottom>
-                Sign up for a new account
-              </Typography>
-            </Box>
-            <aside className={classes.error}>
-              {Object.keys(errors).map(error => (
-                <p key={errors[error]}>{errors[error]}</p>
-              ))}
-            </aside>
-            <RegisterForm onSubmit={onSubmit} />
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="/login">
-                  <a>Already have an account? Sign in</a>
-                </Link>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Container>
-      </main>
+    <MainLayout maxWidth="sm">
+      <Paper className={classes.paper} elevation={2}>
+        <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+          <Typography component="h1" variant="h4" gutterBottom>
+            Register
+          </Typography>
+          <Typography component="p" gutterBottom>
+            Sign up for a new account
+          </Typography>
+        </Box>
+        <aside className={classes.error}>
+          {Object.keys(errors).map(error => (
+            <p key={errors[error]}>{errors[error]}</p>
+          ))}
+        </aside>
+        <RegisterForm onSubmit={onSubmit} />
+        <Grid container justify="flex-end">
+          <Grid item>
+            <Link href="/login">
+              <a>Already have an account? Sign in</a>
+            </Link>
+          </Grid>
+        </Grid>
+      </Paper>
     </MainLayout>
   )
 }

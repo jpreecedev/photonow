@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react"
 import dynamic from "next/dynamic"
 import Router from "next/router"
-import Grid from "@material-ui/core/Grid"
+import { Grid } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import Box from "@material-ui/core/Box"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import Typography from "@material-ui/core/Typography"
+import { Box } from "@material-ui/core"
+import { CircularProgress } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 import { injectStripe, ReactStripeElements } from "react-stripe-elements"
 import { connect, DispatchProp } from "react-redux"
 import { AppState, BillingDetails, PictureItem } from "../global"
@@ -82,7 +82,7 @@ const CheckoutFormContainer: FunctionComponent<
           }}
         />
       </Box>
-      {loaded && <CheckoutForm handleOrder={handleOrder} processing={processing} />}
+      {loaded && <CheckoutForm handleOrder={handleOrder} processing={processing} stripe={stripe} />}
       {!loaded && (
         <Grid container justify="center" alignItems="center">
           <Grid item>

@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm, InjectedFormProps } from "redux-form"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import Button from "@material-ui/core/Button"
-import Box from "@material-ui/core/Box"
-import CircularProgress from "@material-ui/core/CircularProgress"
+import { Button } from "@material-ui/core"
+import { Box } from "@material-ui/core"
+import { CircularProgress } from "@material-ui/core"
 
 import { RegisterFormProps } from "../global"
 import { renderTextField } from "./ReduxForm"

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import Snackbar from "@material-ui/core/Snackbar"
+import { Snackbar } from "@material-ui/core"
 
 interface NotificationProps {
   message: string

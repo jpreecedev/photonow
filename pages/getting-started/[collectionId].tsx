@@ -51,38 +51,36 @@ const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
 
   return (
     <MainLayout>
-      <main className={classes.content}>
-        <Container maxWidth="md">
-          <Typography component="h1" variant="h4" gutterBottom>
-            Show us your face
-          </Typography>
-          <Typography component="p" gutterBottom>
-            We need a picture of you that we can use to search through our galleries
-          </Typography>
-          {!webcamUnavailable && (
-            <Box mt={5}>
-              <Typography component="h2" variant="h5" gutterBottom>
-                Using your camera/webcam...
-              </Typography>
-              <Webcam
-                onCapture={processImage}
-                isUploading={uploading}
-                onWebcamUnavailable={() => setWebcamUnavailable(true)}
-              />
-            </Box>
-          )}
+      <Container maxWidth="md">
+        <Typography component="h1" variant="h4" gutterBottom>
+          Show us your face
+        </Typography>
+        <Typography component="p" gutterBottom>
+          We need a picture of you that we can use to search through our galleries
+        </Typography>
+        {!webcamUnavailable && (
           <Box mt={5}>
             <Typography component="h2" variant="h5" gutterBottom>
-              Select a picture from your device or computer
+              Using your camera/webcam...
             </Typography>
-            <FileUpload
-              allowMultiple={false}
-              url={`/api/face/${router.query.collectionId}`}
-              onUploaded={processResponse}
+            <Webcam
+              onCapture={processImage}
+              isUploading={uploading}
+              onWebcamUnavailable={() => setWebcamUnavailable(true)}
             />
           </Box>
-        </Container>
-      </main>
+        )}
+        <Box mt={5}>
+          <Typography component="h2" variant="h5" gutterBottom>
+            Select a picture from your device or computer
+          </Typography>
+          <FileUpload
+            allowMultiple={false}
+            url={`/api/face/${router.query.collectionId}`}
+            onUploaded={processResponse}
+          />
+        </Box>
+      </Container>
     </MainLayout>
   )
 }

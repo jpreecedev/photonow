@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm, InjectedFormProps } from "redux-form"
-import Grid from "@material-ui/core/Grid"
-import Box from "@material-ui/core/Box"
+import { Grid } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 
 import { renderTextField } from "./ReduxForm"
 

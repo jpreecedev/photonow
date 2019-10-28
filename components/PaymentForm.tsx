@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm } from "redux-form"
-import Typography from "@material-ui/core/Typography"
-import Grid from "@material-ui/core/Grid"
-import TextField from "@material-ui/core/TextField"
-import Box from "@material-ui/core/Box"
+import { Typography } from "@material-ui/core"
+import { Grid } from "@material-ui/core"
+import { TextField } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import { CardExpiryElement, CardCVCElement, CardNumberElement } from "react-stripe-elements"
 
 import { StripeInput } from "./StripeInput"

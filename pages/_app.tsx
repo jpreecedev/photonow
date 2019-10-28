@@ -2,7 +2,7 @@ import React from "react"
 import { Provider } from "react-redux"
 import Head from "next/head"
 import App from "next/app"
-import CssBaseline from "@material-ui/core/CssBaseline"
+import { CssBaseline } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/styles"
 
 import { initialiseStore } from "../store"

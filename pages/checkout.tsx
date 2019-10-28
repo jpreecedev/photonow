@@ -2,11 +2,10 @@ import React from "react"
 import { NextPage } from "next"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import Head from "next/head"
-import Paper from "@material-ui/core/Paper"
-import Box from "@material-ui/core/Box"
-import Typography from "@material-ui/core/Typography"
+import { Paper } from "@material-ui/core"
+import { Box } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 import { Elements, StripeProvider } from "react-stripe-elements"
-import { Container } from "@material-ui/core"
 
 import { MainLayout } from "../layouts/main"
 import { CheckoutFormContainer } from "../components/CheckoutFormContainer"
@@ -53,31 +52,22 @@ const Checkout: NextPage<CheckoutProps> = () => {
       <Head>
         <script src="https://js.stripe.com/v3/"></script>
       </Head>
-      <MainLayout>
-        <main className={classes.content}>
-          <Container maxWidth="md">
-            <Paper className={classes.paper} elevation={2}>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                flexDirection="column"
-              >
-                <Typography component="h1" variant="h4" gutterBottom>
-                  Checkout
-                </Typography>
-                <Typography component="p" gutterBottom>
-                  Purchase your selected pictures using the checkout form below
-                </Typography>
-              </Box>
-              <StripeProvider stripe={stripe}>
-                <Elements>
-                  <CheckoutFormContainer />
-                </Elements>
-              </StripeProvider>
-            </Paper>
-          </Container>
-        </main>
+      <MainLayout maxWidth="md">
+        <Paper className={classes.paper} elevation={2}>
+          <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+            <Typography component="h1" variant="h4" gutterBottom>
+              Checkout
+            </Typography>
+            <Typography component="p" gutterBottom>
+              Purchase your selected pictures using the checkout form below
+            </Typography>
+          </Box>
+          <StripeProvider stripe={stripe}>
+            <Elements>
+              <CheckoutFormContainer />
+            </Elements>
+          </StripeProvider>
+        </Paper>
       </MainLayout>
     </>
   )
