@@ -2,13 +2,15 @@ import React from "react"
 import { NextPage } from "next"
 import { useRouter } from "next/router"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import { List } from "@material-ui/core"
-import { ListItem } from "@material-ui/core"
-import { ListItemAvatar } from "@material-ui/core"
-import { ListItemText } from "@material-ui/core"
-import { ListItemSecondaryAction } from "@material-ui/core"
-import { Avatar } from "@material-ui/core"
-import { IconButton } from "@material-ui/core"
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Avatar,
+  IconButton
+} from "@material-ui/core"
 import CloudDownload from "@material-ui/icons/CloudDownload"
 
 import * as server from "../../utils/server"

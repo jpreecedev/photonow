@@ -2,15 +2,17 @@ import React from "react"
 import { connect, DispatchProp } from "react-redux"
 import { NextPage } from "next"
 import Link from "next/link"
-import { Button } from "@material-ui/core"
-import { Card } from "@material-ui/core"
-import { CardActions } from "@material-ui/core"
-import { CardContent } from "@material-ui/core"
-import { CardMedia } from "@material-ui/core"
-import { Grid } from "@material-ui/core"
-import { Paper } from "@material-ui/core"
-import { Box } from "@material-ui/core"
-import { Typography } from "@material-ui/core"
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
+  Paper,
+  Box,
+  Typography
+} from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
 import { AppState, PictureItem } from "../global"

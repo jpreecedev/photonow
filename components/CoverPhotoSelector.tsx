@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { Types } from "mongoose"
-import { Typography } from "@material-ui/core"
-import { Grid } from "@material-ui/core"
+import { Typography, Grid } from "@material-ui/core"
 
 import { ImageStack } from "../components/ImageStack"
 import { Moment } from "../global"

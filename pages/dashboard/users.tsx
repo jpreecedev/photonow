@@ -1,8 +1,7 @@
 import React from "react"
 import { NextPage } from "next"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import { Grid } from "@material-ui/core"
-import { Paper } from "@material-ui/core"
+import { Grid, Paper } from "@material-ui/core"
 
 import { RolesFormContainer } from "../../components/RolesFormContainer"
 

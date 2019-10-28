@@ -3,9 +3,7 @@ import { NextPage } from "next"
 import { connect, DispatchProp } from "react-redux"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
-import { Typography, Box } from "@material-ui/core"
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import { Container } from "@material-ui/core"
+import { Typography, Box, Container } from "@material-ui/core"
 
 import * as server from "../../utils/server"
 import { MainLayout } from "../../layouts/main"
@@ -13,19 +11,11 @@ import { actions } from "../../store"
 import { PictureItem } from "../../global"
 import { FileUpload } from "../../components/FileUpload"
 
-const useStyles = makeStyles((theme: Theme) => ({
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
-  }
-}))
-
 const Webcam = dynamic(import("../../components/Webcam").then(instance => instance.Webcam), {
   ssr: false
 })
 
 const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
-  const classes = useStyles({})
   const router = useRouter()
   const [uploading, setUploading] = React.useState(false)
   const [webcamUnavailable, setWebcamUnavailable] = React.useState(false)

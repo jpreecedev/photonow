@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from "react"
 import { Button } from "@material-ui/core"
-import { Dialog as MaterialDialog } from "@material-ui/core"
-import { DialogActions } from "@material-ui/core"
-import { DialogContent } from "@material-ui/core"
-import { DialogContentText } from "@material-ui/core"
-import { DialogTitle } from "@material-ui/core"
+import {
+  Dialog as MaterialDialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@material-ui/core"
 
 interface DialogProps {
   isOpen: boolean

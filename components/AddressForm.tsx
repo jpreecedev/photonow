@@ -1,10 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm, InjectedFormProps } from "redux-form"
-import { Grid } from "@material-ui/core"
-import { Typography } from "@material-ui/core"
-import { FormControl } from "@material-ui/core"
-import { InputLabel } from "@material-ui/core"
-import { Box } from "@material-ui/core"
+import { Grid, Typography, FormControl, InputLabel, Box } from "@material-ui/core"
 import countryList from "react-select-country-list"
 import { useTheme } from "@material-ui/core/styles"
 

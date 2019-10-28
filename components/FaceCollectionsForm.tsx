@@ -1,10 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import { Grid } from "@material-ui/core"
-import { Box } from "@material-ui/core"
-import { FormControl } from "@material-ui/core"
-import { InputLabel } from "@material-ui/core"
-import { Select } from "@material-ui/core"
+import { Grid, Box, FormControl, InputLabel, Select } from "@material-ui/core"
 
 import { Collection } from "../global"
 
