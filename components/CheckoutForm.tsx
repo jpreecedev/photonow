@@ -33,7 +33,7 @@ interface CheckoutFormProps {
   paymentForm: FormState
   pictures: PictureItem[]
   processing: boolean
-  handleOrder: (token: stripe.Token, billingDetails: BillingDetails) => void
+  handleOrder: (token: stripe.Token, billingDetails: BillingDetails, error: stripe.Error) => void
 }
 
 const CheckoutForm: FunctionComponent<
@@ -44,6 +44,7 @@ const CheckoutForm: FunctionComponent<
   const getOrderDetails = async (): Promise<{
     token: stripe.Token
     billingDetails: BillingDetails
+    error?: stripe.Error
   }> => {
     const billingDetails = {
       name: paymentForm.values.cardName,
@@ -56,7 +57,7 @@ const CheckoutForm: FunctionComponent<
       country: addressForm.values.country
     }
 
-    const { token } = await stripe.createToken({
+    const response = await stripe.createToken({
       type: "card",
       name: billingDetails.name,
       address_line1: billingDetails.addressLine1,
@@ -67,7 +68,7 @@ const CheckoutForm: FunctionComponent<
       address_country: billingDetails.country
     })
 
-    return { token, billingDetails }
+    return { error: response.error, token: response.token, billingDetails }
   }
 
   return (
@@ -84,8 +85,8 @@ const CheckoutForm: FunctionComponent<
           variant="contained"
           color="primary"
           onClick={async () => {
-            const { token, billingDetails } = await getOrderDetails()
-            await handleOrder(token, billingDetails)
+            const { token, billingDetails, error } = await getOrderDetails()
+            await handleOrder(token, billingDetails, error)
           }}
           className={classes.button}
         >

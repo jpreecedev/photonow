@@ -6,8 +6,10 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import { injectStripe, ReactStripeElements } from "react-stripe-elements"
 import { connect, DispatchProp } from "react-redux"
 import { AppState, BillingDetails, PictureItem } from "../global"
+import ErrorIcon from "@material-ui/icons/Error"
 
 import { CheckoutForm } from "../components/CheckoutForm"
+import { Banner } from "../components/Banner"
 import * as server from "../utils/server"
 import { actions } from "../store"
 
@@ -32,12 +34,27 @@ const CheckoutFormContainer: FunctionComponent<
   ReactStripeElements.InjectedStripeProps & CheckoutFormContainerProps & DispatchProp<any>
 > = ({ stripe, pictures, dispatch }) => {
   const [loaded, setLoaded] = React.useState(false)
+  const [paymentStatus, setPaymentStatus] = React.useState({
+    paymentAttemptMade: false,
+    success: false
+  })
   const [success, setSuccess] = React.useState(false)
   const [processing, setProcessing] = React.useState(false)
 
   const classes = useStyles({})
 
-  const handleOrder = async (token: stripe.Token, billingDetails: BillingDetails) => {
+  const handleOrder = async (
+    token: stripe.Token,
+    billingDetails: BillingDetails,
+    error?: stripe.Error
+  ) => {
+    if (error) {
+      setPaymentStatus({ paymentAttemptMade: true, success: false })
+      window.scrollTo(0, 0)
+      console.log(error)
+      return
+    }
+
     setProcessing(true)
 
     try {
@@ -47,10 +64,14 @@ const CheckoutFormContainer: FunctionComponent<
         pictures: pictures.filter(picture => picture.addedToBasket)
       })
 
+      setPaymentStatus({ paymentAttemptMade: true, success })
+
       if (success) {
         dispatch(actions.pictures.clearBasket())
         Router.push(data)
         return
+      } else {
+        window.scrollTo(0, 0)
       }
     } finally {
       setProcessing(false)
@@ -71,7 +92,9 @@ const CheckoutFormContainer: FunctionComponent<
       )}
       <Box mb={5}>
         <StripePaymentButton
-          orderTotal={pictures.reduce((acc, current) => (acc += current.price), 0)}
+          orderTotal={pictures
+            .filter(picture => picture.addedToBasket)
+            .reduce((acc, current) => (acc += current.price), 0)}
           stripe={stripe}
           handleOrder={handleOrder}
           loaded={success => {
@@ -80,6 +103,19 @@ const CheckoutFormContainer: FunctionComponent<
           }}
         />
       </Box>
+      {paymentStatus.paymentAttemptMade && !paymentStatus.success && (
+        <Banner
+          theme="error"
+          icon={<ErrorIcon />}
+          message={
+            <Typography>
+              Your payment was not successful.
+              <br />
+              Please check your details and try again.
+            </Typography>
+          }
+        />
+      )}
       {loaded && <CheckoutForm handleOrder={handleOrder} processing={processing} stripe={stripe} />}
       {!loaded && (
         <Grid container justify="center" alignItems="center">

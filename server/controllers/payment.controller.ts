@@ -56,6 +56,13 @@ async function post(req: UserRequest, res: Response) {
 
     const amount = calculateOrderAmount(collection, moments)
 
+    const result = await stripe.charges.create({
+      amount,
+      currency: "gbp",
+      description: `Purchase of precious moments (${name})`,
+      source: tokenId
+    })
+
     const newOrder = <Order>{
       moments: momentIds,
       amount,
@@ -70,13 +77,6 @@ async function post(req: UserRequest, res: Response) {
     }
 
     const order = await createOrder(newOrder)
-
-    const result = await stripe.charges.create({
-      amount,
-      currency: "gbp",
-      description: `Purchase of precious moments (${name})`,
-      source: tokenId
-    })
 
     const paymentSaved = await createPayment(<Payment>{
       orderId: order._id,
@@ -104,7 +104,7 @@ async function post(req: UserRequest, res: Response) {
     errorHandler.handle(e)
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
-      data: e
+      data: null
     })
   }
 }

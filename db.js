@@ -1,4 +1,11 @@
-import { UserModel, MomentModel, OrderModel, CollectionModel } from "./server/database/schema"
+import {
+  UserModel,
+  MomentModel,
+  OrderModel,
+  CollectionModel,
+  PaymentModel,
+  OrderModel
+} from "./server/database/schema"
 
 import mongoose from "mongoose"
 const { Types } = mongoose
@@ -10,6 +17,16 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 
 // CollectionModel.find({}).exec((err, collections) => {
 //   collections.forEach(u => console.log(u))
+//   process.exit(0)
+// })
+
+// PaymentModel.find({}).exec((err, payments) => {
+//   payments.forEach(u => console.log(u))
+//   process.exit(0)
+// })
+
+// OrderModel.find({}).exec((err, orders) => {
+//   orders.forEach(u => console.log(u))
 //   process.exit(0)
 // })
 

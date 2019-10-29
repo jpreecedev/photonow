@@ -65,7 +65,7 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
             fullWidth
             id="cvv"
             label="CVV"
-            helperText="Last three digits on signature strip"
+            helperText="Last three/four digits on signature strip"
             InputLabelProps={{
               shrink: true
             }}
