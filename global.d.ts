@@ -229,6 +229,16 @@ export interface NewCollection {
   name: string
 }
 
+export interface Email {
+  to: string
+  from: string
+  cc?: string
+  bcc?: string
+  subject: string
+  message: string
+  altText?: string
+}
+
 declare module "*.gif" {
   const src: string
   export default src

@@ -9,13 +9,15 @@ import {
   Payment,
   PictureItem,
   ClientResponse,
-  Collection
+  Collection,
+  Email
 } from "../../global"
 import { createPayment } from "../database/payment"
 import { createOrder } from "../database/order"
 import { getMoments } from "../database/moments"
 import { errorHandler } from "../utils"
 import { getCollection } from "../database/collection"
+import { sendEmail } from "../utils/email"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
@@ -23,6 +25,20 @@ interface PaymentRequest {
   tokenId: string
   billingDetails: Order
   pictures: PictureItem[]
+}
+
+async function sendConfirmationEmail({ name, email, orderId, receiptUrl }) {
+  const confirmationEmail = <Email>{
+    to: email,
+    from: "sreeni@photonow.io",
+    subject: `Order confirmation ${orderId}`,
+    message: `<p>${name}, thank you for your order</p>
+<p>We thought you would like a receipt, so here it is; <a href="${receiptUrl}">${receiptUrl}</a>.</p>
+<p>Thank you for your order.</p>
+<p>The team at PhotoNow.io</p>`
+  }
+
+  return await sendEmail(confirmationEmail)
 }
 
 function calculateOrderAmount(collection: Collection, moments: Moment[]) {
@@ -90,6 +106,17 @@ async function post(req: UserRequest, res: Response) {
     })
 
     if (paymentSaved) {
+      try {
+        await sendConfirmationEmail({
+          name,
+          email,
+          orderId: order._id,
+          receiptUrl: result.receipt_url
+        })
+      } catch (err) {
+        errorHandler.handle(err)
+      }
+
       return res.status(200).json(<ClientResponse<string>>{
         success: true,
         data: `/order-confirmation/${order._id}`
