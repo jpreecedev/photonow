@@ -112,11 +112,6 @@ const getUserRole = async (req: Request): Promise<string> => {
   })
 }
 
-const logout = (req: Request) => {
-  req.logout()
-  req.clearCookie("jwt")
-}
-
 const getRedirectUrl = (role: string) => {
   switch (role) {
     case ROLES.Admin:
@@ -134,7 +129,6 @@ export {
   verifyPassword,
   hashPassword,
   signToken,
-  logout,
   getRedirectUrl,
   getUserRole
 }
