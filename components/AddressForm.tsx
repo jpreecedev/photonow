@@ -6,6 +6,7 @@ import { useTheme } from "@material-ui/core/styles"
 
 import { Country } from "../global"
 import { renderSelectField, renderTextField } from "./ReduxForm"
+import { AddressLookup } from "./AddressLookup"
 
 interface AddressFormProps {}
 
@@ -23,6 +24,12 @@ const AddressForm: FunctionComponent<InjectedFormProps & AddressFormProps> = ({ 
       <Typography component="h2" variant="h5" gutterBottom>
         Shipping address
       </Typography>
+      <Typography component="p" gutterBottom>
+        Start typing your address in the box below
+      </Typography>
+      <Box mt={3} mb={3}>
+        <AddressLookup />
+      </Box>
       <Box mb={6}>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
