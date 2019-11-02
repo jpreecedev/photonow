@@ -22,7 +22,6 @@ const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
 
   const processResponse = (pictures: PictureItem[]) => {
     pictures.forEach(picture => dispatch(actions.pictures.addPicture(picture)))
-    router.push("/select-your-pictures")
   }
 
   const processImage = async (blob: Blob) => {
@@ -36,6 +35,8 @@ const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
     if (success) {
       processResponse(data)
     }
+
+    router.push("/select-your-pictures")
     setUploading(false)
   }
 
