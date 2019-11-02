@@ -10,6 +10,11 @@ const picturesReducer = (state: PictureItem[], action: PicturesActionTypes) => {
 
   switch (action.type) {
     case Actions.pictures.ADD_PICTURE:
+      const exists = state.some(item => item.momentId === action.payload.momentId)
+      if (exists) {
+        return state
+      }
+
       return [...state, action.payload]
     case Actions.pictures.ADD_TO_BASKET:
       return state.map(item => {
