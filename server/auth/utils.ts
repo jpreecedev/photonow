@@ -116,7 +116,7 @@ const getRedirectUrl = (role: string) => {
   switch (role) {
     case ROLES.Admin:
     case ROLES.Photographer:
-      return "/dashboard"
+      return "/dashboard/collections"
   }
   return "/select-gallery"
 }
