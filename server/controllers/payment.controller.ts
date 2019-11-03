@@ -30,10 +30,11 @@ interface PaymentRequest {
 async function sendConfirmationEmail({ name, email, orderId, receiptUrl }) {
   const confirmationEmail = <Email>{
     to: email,
-    from: "sreeni@photonow.io",
+    from: "no-reply@photonow.io",
     subject: `Order confirmation ${orderId}`,
     message: `<p>${name}, thank you for your order</p>
 <p>We thought you would like a receipt, so here it is; <a href="${receiptUrl}">${receiptUrl}</a>.</p>
+<p>You can review your order and download your pictures any time by clicking this link; <a href="${process.env.SERVER_URL}order-confirmation/${orderId}">${process.env.SERVER_URL}order-confirmation/${orderId}</a></p>
 <p>Thank you for your order.</p>
 <p>The team at PhotoNow.io</p>`
   }
