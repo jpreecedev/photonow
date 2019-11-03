@@ -11,6 +11,7 @@ interface FacebookLoginButtonProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
+      width: "100%",
       display: "flex",
       backgroundColor: "#4C69BA",
       backgroundImage: "linear-gradient(#4C69BA, #3B55A0)",

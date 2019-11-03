@@ -1,14 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
 import { NextPage } from "next"
-import Link from "next/link"
-import { Box, Paper, Typography, Grid } from "@material-ui/core"
+import { Box, Paper, Typography } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
 import { MainLayout } from "../layouts/main"
-import { LoginForm } from "../components/LoginForm"
-import { AppState, LoginFormProps } from "../global"
-import * as server from "../utils/server"
+import { SocialLoginProviders } from "../components/SocialLoginProviders"
+import { AppState } from "../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   layout: {
@@ -37,46 +35,25 @@ interface LoginProps {}
 
 const Login: NextPage<LoginProps> = () => {
   const classes = useStyles({})
-  const [errors, setErrors] = React.useState({})
-
-  const onSubmit = async ({ email, password }: LoginFormProps) => {
-    const { success, data } = await server.postAsync<string>("/auth/login", {
-      email,
-      password
-    })
-
-    if (success) {
-      window.location.replace(data)
-      return
-    }
-
-    setErrors({ ...errors, global: data })
-  }
 
   return (
     <MainLayout maxWidth="sm">
       <Paper className={classes.paper} elevation={2}>
         <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
           <Typography component="h1" variant="h4" gutterBottom>
-            Login
+            Connect with us
           </Typography>
-          <Typography component="p" gutterBottom>
-            Log in to your account dashboard
+          <Typography component="p" gutterBottom align="center">
+            To make registering and logging in with us easy and <strong>secure</strong>, we use
+            social networks to authenticate you.
+          </Typography>
+          <Box mt={3} mb={5} display="block" maxWidth="75%" width="100%" textAlign="center">
+            <SocialLoginProviders />
+          </Box>
+          <Typography component="small" align="center" variant="body2">
+            If you do not already have an account, we will create one for you automatically.
           </Typography>
         </Box>
-        <aside className={classes.error}>
-          {Object.keys(errors).map(error => (
-            <p key={errors[error]}>{errors[error]}</p>
-          ))}
-        </aside>
-        <LoginForm onSubmit={onSubmit} />
-        <Grid container justify="flex-end">
-          <Grid item>
-            <Link href="/register">
-              <a>Don't already have an account?</a>
-            </Link>
-          </Grid>
-        </Grid>
       </Paper>
     </MainLayout>
   )

@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "next/link"
-import { Typography, Button } from "@material-ui/core"
+import { Typography, Button, Box } from "@material-ui/core"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,9 +62,16 @@ const Splash = () => {
       <Typography align="center" component="p" variant="h4" className={classes.subTitle}>
         Use our face scanning tool to find pictures of yourself in a crowd
       </Typography>
-      <Link href="/select-gallery">
+      <Box mb={3}>
+        <Link href="/select-gallery">
+          <Button variant="contained" color="primary" size="large">
+            Get Started
+          </Button>
+        </Link>
+      </Box>
+      <Link href="/choose-account-type">
         <Button variant="contained" color="primary" size="large">
-          Get Started
+          I'm a photographer
         </Button>
       </Link>
       <div className={classes.spacer}></div>

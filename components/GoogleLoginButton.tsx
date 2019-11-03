@@ -11,6 +11,7 @@ interface GoogleLoginButtonProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
+      width: "100%",
       margin: theme.spacing(0, 0, 1),
       display: "flex",
       backgroundColor: "#DD4B39",

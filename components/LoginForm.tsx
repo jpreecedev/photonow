@@ -1,12 +1,10 @@
 import React, { FunctionComponent } from "react"
 import { Field, reduxForm, InjectedFormProps } from "redux-form"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import { Button, Box, CircularProgress, Typography } from "@material-ui/core"
+import { Button, CircularProgress } from "@material-ui/core"
 
 import { LoginFormProps } from "../global"
 import { renderTextField } from "./ReduxForm"
-import { GoogleLoginButton } from "./GoogleLoginButton"
-import { FacebookLoginButton } from "./FacebookLoginButton"
 
 const useStyles = makeStyles((theme: Theme) => ({
   submit: {
@@ -76,24 +74,17 @@ const LoginForm: FunctionComponent<InjectedFormProps<LoginFormProps>> = ({
         component={renderTextField}
       />
 
-      <Box mb={6}>
-        <Button
-          disabled={submitting}
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          fullWidth
-        >
-          {submitting && <CircularProgress size={24} className={classes.buttonProgress} />}
-          {submitting ? "Signing in..." : "Sign In"}
-        </Button>
-        <Typography variant="overline" display="block" gutterBottom>
-          Social Login Providers
-        </Typography>
-        <GoogleLoginButton />
-        <FacebookLoginButton />
-      </Box>
+      <Button
+        disabled={submitting}
+        type="submit"
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+        fullWidth
+      >
+        {submitting && <CircularProgress size={24} className={classes.buttonProgress} />}
+        {submitting ? "Signing in..." : "Sign In"}
+      </Button>
     </form>
   )
 }
