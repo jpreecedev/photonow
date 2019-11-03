@@ -54,7 +54,7 @@ const Photographers: NextPage<PhotographersProps> = () => {
               size="large"
               startIcon={<PeopleIcon />}
               onClick={() => {
-                Router.push("/login?type=customer")
+                Router.push("/select-gallery")
               }}
             >
               I am looking for my pictures

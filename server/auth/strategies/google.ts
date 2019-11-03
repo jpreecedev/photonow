@@ -1,4 +1,4 @@
-import { Express, Response } from "express"
+import { Express, Request, Response, NextFunction } from "express"
 import passport from "passport"
 import passportGoogle from "passport-google-oauth"
 import { to } from "await-to-js"
@@ -10,14 +10,33 @@ import { ROLES } from "../../../utils/roles"
 
 const GoogleStrategy = passportGoogle.OAuth2Strategy
 
+const getRole = (req: Request) => {
+  if (!req.query || !req.query.state) {
+    return ROLES.Customer
+  }
+
+  let role = `${req.query.state.substring(0, 1).toUpperCase()}${req.query.state
+    .substring(1)
+    .toLowerCase()}`
+
+  switch (role) {
+    case ROLES.Photographer:
+      return ROLES.Photographer
+    default:
+      return ROLES.Customer
+  }
+}
+
 const strategy = (app: Express) => {
   const strategyOptions = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.SERVER_API_URL}/auth/google/callback`
+    callbackURL: `${process.env.SERVER_API_URL}/auth/google/callback`,
+    passReqToCallback: true
   }
 
   const verifyCallback = async (
+    req: Request,
     accessToken: string,
     refreshToken: string,
     profile: GoogleProfile,
@@ -38,7 +57,7 @@ const strategy = (app: Express) => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: verifiedEmail.value,
-        role: ROLES.Customer,
+        role: getRole(req),
         password: null
       })
     )
@@ -50,12 +69,14 @@ const strategy = (app: Express) => {
 
   app.get(
     `${process.env.BASE_API_URL}/auth/google`,
-    passport.authenticate("google", {
-      scope: [
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/userinfo.email"
-      ]
-    })
+    (req: Request, res: Response, next: NextFunction) =>
+      passport.authenticate("google", {
+        state: req.query.type,
+        scope: [
+          "https://www.googleapis.com/auth/userinfo.profile",
+          "https://www.googleapis.com/auth/userinfo.email"
+        ]
+      })(req, res, next)
   )
 
   app.get(

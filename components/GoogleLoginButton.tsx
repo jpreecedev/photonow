@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import { useRouter } from "next/router"
 
 interface GoogleLoginButtonProps {
   variant?: "text" | "outlined" | "contained"
@@ -57,9 +58,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const GoogleLoginButton: FunctionComponent<GoogleLoginButtonProps> = () => {
   const classes = useStyles({})
+  const router = useRouter()
+
+  const type = router.query.type || undefined
 
   return (
-    <a href={`${process.env.BASE_API_URL}/auth/google`} className={classes.button}>
+    <a
+      href={`${process.env.BASE_API_URL}/auth/google${type ? `?type=${type}` : ""}`}
+      className={classes.button}
+    >
       <div className={classes.wrapper}>
         <svg className={classes.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533.5 544.3">
           <path

@@ -1,6 +1,6 @@
-import { Express, Response } from "express"
+import { Express, Response, NextFunction, Request } from "express"
 import passport from "passport"
-import passportFacebook from "passport-facebook"
+import passportFacebook, { StrategyOptionWithRequest } from "passport-facebook"
 import { to } from "await-to-js"
 
 import { User, FacebookProfile, UserRequest } from "../../../global"
@@ -10,15 +10,34 @@ import { ROLES } from "../../../utils/roles"
 
 const FacebookStrategy = passportFacebook.Strategy
 
+const getRole = (req: Request) => {
+  if (!req.query || !req.query.state) {
+    return ROLES.Customer
+  }
+
+  let role = `${req.query.state.substring(0, 1).toUpperCase()}${req.query.state
+    .substring(1)
+    .toLowerCase()}`
+
+  switch (role) {
+    case ROLES.Photographer:
+      return ROLES.Photographer
+    default:
+      return ROLES.Customer
+  }
+}
+
 const strategy = (app: Express) => {
-  const strategyOptions = {
+  const strategyOptions: StrategyOptionWithRequest = {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: `${process.env.SERVER_API_URL}/auth/facebook/callback`,
-    profileFields: ["id", "displayName", "name", "emails"]
+    profileFields: ["id", "displayName", "name", "emails"],
+    passReqToCallback: true
   }
 
   const verifyCallback = async (
+    req: Request,
     accessToken: string,
     refreshToken: string,
     profile: FacebookProfile,
@@ -37,7 +56,7 @@ const strategy = (app: Express) => {
         lastName: profile.name.familyName,
         displayName: profile.displayName,
         email: profile.emails[0].value,
-        role: ROLES.Customer,
+        role: getRole(req),
         password: null
       })
     )
@@ -47,7 +66,13 @@ const strategy = (app: Express) => {
 
   passport.use(new FacebookStrategy(strategyOptions, verifyCallback))
 
-  app.get(`${process.env.BASE_API_URL}/auth/facebook`, passport.authenticate("facebook"))
+  app.get(
+    `${process.env.BASE_API_URL}/auth/facebook`,
+    (req: Request, res: Response, next: NextFunction) =>
+      passport.authenticate("facebook", {
+        state: req.query.type
+      })(req, res, next)
+  )
 
   app.get(
     `${process.env.BASE_API_URL}/auth/facebook/callback`,

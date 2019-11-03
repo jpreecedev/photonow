@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import { useRouter } from "next/router"
 
 interface FacebookLoginButtonProps {
   variant?: "text" | "outlined" | "contained"
@@ -58,9 +59,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const FacebookLoginButton: FunctionComponent<FacebookLoginButtonProps> = () => {
   const classes = useStyles({})
+  const router = useRouter()
+
+  const type = router.query.type
 
   return (
-    <a href={`${process.env.BASE_API_URL}/auth/facebook`} className={classes.button}>
+    <a
+      href={`${process.env.BASE_API_URL}/auth/facebook${type ? `?type=${type}` : ""}`}
+      className={classes.button}
+    >
       <div className={classes.wrapper}>
         <svg
           fill="#3b5998"
