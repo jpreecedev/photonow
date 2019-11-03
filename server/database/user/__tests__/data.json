@@ -8,7 +8,16 @@
       "firstName": "Test First Name",
       "lastName": "Test Last Name",
       "displayName": "Test Display Name",
-      "role": "Some first role"
+      "role": "Some first role",
+      "stripeData": {
+        "authCode": "FIRST_AUTH_CODE",
+        "accessToken": "FIRST_ACCESS_TOKEN",
+        "refreshToken": "FIRST_REFRESH_TOKEN",
+        "tokenType": "FIRST_TOKEN_TYPE",
+        "publishableKey": "FIRST_PUBLISHABLE_KEY",
+        "userId": "FIRST_USER_ID",
+        "scope": "FIRST_SCOPE"
+      }
     },
     {
       "_id": "5d9037a7e174b39d1abc8a6a",
@@ -20,7 +29,10 @@
       "displayName": "Test Google Display Name",
       "providerId": "Test Google Id",
       "provider": "Test Provider",
-      "role": "Some second role"
+      "role": "Some second role",
+      "stripeData": {
+        "authCode": "EXISTING_AUTH_CODE"
+      }
     }
   ]
 }

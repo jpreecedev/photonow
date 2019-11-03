@@ -30,6 +30,7 @@ export interface User extends Document {
   providerId?: string
   provider?: string
   role: string
+  stripeData?: StripeExpressConnect
 }
 
 export interface DatabaseUser {
@@ -72,6 +73,16 @@ export interface Collection extends Document {
 
 export interface StripeCsrfToken extends Document {
   state: string
+}
+
+export interface StripeExpressConnect {
+  authCode?: string
+  accessToken: string
+  refreshToken: string
+  tokenType: "bearer" | string
+  publishableKey: string
+  userId: string
+  scope: "express" | string
 }
 
 export interface CollectionWithCoverPhoto extends Collection {

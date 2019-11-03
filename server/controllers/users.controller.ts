@@ -1,11 +1,9 @@
 import { Response, Request } from "express"
-import uuid from "uuid/v4"
 
 import { getAllUsers, updateRole } from "../database/user"
 import { errorHandler } from "../utils"
 import { utils } from "../auth"
-import { ClientResponse, DatabaseUser, UpdateRoleRequest, StripeCsrfToken } from "../../global"
-import { createCsrfToken } from "../database/stripecsrftoken"
+import { ClientResponse, DatabaseUser, UpdateRoleRequest } from "../../global"
 
 async function get(req: Request, res: Response) {
   try {
@@ -22,13 +20,6 @@ async function get(req: Request, res: Response) {
       data: e
     })
   }
-}
-
-async function getRegisterPhotographer(req: Request, res: Response) {
-  const state = uuid()
-  await createCsrfToken(<StripeCsrfToken>{ state })
-
-  return res.redirect(process.env.STRIPE_EXPRESS_REGISTER_URL.replace("{STATE_VALUE}", state))
 }
 
 async function getRole(req: Request, res: Response) {
@@ -72,4 +63,4 @@ async function post(req: UpdateRoleRequest, res: Response) {
   }
 }
 
-export default { get, getRole, getRegisterPhotographer, post }
+export default { get, getRole, post }

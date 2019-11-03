@@ -112,13 +112,35 @@ const getUserRole = async (req: Request): Promise<string> => {
   })
 }
 
-const getRedirectUrl = (role: string) => {
-  switch (role) {
-    case ROLES.Admin:
-    case ROLES.Photographer:
-      return "/dashboard/collections"
+const getRedirectUrl = (user: User) => {
+  if (!user || !user.role || user.role === ROLES.Customer) {
+    return "/select-gallery"
   }
-  return "/select-gallery"
+
+  if (
+    user.role === ROLES.Photographer &&
+    (!user.stripeData.authCode && !user.stripeData.accessToken)
+  ) {
+    return "/api/stripe/start"
+  }
+
+  if (
+    user.role === ROLES.Photographer &&
+    user.stripeData &&
+    user.stripeData.authCode &&
+    !user.stripeData.accessToken
+  ) {
+    return `/api/stripe/request-access?code=${user.stripeData.authCode}`
+  }
+
+  if (
+    user.role === ROLES.Admin ||
+    (user.role === ROLES.Photographer && user.stripeData && user.stripeData.accessToken)
+  ) {
+    return "/dashboard/collections"
+  }
+
+  return "/"
 }
 
 export {

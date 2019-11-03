@@ -64,7 +64,7 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
     })
     .json(<ClientResponse<string>>{
       success: true,
-      data: utils.getRedirectUrl(user.role)
+      data: utils.getRedirectUrl(user)
     })
 })
 
@@ -114,7 +114,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
     })
     .json(<ClientResponse<string>>{
       success: true,
-      data: utils.getRedirectUrl(user.role)
+      data: utils.getRedirectUrl(user)
     })
 })
 

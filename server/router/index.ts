@@ -6,6 +6,7 @@ import faceRoutes from "./face.routes"
 import authRoutes from "./auth.routes"
 import usersRoutes from "./users.routes"
 import collectionsRoutes from "./collections.routes"
+import stripeRoutes from "./stripe.routes"
 
 function Router(app: Express) {
   app.use(`${process.env.BASE_API_URL}/moments`, momentsRouter)
@@ -15,6 +16,7 @@ function Router(app: Express) {
   app.use(`${process.env.BASE_API_URL}/auth`, authRoutes)
   app.use(`${process.env.BASE_API_URL}/users`, usersRoutes)
   app.use(`${process.env.BASE_API_URL}/collections`, collectionsRoutes)
+  app.use(`${process.env.BASE_API_URL}/stripe`, stripeRoutes)
 }
 
 export default Router

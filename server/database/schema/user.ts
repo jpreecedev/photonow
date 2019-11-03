@@ -10,7 +10,16 @@ const UserSchema = new Schema({
   displayName: String,
   providerId: String,
   provider: String,
-  role: String
+  role: String,
+  stripeData: {
+    authCode: String,
+    accessToken: String,
+    refreshToken: String,
+    tokenType: String,
+    publishableKey: String,
+    userId: String,
+    scope: String
+  }
 })
 
 const UserModel: Model<User> = model<User>("User", UserSchema)
