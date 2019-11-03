@@ -28,4 +28,6 @@ router.post(
   UsersController.post
 )
 
+router.get("/register-photographer", UsersController.getRegisterPhotographer)
+
 export default router

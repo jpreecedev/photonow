@@ -70,6 +70,10 @@ export interface Collection extends Document {
   price: number
 }
 
+export interface StripeCsrfToken extends Document {
+  state: string
+}
+
 export interface CollectionWithCoverPhoto extends Collection {
   coverPhoto?: Moment
 }
