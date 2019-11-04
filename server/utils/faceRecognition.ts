@@ -1,11 +1,38 @@
 import AWS from "aws-sdk"
 import { Types } from "mongoose"
-import { getMoments } from "../database/moments"
-import { PictureItem, Collection } from "../../global"
+import { PictureItem, CollectionWithMoments, Moment } from "../../global"
 import { formatCollectionName } from "./collection"
+import { FaceMatch } from "aws-sdk/clients/rekognition"
 
 const rekognition = new AWS.Rekognition({ region: process.env.AWS_REGION })
 AWS.config.region = process.env.AWS_REGION
+
+function getUniqueMoments(moments: Moment[], faces: FaceMatch[]) {
+  const matchSet = new Set<string>()
+
+  faces.forEach(match => {
+    matchSet.add(match.Face.ExternalImageId)
+  })
+
+  const matches = moments.filter(moment => matchSet.has(moment._id.toString()))
+  const unmatched = moments.filter(moment => !matchSet.has(moment._id.toString()))
+
+  return { matches, unmatched }
+}
+
+function mapMoments(moments: Moment[], matched: boolean, price: number) {
+  return moments.map(
+    moment =>
+      <PictureItem>{
+        momentId: moment._id,
+        label: moment.filename,
+        url: moment.resizedLocation,
+        price: price || Number.parseInt(process.env.DEFAULT_MOMENT_PRICE, 10),
+        addedToBasket: false,
+        matched
+      }
+  )
+}
 
 async function deleteCollection(name: string) {
   return new Promise((resolve, reject) => {
@@ -44,7 +71,10 @@ async function createCollection(collectionName: string) {
   })
 }
 
-async function recogniseFromBuffer(collection: Collection, image: Buffer): Promise<PictureItem[]> {
+async function recogniseFromBuffer(
+  collection: CollectionWithMoments,
+  image: Buffer
+): Promise<PictureItem[]> {
   return new Promise((resolve, reject) => {
     rekognition.searchFacesByImage(
       {
@@ -60,28 +90,12 @@ async function recogniseFromBuffer(collection: Collection, image: Buffer): Promi
 
         if (data.FaceMatches && data.FaceMatches.length > 0 && data.FaceMatches[0].Face) {
           const sorted = data.FaceMatches.sort((a, b) => b.Face.Confidence - a.Face.Confidence)
+          const { matches, unmatched } = getUniqueMoments(collection.moments, sorted)
 
-          const matchSet = new Set()
-          sorted.forEach(match => {
-            matchSet.add(Types.ObjectId(match.Face.ExternalImageId.toString()))
-          })
+          const matchesMapped = mapMoments(matches, true, collection.price)
+          const unmatchedMapped = mapMoments(unmatched, false, collection.price)
 
-          const moments = await getMoments(
-            Array.from(matchSet).map((c: string) => Types.ObjectId(c))
-          )
-
-          return resolve(
-            moments.map(
-              moment =>
-                <PictureItem>{
-                  momentId: moment._id,
-                  label: moment.filename,
-                  url: moment.resizedLocation,
-                  price: collection.price || Number.parseInt(process.env.DEFAULT_MOMENT_PRICE, 10),
-                  addedToBasket: false
-                }
-            )
-          )
+          return resolve(matchesMapped.concat(unmatchedMapped))
         }
         return reject("Not recognized")
       }

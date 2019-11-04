@@ -2,7 +2,7 @@ import { Response, Request } from "express"
 import { createMoment, getMomentsByCollectionId } from "../database/moments"
 import { errorHandler, faceRecognition } from "../utils"
 import { FileRequest, Moment, ClientResponse } from "../../global"
-import { getCollection } from "../database/collection"
+import { getCollection, addMomentToCollection } from "../database/collection"
 import { Types } from "mongoose"
 
 async function get(req: Request, res: Response) {
@@ -60,6 +60,8 @@ async function post(req: FileRequest, res: Response) {
       result._id.toString(),
       originalFile.key
     )
+
+    await addMomentToCollection(collection._id, result._id)
 
     return res.status(200).json(<ClientResponse<string>>{ success: true, data: "Upload complete" })
   } catch (e) {

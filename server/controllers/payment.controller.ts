@@ -9,8 +9,8 @@ import {
   Payment,
   PictureItem,
   ClientResponse,
-  Collection,
-  Email
+  Email,
+  CollectionWithMoments
 } from "../../global"
 import { createPayment } from "../database/payment"
 import { createOrder } from "../database/order"
@@ -42,7 +42,7 @@ async function sendConfirmationEmail({ name, email, orderId, receiptUrl }) {
   return await sendEmail(confirmationEmail)
 }
 
-function calculateOrderAmount(collection: Collection, moments: Moment[]) {
+function calculateOrderAmount(collection: CollectionWithMoments, moments: Moment[]) {
   return moments.length * collection.price
 }
 

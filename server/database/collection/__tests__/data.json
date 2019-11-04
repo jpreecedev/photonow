@@ -70,7 +70,8 @@
       "_id": "5dab326748f8923dbffbbf92",
       "userId": "5dac1640a44770f0715f0fac",
       "name": "Test Collection 2",
-      "price": 699
+      "price": 699,
+      "moments": ["5d73d6d317fde1fec95d6d1f"]
     },
     {
       "_id": "5dac16e3b1b72a9298840600",

@@ -50,6 +50,9 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 // UserModel.updateOne({ _id: "5dac1cabb837afb595f1440d" }, { role: "Photographer" }).exec()
 
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
+// CollectionModel.deleteMany({}).then((err, res) => console.log(err))
+// OrderModel.deleteMany({}).then((err, res) => console.log(err))
+// PaymentModel.deleteMany({}).then((err, res) => console.log(err))
 
 // MomentModel.find({}).exec((err, moments) => {
 //   moments.forEach(u => console.log(u))

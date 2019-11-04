@@ -1,8 +1,15 @@
 import { Types } from "mongoose"
 import { CollectionModel } from "../schema"
+import { CollectionWithMoments } from "../../../global"
 
-async function getCollection(collectionId: Types.ObjectId) {
-  return await CollectionModel.findOne({ _id: collectionId }).exec()
+async function getCollection(collectionId: Types.ObjectId): Promise<CollectionWithMoments> {
+  const collection = await CollectionModel.findOne({ _id: collectionId })
+    .populate({
+      path: "moments"
+    })
+    .exec()
+
+  return (collection as unknown) as CollectionWithMoments
 }
 
 async function getCollections(populate: boolean = false) {

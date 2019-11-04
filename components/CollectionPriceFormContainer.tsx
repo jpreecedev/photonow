@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { Types } from "mongoose"
 import { FormState } from "redux-form"
-import Router from "next/router"
 import { CircularProgress, Button } from "@material-ui/core"
 import { connect, DispatchProp } from "react-redux"
 import { makeStyles, Theme } from "@material-ui/core/styles"

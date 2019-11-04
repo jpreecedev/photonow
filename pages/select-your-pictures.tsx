@@ -77,6 +77,42 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
     0
   )
 
+  const hasUnmatchedPictures = pictures.some(picture => !picture.matched)
+
+  const renderPicture = (picture: PictureItem) => (
+    <Grid item key={picture.url} xs={12} sm={6} md={4}>
+      <Card className={classes.card}>
+        <CardMedia className={classes.cardMedia} image={picture.url} title={picture.label} />
+        <CardContent className={classes.cardContent}>
+          <Typography>
+            This picture is available for purchase for only &pound;
+            {picture.price / 100}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          {!picture.addedToBasket && (
+            <Button
+              size="small"
+              color="primary"
+              onClick={() => dispatch(actions.pictures.addToBasket(picture))}
+            >
+              Add to basket
+            </Button>
+          )}
+          {picture.addedToBasket && (
+            <Button
+              size="small"
+              color="primary"
+              onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
+            >
+              Remove from basket
+            </Button>
+          )}
+        </CardActions>
+      </Card>
+    </Grid>
+  )
+
   const renderNoPicturesFound = () => (
     <>
       <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column" mb={3}>
@@ -115,43 +151,7 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
           </Typography>
         </Box>
         <Grid container spacing={4}>
-          {pictures.map((picture: PictureItem) => (
-            <Grid item key={picture.url} xs={12} sm={6} md={4}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image={picture.url}
-                  title={picture.label}
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography>
-                    Your picture is available for purchase for only &pound;
-                    {picture.price / 100}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  {!picture.addedToBasket && (
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => dispatch(actions.pictures.addToBasket(picture))}
-                    >
-                      Add to basket
-                    </Button>
-                  )}
-                  {picture.addedToBasket && (
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
-                    >
-                      Remove from basket
-                    </Button>
-                  )}
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+          {pictures.filter(picture => picture.matched).map(renderPicture)}
         </Grid>
         <Box display="flex" justifyContent="flex-end" mt={3}>
           <Link href="/checkout">
@@ -160,6 +160,28 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
             </Button>
           </Link>
         </Box>
+        {hasUnmatchedPictures && (
+          <>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexDirection="column"
+              mt={5}
+              mb={3}
+            >
+              <Typography component="h1" variant="h4" align="center">
+                Other pictures are available
+              </Typography>
+              <Typography component="p" gutterBottom>
+                Here are the rest of the pictures from the gallery
+              </Typography>
+            </Box>
+            <Grid container spacing={4}>
+              {pictures.filter(picture => !picture.matched).map(renderPicture)}
+            </Grid>
+          </>
+        )}
       </>
     )
   }

@@ -9,17 +9,9 @@ import { MainLayout } from "../layouts/main"
 import { CollectionWithCoverPhoto } from "../global"
 import { ImageStack } from "../components/ImageStack"
 
-const useStyles = makeStyles((theme: Theme) => ({
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
-  }
-}))
-
 interface SelectGalleryProps {}
 
 const SelectGallery: NextPage<SelectGalleryProps> = () => {
-  const classes = useStyles({})
   const [collections, setCollections] = React.useState<CollectionWithCoverPhoto[]>([])
 
   React.useEffect(() => {

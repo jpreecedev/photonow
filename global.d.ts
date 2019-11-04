@@ -71,6 +71,10 @@ export interface Collection extends Document {
   price: number
 }
 
+export interface CollectionWithMoments extends Collection {
+  moments: Moment[]
+}
+
 export interface StripeCsrfToken extends Document {
   state: string
 }
@@ -172,6 +176,7 @@ export interface PictureItem {
   price: number
   addedToBasket: boolean
   price: number
+  matched: boolean
 }
 
 export interface AddPictureAction {
