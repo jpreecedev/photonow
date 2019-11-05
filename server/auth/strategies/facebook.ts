@@ -7,6 +7,7 @@ import { User, FacebookProfile, UserRequest } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
 import { signToken, getRedirectUrl } from "../utils"
 import { ROLES } from "../../../utils/roles"
+import { errorHandler } from "../../utils"
 
 const FacebookStrategy = passportFacebook.Strategy
 
@@ -48,20 +49,25 @@ const strategy = (app: Express) => {
       return done(err, user)
     }
 
-    const [createdError, createdUser] = await to(
-      createUser(<User>{
-        providerId: profile.id,
-        provider: profile.provider,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        displayName: profile.displayName,
-        email: profile.emails[0].value,
-        role: getRole(req),
-        password: null
-      })
-    )
+    try {
+      const [createdError, createdUser] = await to(
+        createUser(<User>{
+          providerId: profile.id,
+          provider: profile.provider,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          displayName: profile.displayName,
+          email: profile.emails[0].value,
+          role: getRole(req),
+          password: null
+        })
+      )
 
-    return done(createdError, createdUser)
+      return done(createdError, createdUser)
+    } catch (error) {
+      errorHandler.handle(error + "    " + JSON.stringify(profile))
+      return done(error, null)
+    }
   }
 
   passport.use(new FacebookStrategy(strategyOptions, verifyCallback))
