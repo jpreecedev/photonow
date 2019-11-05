@@ -31,15 +31,13 @@
       "moments": ["5d73d69ef390eea3b2bfa4df", "5d73d6d317fde1fec95d6d1f"],
       "customerId": "SOME_RANDOM_CUSTOMER_ID",
       "sessionId": "SOME_RANDOM_SESSION_ID",
-      "stripeOrderId": "SOME_RANDOM_STRIPE_ORDER_ID",
       "fulfilled": true
     },
     {
       "_id": "5dc128ca8d88095abccdbe0c",
       "moments": ["5d73d69ef390eea3b2bfa4df", "5d73d6d317fde1fec95d6d1f"],
-      "customerId": "ANOTHER_RANDOM_CUSTOMER_ID",
+      "customerId": null,
       "sessionId": "SOME_RANDOM_UNFULFILLED_ORDER",
-      "stripeOrderId": null,
       "fulfilled": false
     }
   ]

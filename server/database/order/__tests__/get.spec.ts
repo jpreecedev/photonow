@@ -35,7 +35,6 @@ describe("Get order tests", () => {
     expect(order.customerId).toEqual(testData.orders[0].customerId)
     expect(order.sessionId).toEqual(testData.orders[0].sessionId)
     expect(order.fulfilled).toEqual(testData.orders[0].fulfilled)
-    expect(order.stripeOrderId).toEqual(testData.orders[0].stripeOrderId)
 
     expect(order.moments).toBeDefined()
     expect(order.moments.length).toEqual(2)
@@ -58,7 +57,6 @@ describe("Get order tests", () => {
     expect(order.customerId).toEqual(testData.orders[1].customerId)
     expect(order.sessionId).toEqual(testData.orders[1].sessionId)
     expect(order.fulfilled).toEqual(testData.orders[1].fulfilled)
-    expect(order.stripeOrderId).toBeNull()
 
     expect(order.moments).toBeDefined()
     expect(order.moments.length).toEqual(2)

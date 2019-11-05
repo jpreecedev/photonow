@@ -23,7 +23,6 @@ describe("Create order tests", () => {
       moments: [Types.ObjectId("1aaa9190969b198adaa1ba91")],
       customerId: "TEST_CUSTOMER_ID_123",
       sessionId: "TEST_SESSION_ID",
-      stripeOrderId: "TEST_STRIPE_ORDER_ID",
       fulfilled: true
     }
 
@@ -34,7 +33,6 @@ describe("Create order tests", () => {
     expect(newOrder.moments.length).toEqual(1)
     expect(newOrder.customerId).toEqual(order.customerId)
     expect(newOrder.sessionId).toEqual(order.sessionId)
-    expect(newOrder.stripeOrderId).toEqual(order.stripeOrderId)
     expect(newOrder.fulfilled).toEqual(order.fulfilled)
   })
 })

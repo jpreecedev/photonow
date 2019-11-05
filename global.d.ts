@@ -41,8 +41,7 @@ export interface DatabaseUser {
 
 export interface Order extends Document {
   moments: Type.ObjectId[]
-  stripeOrderId?: string
-  customerId: string
+  customerId?: string
   sessionId: string
   fulfilled: boolean
 }

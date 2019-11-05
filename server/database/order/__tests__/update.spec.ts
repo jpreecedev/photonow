@@ -25,15 +25,11 @@ describe("Update order tests", () => {
 
   test("should update the given order", async () => {
     const sessionId = testData.orders[1].sessionId
-    const customerId = testData.orders[1].customerId
-    const stripeOrderId = "MY_RANDOM_STRIPE_ORDER_ID"
 
-    const result = await fulfillOrder({ sessionId, customerId, stripeOrderId })
-    console.log(result)
+    const result = await fulfillOrder(sessionId)
 
     expect(result).toBeDefined()
     expect(result).toBeTruthy()
     expect(result.fulfilled).toBeTruthy()
-    expect(result.stripeOrderId).toEqual(stripeOrderId)
   })
 })
