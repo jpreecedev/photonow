@@ -21,15 +21,10 @@ describe("Create order tests", () => {
   test("should create an order", async () => {
     const order = <Order>{
       moments: [Types.ObjectId("1aaa9190969b198adaa1ba91")],
-      amount: 222,
-      name: "Test Customer",
-      email: "test@test.com",
-      addressLine1: "1 Test Street",
-      addressLine2: "Test Area",
-      city: "Test City",
-      postalCode: "TT1 1TT",
-      state: "Test State",
-      country: "Test Country"
+      customerId: "TEST_CUSTOMER_ID_123",
+      sessionId: "TEST_SESSION_ID",
+      stripeOrderId: "TEST_STRIPE_ORDER_ID",
+      fulfilled: true
     }
 
     const newOrder = await createOrder(order)
@@ -37,14 +32,9 @@ describe("Create order tests", () => {
     expect(newOrder).toBeDefined()
     expect(newOrder._id).not.toBeUndefined()
     expect(newOrder.moments.length).toEqual(1)
-    expect(newOrder.amount).toEqual(order.amount)
-    expect(newOrder.name).toEqual(order.name)
-    expect(newOrder.email).toEqual(order.email)
-    expect(newOrder.addressLine1).toEqual(order.addressLine1)
-    expect(newOrder.addressLine2).toEqual(order.addressLine2)
-    expect(newOrder.city).toEqual(order.city)
-    expect(newOrder.postalCode).toEqual(order.postalCode)
-    expect(newOrder.state).toEqual(order.state)
-    expect(newOrder.country).toEqual(order.country)
+    expect(newOrder.customerId).toEqual(order.customerId)
+    expect(newOrder.sessionId).toEqual(order.sessionId)
+    expect(newOrder.stripeOrderId).toEqual(order.stripeOrderId)
+    expect(newOrder.fulfilled).toEqual(order.fulfilled)
   })
 })

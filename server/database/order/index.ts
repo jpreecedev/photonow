@@ -1,4 +1,4 @@
-import { getOrder } from "./get"
+import { getOrder, getOrderBySessionId } from "./get"
 import { createOrder } from "./create"
 
-export { getOrder, createOrder }
+export { getOrder, getOrderBySessionId, createOrder }

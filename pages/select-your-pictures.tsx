@@ -1,6 +1,7 @@
 import React from "react"
 import { connect, DispatchProp } from "react-redux"
 import { NextPage } from "next"
+import Head from "next/head"
 import Link from "next/link"
 import {
   Button,
@@ -14,10 +15,13 @@ import {
   Typography
 } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
+import ErrorIcon from "@material-ui/icons/Error"
 
+import * as server from "../utils/server"
 import { AppState, PictureItem } from "../global"
 import { MainLayout } from "../layouts/main"
 import { actions } from "../store"
+import { Banner } from "../components/Banner"
 
 const useStyles = makeStyles((theme: Theme) => ({
   content: {
@@ -71,13 +75,48 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
   dispatch
 }) => {
   const classes = useStyles({})
+  const [error, setError] = React.useState("")
+
+  const watchRef = React.useRef(false)
+  const [stripe, setStripe] = React.useState(null)
+
+  React.useEffect(() => {
+    if (!watchRef.current) {
+      const interval = setInterval(() => {
+        if (window && window.Stripe) {
+          setStripe(window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY))
+          clearInterval(interval)
+        }
+      }, 100)
+      watchRef.current = true
+    }
+  }, [])
 
   const addedToBasket = pictures.reduce(
     (acc, current) => (current.addedToBasket ? (acc += 1) : acc),
     0
   )
 
+  const handleSubmit = async () => {
+    const { success, data } = await server.postAsync<string>("/stripe/session", {
+      pictures: pictures.filter(picture => picture.addedToBasket)
+    })
+
+    if (success) {
+      stripe.redirectToCheckout({ sessionId: data })
+      setError(null)
+    } else {
+      setError(data)
+    }
+  }
+
   const hasUnmatchedPictures = pictures.some(picture => !picture.matched)
+
+  const renderPostError = (error: string) => {
+    return (
+      <Banner theme="error" icon={<ErrorIcon />} message={"Unable to start a checkout session"} />
+    )
+  }
 
   const renderPicture = (picture: PictureItem) => (
     <Grid item key={picture.url} xs={12} sm={6} md={4}>
@@ -150,15 +189,20 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
             Please review your pictures and add any you would like to purchase to your basket
           </Typography>
         </Box>
+        {error && renderPostError(error)}
         <Grid container spacing={4}>
           {pictures.filter(picture => picture.matched).map(renderPicture)}
         </Grid>
         <Box display="flex" justifyContent="flex-end" mt={3}>
-          <Link href="/checkout">
-            <Button size="large" color="primary" variant="contained" disabled={!addedToBasket}>
-              Proceed to checkout
-            </Button>
-          </Link>
+          <Button
+            size="large"
+            color="primary"
+            variant="contained"
+            onClick={handleSubmit}
+            disabled={!addedToBasket}
+          >
+            Proceed to checkout
+          </Button>
         </Box>
         {hasUnmatchedPictures && (
           <>
@@ -187,11 +231,16 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
   }
 
   return (
-    <MainLayout maxWidth="md">
-      <Paper className={classes.paper} elevation={2}>
-        {pictures && pictures.length > 0 ? renderPictures() : renderNoPicturesFound()}
-      </Paper>
-    </MainLayout>
+    <>
+      <Head>
+        <script src="https://js.stripe.com/v3/"></script>
+      </Head>
+      <MainLayout maxWidth="md">
+        <Paper className={classes.paper} elevation={2}>
+          {pictures && pictures.length > 0 ? renderPictures() : renderNoPicturesFound()}
+        </Paper>
+      </MainLayout>
+    </>
   )
 }
 

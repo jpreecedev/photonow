@@ -3,7 +3,6 @@ require("dotenv").config()
 import express from "express"
 import next from "next"
 import cors from "cors"
-import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import passport from "passport"
 import { Handlers, init } from "@sentry/node"
@@ -30,9 +29,6 @@ nextApp.prepare().then(() => {
 
   app.use(Handlers.requestHandler())
   app.use(cors())
-
-  app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(bodyParser.json())
   app.use(cookieParser())
 
   app.use(passport.initialize())

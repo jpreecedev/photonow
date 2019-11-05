@@ -41,26 +41,10 @@ export interface DatabaseUser {
 
 export interface Order extends Document {
   moments: Type.ObjectId[]
-  amount: number
-  name: string
-  email: string
-  addressLine1: string
-  addressLine2: string
-  city: string
-  postalCode: string
-  state: string
-  country: string
-}
-
-export interface Payment extends Document {
-  orderId: Types.ObjectId
-  moments: Types.ObjectId[]
-  amount: number
-  paid: boolean
-  status: string
-  receipt: string
-  stripeCharge: any
-  purchased: Date
+  stripeOrderId?: string
+  customerId: string
+  sessionId: string
+  fulfilled: boolean
 }
 
 export interface Collection extends Document {

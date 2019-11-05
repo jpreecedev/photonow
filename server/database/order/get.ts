@@ -10,4 +10,13 @@ async function getOrder(orderId: Types.ObjectId) {
     .exec()
 }
 
-export { getOrder }
+async function getOrderBySessionId(sessionId: string) {
+  return OrderModel.findOne({ sessionId })
+    .populate({
+      path: "moments",
+      select: ["filename", "location", "resizedLocation", "mimeType"]
+    })
+    .exec()
+}
+
+export { getOrder, getOrderBySessionId }

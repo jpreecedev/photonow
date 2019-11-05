@@ -29,14 +29,18 @@
     {
       "_id": "5d73d89ebed5d85791961f23",
       "moments": ["5d73d69ef390eea3b2bfa4df", "5d73d6d317fde1fec95d6d1f"],
-      "name": "Test Customer",
-      "email": "test@test.com",
-      "addressLine1": "Test Line 1",
-      "addressLine2": "Test Line 2",
-      "city": "Test City",
-      "postalCode": "TT1 1TT",
-      "state": "Test State",
-      "country": "Test Country"
+      "customerId": "SOME_RANDOM_CUSTOMER_ID",
+      "sessionId": "SOME_RANDOM_SESSION_ID",
+      "stripeOrderId": "SOME_RANDOM_STRIPE_ORDER_ID",
+      "fulfilled": true
+    },
+    {
+      "_id": "5dc128ca8d88095abccdbe0c",
+      "moments": ["5d73d69ef390eea3b2bfa4df", "5d73d6d317fde1fec95d6d1f"],
+      "customerId": "ANOTHER_RANDOM_CUSTOMER_ID",
+      "sessionId": "SOME_RANDOM_UNFULFILLED_ORDER",
+      "stripeOrderId": null,
+      "fulfilled": false
     }
   ]
 }

@@ -4,7 +4,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import clsx from "clsx"
 
 interface BannerProps {
-  message: React.ReactElement
+  message: string
   icon: React.ReactElement
   theme?: "error"
 }

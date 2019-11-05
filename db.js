@@ -3,7 +3,6 @@ import {
   MomentModel,
   OrderModel,
   CollectionModel,
-  PaymentModel,
   OrderModel
 } from "./server/database/schema"
 
@@ -17,11 +16,6 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 
 // CollectionModel.find({}).exec((err, collections) => {
 //   collections.forEach(u => console.log(u))
-//   process.exit(0)
-// })
-
-// PaymentModel.find({}).exec((err, payments) => {
-//   payments.forEach(u => console.log(u))
 //   process.exit(0)
 // })
 
@@ -52,17 +46,16 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 // CollectionModel.deleteMany({}).then((err, res) => console.log(err))
 // OrderModel.deleteMany({}).then((err, res) => console.log(err))
-// PaymentModel.deleteMany({}).then((err, res) => console.log(err))
 
 // MomentModel.find({}).exec((err, moments) => {
 //   moments.forEach(u => console.log(u))
 //   process.exit(0)
 // })
 
-// OrderModel.find({}).exec((err, orders) => {
-//   orders.forEach(u => console.log(u))
-//   process.exit(0)
-// })
+OrderModel.find({}).exec((err, orders) => {
+  orders.forEach(u => console.log(u))
+  process.exit(0)
+})
 
 // OrderModel.findOne({ customerId: Types.ObjectId("5d3c3e6d438835640d81bd12") })
 //   .populate({

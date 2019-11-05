@@ -1,10 +1,9 @@
 import { Types } from "mongoose"
-import { Order, Moment, Payment, User, Collection, StripeCsrfToken } from "../../global"
+import { Order, Moment, User, Collection, StripeCsrfToken } from "../../global"
 
 interface TestData {
   orders?: Order[]
   moments?: Moment[]
-  payments?: Payment[]
   users?: User[]
   collections?: Collection[]
   stripeCsrfTokens?: StripeCsrfToken[]
@@ -35,18 +34,14 @@ function sanitizeData(testData: TestData) {
       moment.collectionId = Types.ObjectId((moment.collectionId as unknown) as string)
     })
   }
-  if (testData.payments && testData.payments.length) {
-    testData.payments.forEach(payment => {
-      payment._id = Types.ObjectId(payment._id)
-      payment.orderId = Types.ObjectId((payment.orderId as unknown) as string)
-    })
-  }
+
   if (testData.collections && testData.collections.length) {
     testData.collections.forEach(collection => {
       collection._id = Types.ObjectId(collection._id)
       collection.userId = Types.ObjectId((collection.userId as unknown) as string)
     })
   }
+
   if (testData.stripeCsrfTokens && testData.stripeCsrfTokens.length) {
     testData.stripeCsrfTokens.forEach(token => {
       token._id = Types.ObjectId(token._id)

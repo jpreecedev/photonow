@@ -11,15 +11,60 @@ import {
   StripeExpressConnect,
   UserRequest,
   PictureItem,
-  ClientResponse
+  Order,
+  ClientResponse,
+  Email
 } from "../../global"
 import { errorHandler } from "../utils"
+import { sendEmail } from "../utils/email"
 import { updateStripeData } from "../database/user/update"
 import { getRedirectUrl } from "../auth/utils"
 import { getMoments } from "../database/moments"
 import { getCollection } from "../database/collection"
+import { createOrder, getOrderBySessionId } from "../database/order"
+import { fulfillOrder } from "../database/order/update"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
+
+async function sendConfirmationEmail({ name, email, orderId }) {
+  const confirmationEmail = <Email>{
+    to: email,
+    from: "no-reply@photonow.io",
+    subject: `Order confirmation ${orderId}`,
+    message: `<p>${name}, thank you for your order</p>
+<p>You can review your order and download your pictures any time by clicking this link; <a href="${process.env.SERVER_URL}order-confirmation/${orderId}">${process.env.SERVER_URL}order-confirmation/${orderId}</a></p>
+<p>Thank you for your order.</p>
+<p>The team at PhotoNow.io</p>`
+  }
+
+  return await sendEmail(confirmationEmail)
+}
+
+async function checkoutSuccessful(req: Request, res: Response) {
+  const { session_id } = req.query
+  const order = await getOrderBySessionId(session_id)
+
+  if (!order.fulfilled && process.env.NODE_ENV !== "development") {
+    return res.status(500).json({ error: "The order was not fulfilled" })
+  }
+
+  const customer = order.customerId && (await stripe.customers.retrieve(order.customerId))
+
+  if (customer) {
+    await sendConfirmationEmail({
+      name: customer.name,
+      email: customer.email,
+      orderId: order._id
+    })
+  }
+
+  return res.redirect(`/order-confirmation/${order._id}`)
+}
+
+async function checkoutSessionCompleted(session: Stripe.checkouts.sessions.ICheckoutSession) {
+  const customer = await stripe.customers.retrieve(session.customer as string)
+  await fulfillOrder({ sessionId: session.id, customerId: customer.id, stripeOrderId: null })
+}
 
 async function createSession(req: Request, res: Response) {
   try {
@@ -29,9 +74,8 @@ async function createSession(req: Request, res: Response) {
     const collection = await getCollection(moments[0].collectionId)
 
     const lineItems: Stripe.checkouts.sessions.ICheckoutLineItems[] = moments.map(moment => ({
-      name: moment.filename,
+      name: "Precious Moment",
       description: moment.filename,
-      images: [moment.resizedLocation],
       amount: collection.price,
       currency: "gbp",
       quantity: 1
@@ -42,6 +86,13 @@ async function createSession(req: Request, res: Response) {
       line_items: lineItems,
       success_url: `${process.env.SERVER_API_URL}/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.SERVER_API_URL}/stripe/cancel`
+    })
+
+    await createOrder(<Order>{
+      moments: moments.map(moment => moment._id.toString()),
+      customerId: session.customer as string,
+      sessionId: session.id,
+      fulfilled: false
     })
 
     return res.status(200).json(<ClientResponse<string>>{
@@ -110,4 +161,4 @@ async function requestAccess(req: UserRequest, res: Response) {
   return res.redirect(getRedirectUrl(updatedUser))
 }
 
-export default { start, requestAccess, createSession }
+export default { start, requestAccess, createSession, checkoutSessionCompleted, checkoutSuccessful }
