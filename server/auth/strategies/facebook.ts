@@ -1,14 +1,13 @@
 import { Express, Response, NextFunction, Request } from "express"
 import passport from "passport"
-import passportFacebook, { StrategyOptionWithRequest } from "passport-facebook"
+import passportFacebook, { StrategyOptionWithRequest, Profile } from "passport-facebook"
 import { to } from "await-to-js"
 
-import { User, FacebookProfile, UserRequest } from "../../../global"
+import { User, UserRequest } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
 import { signToken, getRedirectUrl } from "../utils"
 import { ROLES } from "../../../utils/roles"
 import { errorHandler } from "../../utils"
-import { captureMessage } from "@sentry/core"
 
 const FacebookStrategy = passportFacebook.Strategy
 
@@ -34,7 +33,7 @@ const strategy = (app: Express) => {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: `${process.env.SERVER_API_URL}/auth/facebook/callback`,
-    profileFields: ["id", "displayName", "name", "emails"],
+    profileFields: ["id", "displayName", "photos", "email"],
     passReqToCallback: true
   }
 
@@ -42,7 +41,7 @@ const strategy = (app: Express) => {
     req: Request,
     accessToken: string,
     refreshToken: string,
-    profile: FacebookProfile,
+    profile: Profile,
     done
   ) => {
     let [err, user] = await to(getUserByProviderId(profile.id))
@@ -66,8 +65,6 @@ const strategy = (app: Express) => {
 
       return done(createdError, createdUser)
     } catch (error) {
-      errorHandler.handle(error + "    " + JSON.stringify(profile))
-      captureMessage(profile._raw)
       return done(error, null)
     }
   }

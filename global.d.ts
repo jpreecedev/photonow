@@ -219,14 +219,6 @@ export interface GoogleProfile extends Profile {
   photos: [{ value: string }]
 }
 
-export interface FacebookProfile extends Profile {
-  id: string
-  displayName: string
-  name: { familyName: string; givenName: string }
-  emails: [{ value: string }]
-  birthday: string
-}
-
 export interface NewCollection {
   _id?: string
   name: string
