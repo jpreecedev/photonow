@@ -26,12 +26,12 @@ import { fulfillOrder } from "../database/order/update"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
-async function sendConfirmationEmail({ name, email, orderId }) {
+async function sendConfirmationEmail({ email, orderId }) {
   const confirmationEmail = <Email>{
     to: email,
     from: "no-reply@photonow.io",
     subject: `Order confirmation ${orderId}`,
-    message: `<p>${name}, thank you for your order</p>
+    message: `<p>Hello, thank you for your order!</p>
 <p>You can review your order and download your pictures any time by clicking this link; <a href="${process.env.SERVER_URL}order-confirmation/${orderId}">${process.env.SERVER_URL}order-confirmation/${orderId}</a></p>
 <p>Thank you for your order.</p>
 <p>The team at PhotoNow.io</p>`
@@ -48,12 +48,11 @@ async function checkoutSuccessful(req: Request, res: Response) {
     return res.status(500).json({ error: "The order was not fulfilled" })
   }
 
-  const customer = order.customerId && (await stripe.customers.retrieve(order.customerId))
+  const stripeSession = await stripe.checkout.sessions.retrieve(session_id)
 
-  if (customer) {
+  if (stripeSession && stripeSession.customer_email) {
     await sendConfirmationEmail({
-      name: customer.name,
-      email: customer.email,
+      email: stripeSession.customer_email,
       orderId: order._id
     })
   }
