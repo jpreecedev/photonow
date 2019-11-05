@@ -4,6 +4,7 @@ import uuid from "uuid/v4"
 import { Response, Request } from "express"
 import { to } from "await-to-js"
 import Stripe from "stripe"
+import { captureMessage } from "@sentry/node"
 
 import { createCsrfToken } from "../database/stripecsrftoken"
 import {
@@ -63,6 +64,10 @@ async function checkoutSuccessful(req: Request, res: Response) {
 
 async function checkoutSessionCompleted(session: Stripe.checkouts.sessions.ICheckoutSession) {
   const customer = await stripe.customers.retrieve(session.customer as string)
+  captureMessage(
+    "Fulfilling order, " +
+      JSON.stringify({ sessionId: session.id, customerId: customer.id, stripeOrderId: null })
+  )
   await fulfillOrder({ sessionId: session.id, customerId: customer.id, stripeOrderId: null })
 }
 
