@@ -74,13 +74,14 @@ const strategy = (app: Express) => {
     `${process.env.BASE_API_URL}/auth/facebook`,
     (req: Request, res: Response, next: NextFunction) =>
       passport.authenticate("facebook", {
+        scope: ["email"],
         state: req.query.type
       })(req, res, next)
   )
 
   app.get(
     `${process.env.BASE_API_URL}/auth/facebook/callback`,
-    passport.authenticate("facebook", { scope: "email", failureRedirect: "/login" }),
+    passport.authenticate("facebook", { failureRedirect: "/login" }),
     (req: UserRequest, res: Response) => {
       return res
         .status(200)
