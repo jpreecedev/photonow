@@ -8,6 +8,7 @@ import { getUserByProviderId, createUser } from "../../database/user"
 import { signToken, getRedirectUrl } from "../utils"
 import { ROLES } from "../../../utils/roles"
 import { errorHandler } from "../../utils"
+import { captureMessage } from "@sentry/core"
 
 const FacebookStrategy = passportFacebook.Strategy
 
@@ -66,6 +67,7 @@ const strategy = (app: Express) => {
       return done(createdError, createdUser)
     } catch (error) {
       errorHandler.handle(error + "    " + JSON.stringify(profile))
+      captureMessage(profile._raw)
       return done(error, null)
     }
   }
