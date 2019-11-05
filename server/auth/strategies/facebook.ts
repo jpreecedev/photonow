@@ -7,7 +7,6 @@ import { User, UserRequest } from "../../../global"
 import { getUserByProviderId, createUser } from "../../database/user"
 import { signToken, getRedirectUrl } from "../utils"
 import { ROLES } from "../../../utils/roles"
-import { errorHandler } from "../../utils"
 
 const FacebookStrategy = passportFacebook.Strategy
 
@@ -33,7 +32,7 @@ const strategy = (app: Express) => {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: `${process.env.SERVER_API_URL}/auth/facebook/callback`,
-    profileFields: ["id", "displayName", "photos", "email"],
+    profileFields: ["id", "displayName", "emails"],
     passReqToCallback: true
   }
 
@@ -81,7 +80,7 @@ const strategy = (app: Express) => {
 
   app.get(
     `${process.env.BASE_API_URL}/auth/facebook/callback`,
-    passport.authenticate("facebook", { failureRedirect: "/login" }),
+    passport.authenticate("facebook", { scope: "email", failureRedirect: "/login" }),
     (req: UserRequest, res: Response) => {
       return res
         .status(200)
