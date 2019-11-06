@@ -75,7 +75,7 @@ const strategy = (app: Express) => {
     (req: Request, res: Response, next: NextFunction) =>
       passport.authenticate("facebook", {
         scope: ["email"],
-        state: req.query.type
+        state: req.query.type || "Customer"
       })(req, res, next)
   )
 

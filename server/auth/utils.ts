@@ -130,7 +130,7 @@ const getRedirectUrl = (user: User) => {
     user.stripeData.authCode &&
     !user.stripeData.accessToken
   ) {
-    return `/api/stripe/request-access?code=${user.stripeData.authCode}`
+    return `${process.env.SERVER_API_URL}/stripe/request-access?code=${user.stripeData.authCode}`
   }
 
   if (
