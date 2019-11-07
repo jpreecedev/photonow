@@ -24,9 +24,9 @@ describe("Update order tests", () => {
   })
 
   test("should update the given order", async () => {
-    const sessionId = testData.orders[1].sessionId
+    const paymentIntentId = testData.orders[1].paymentIntentId
 
-    const result = await fulfillOrder(sessionId)
+    const result = await fulfillOrder(paymentIntentId)
 
     expect(result).toBeDefined()
     expect(result).toBeTruthy()

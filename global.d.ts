@@ -42,7 +42,7 @@ export interface DatabaseUser {
 export interface Order extends Document {
   moments: Type.ObjectId[]
   customerId?: string
-  sessionId: string
+  paymentIntentId: string
   fulfilled: boolean
 }
 

@@ -3,6 +3,7 @@ import { connect, DispatchProp } from "react-redux"
 import { NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link"
+import Router from "next/router"
 import {
   Button,
   Card,
@@ -98,12 +99,12 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
   )
 
   const handleSubmit = async () => {
-    const { success, data } = await server.postAsync<string>("/stripe/session", {
+    const { success, data } = await server.postAsync<string>("/stripe/intent", {
       pictures: pictures.filter(picture => picture.addedToBasket)
     })
 
     if (success) {
-      stripe.redirectToCheckout({ sessionId: data })
+      Router.push({ pathname: "/checkout", query: { token: data } })
       setError(null)
     } else {
       setError(data)

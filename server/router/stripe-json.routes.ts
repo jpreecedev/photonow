@@ -7,9 +7,9 @@ import { ROLES } from "../../utils/roles"
 
 const router = express.Router()
 
-router.post("/session", StripeController.createSession)
+router.post("/intent", StripeController.paymentIntent)
 
-router.get("/success", StripeController.checkoutSuccessful)
+router.post("/check-order", StripeController.checkOrderStatus)
 
 router.get("/cancel", (req: Request, res: Response) => res.redirect("/select-your-pictures"))
 

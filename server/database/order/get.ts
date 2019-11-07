@@ -10,8 +10,8 @@ async function getOrder(orderId: Types.ObjectId) {
     .exec()
 }
 
-async function getOrderBySessionId(sessionId: string) {
-  return OrderModel.findOne({ sessionId })
+async function getOrderByPaymentIntentId(paymentIntentId: string) {
+  return OrderModel.findOne({ paymentIntentId })
     .populate({
       path: "moments",
       select: ["filename", "location", "resizedLocation", "mimeType"]
@@ -19,4 +19,4 @@ async function getOrderBySessionId(sessionId: string) {
     .exec()
 }
 
-export { getOrder, getOrderBySessionId }
+export { getOrder, getOrderByPaymentIntentId }

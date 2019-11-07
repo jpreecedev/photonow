@@ -4,7 +4,7 @@ import { Order } from "../../../global"
 const OrderSchema = new Schema({
   moments: [{ type: Schema.Types.ObjectId, ref: "Moment" }],
   customerId: String,
-  sessionId: String,
+  paymentIntentId: String,
   fulfilled: Boolean
 })
 

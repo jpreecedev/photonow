@@ -21,8 +21,9 @@ import { updateStripeData } from "../database/user/update"
 import { getRedirectUrl } from "../auth/utils"
 import { getMoments } from "../database/moments"
 import { getCollection } from "../database/collection"
-import { createOrder, getOrderBySessionId } from "../database/order"
+import { createOrder, getOrderByPaymentIntentId } from "../database/order"
 import { fulfillOrder } from "../database/order/update"
+import { getUserById } from "../database/user"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
@@ -40,67 +41,67 @@ async function sendConfirmationEmail({ email, orderId }) {
   return await sendEmail(confirmationEmail)
 }
 
-async function checkoutSuccessful(req: Request, res: Response) {
-  const { session_id } = req.query
-  const order = await getOrderBySessionId(session_id)
+async function checkOrderStatus(req: Request, res: Response) {
+  const { paymentIntentId } = req.body
+  const order = await getOrderByPaymentIntentId(paymentIntentId)
 
   if (!order.fulfilled && process.env.NODE_ENV !== "development") {
-    return res.status(500).json({ error: "The order was not fulfilled" })
-  }
-
-  const stripeSession = await stripe.checkout.sessions.retrieve(session_id)
-
-  if (stripeSession && stripeSession.customer_email) {
-    await sendConfirmationEmail({
-      email: stripeSession.customer_email,
-      orderId: order._id
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "The order was not fulfilled"
     })
   }
 
-  return res.redirect(`/order-confirmation/${order._id}`)
+  return res.status(200).json(<ClientResponse<string>>{
+    success: true,
+    data: `/order-confirmation/${order._id}`
+  })
 }
 
-async function checkoutSessionCompleted(session: Stripe.checkouts.sessions.ICheckoutSession) {
-  await fulfillOrder(session.id)
+async function paymentIntentCompleted(intent: Stripe.paymentIntents.IPaymentIntent) {
+  const order = await fulfillOrder(intent.id)
+
+  if (intent.receipt_email) {
+    await sendConfirmationEmail({
+      email: intent.receipt_email,
+      orderId: order._id
+    })
+  }
 }
 
-async function createSession(req: Request, res: Response) {
+async function paymentIntent(req: Request, res: Response) {
   try {
     const { pictures }: { pictures: PictureItem[] } = req.body
-
     const moments = await getMoments(pictures.map(picture => Types.ObjectId(picture.momentId)))
     const collection = await getCollection(moments[0].collectionId)
+    const photographer = await getUserById(moments[0].photographerId)
 
-    const lineItems: Stripe.checkouts.sessions.ICheckoutLineItems[] = moments.map(moment => ({
-      name: "Precious Moment",
-      description: moment.filename,
-      amount: collection.price,
+    const amount = pictures.filter(picture => picture.addedToBasket).length * collection.price
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
       currency: "gbp",
-      quantity: 1
-    }))
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: lineItems,
-      success_url: `${process.env.SERVER_API_URL}/stripe/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.SERVER_API_URL}/stripe/cancel`
+      application_fee_amount: 100,
+      transfer_data: {
+        destination: photographer.stripeData.userId
+      }
     })
 
     await createOrder(<Order>{
       moments: moments.map(moment => moment._id.toString()),
-      sessionId: session.id,
+      paymentIntentId: paymentIntent.id,
       fulfilled: false
     })
 
     return res.status(200).json(<ClientResponse<string>>{
       success: true,
-      data: session.id
+      data: paymentIntent.client_secret
     })
-  } catch (e) {
-    errorHandler.handle(e)
+  } catch (err) {
+    errorHandler.handle(err)
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
-      data: e
+      data: err
     })
   }
 }
@@ -158,4 +159,10 @@ async function requestAccess(req: UserRequest, res: Response) {
   return res.redirect(getRedirectUrl(updatedUser))
 }
 
-export default { start, requestAccess, createSession, checkoutSessionCompleted, checkoutSuccessful }
+export default {
+  start,
+  requestAccess,
+  paymentIntent,
+  paymentIntentCompleted,
+  checkOrderStatus
+}

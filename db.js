@@ -32,10 +32,10 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   .exec()
 //   .then((err, res) => console.log(err))
 
-// UserModel.find({}).exec((err, users) => {
-//   users.forEach(u => console.log(u))
-//   process.exit(0)
-// })
+UserModel.find({}).exec((err, users) => {
+  users.forEach(u => console.log(u))
+  process.exit(0)
+})
 
 // CollectionModel.updateMany({
 //   price: 799
@@ -52,10 +52,10 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   process.exit(0)
 // })
 
-OrderModel.find({}).exec((err, orders) => {
-  orders.forEach(u => console.log(u))
-  process.exit(0)
-})
+// OrderModel.find({}).exec((err, orders) => {
+//   orders.forEach(u => console.log(u))
+//   process.exit(0)
+// })
 
 // OrderModel.findOne({ customerId: Types.ObjectId("5d3c3e6d438835640d81bd12") })
 //   .populate({

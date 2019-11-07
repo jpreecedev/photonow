@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getOrder, getOrderBySessionId } from "../get"
+import { getOrder, getOrderByPaymentIntentId } from "../get"
 import { Moment } from "../../../../global"
 
 const dbHelper = TestDbHelper()
@@ -33,7 +33,7 @@ describe("Get order tests", () => {
     expect(order).toBeDefined()
     expect(order._id).not.toBeUndefined()
     expect(order.customerId).toEqual(testData.orders[0].customerId)
-    expect(order.sessionId).toEqual(testData.orders[0].sessionId)
+    expect(order.paymentIntentId).toEqual(testData.orders[0].paymentIntentId)
     expect(order.fulfilled).toEqual(testData.orders[0].fulfilled)
 
     expect(order.moments).toBeDefined()
@@ -48,14 +48,14 @@ describe("Get order tests", () => {
   })
 
   test("should get one order by session id", async () => {
-    const sessionId = testData.orders[1].sessionId
+    const paymentIntentId = testData.orders[1].paymentIntentId
 
-    const order = await getOrderBySessionId(sessionId)
+    const order = await getOrderByPaymentIntentId(paymentIntentId)
 
     expect(order).toBeDefined()
     expect(order._id).not.toBeUndefined()
     expect(order.customerId).toEqual(testData.orders[1].customerId)
-    expect(order.sessionId).toEqual(testData.orders[1].sessionId)
+    expect(order.paymentIntentId).toEqual(testData.orders[1].paymentIntentId)
     expect(order.fulfilled).toEqual(testData.orders[1].fulfilled)
 
     expect(order.moments).toBeDefined()

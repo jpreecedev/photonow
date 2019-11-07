@@ -16,6 +16,7 @@ router.post(
     const sig = req.headers["stripe-signature"]
 
     let event
+    let intent
 
     try {
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
@@ -24,10 +25,16 @@ router.post(
       return res.status(400).send(`Webhook Error: ${err.message}`)
     }
 
-    // Handle the checkout.session.completed event
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object
-      await StripeController.checkoutSessionCompleted(session)
+    switch (event["type"]) {
+      case "payment_intent.succeeded":
+        intent = event.data.object
+        await StripeController.paymentIntentCompleted(intent)
+        break
+      case "payment_intent.payment_failed":
+        intent = event.data.object
+        const message = intent.last_payment_error && intent.last_payment_error.message
+        console.log("Failed:", intent.id, message)
+        break
     }
 
     return res.status(200).json({ received: true })

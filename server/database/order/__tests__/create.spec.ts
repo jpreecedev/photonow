@@ -22,7 +22,7 @@ describe("Create order tests", () => {
     const order = <Order>{
       moments: [Types.ObjectId("1aaa9190969b198adaa1ba91")],
       customerId: "TEST_CUSTOMER_ID_123",
-      sessionId: "TEST_SESSION_ID",
+      paymentIntentId: "TEST_PAYMENT_INTENT_ID",
       fulfilled: true
     }
 
@@ -32,7 +32,7 @@ describe("Create order tests", () => {
     expect(newOrder._id).not.toBeUndefined()
     expect(newOrder.moments.length).toEqual(1)
     expect(newOrder.customerId).toEqual(order.customerId)
-    expect(newOrder.sessionId).toEqual(order.sessionId)
+    expect(newOrder.paymentIntentId).toEqual(order.paymentIntentId)
     expect(newOrder.fulfilled).toEqual(order.fulfilled)
   })
 })
