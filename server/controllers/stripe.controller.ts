@@ -24,7 +24,6 @@ import { getCollection } from "../database/collection"
 import { createOrder, getOrderByPaymentIntentId } from "../database/order"
 import { fulfillOrder } from "../database/order/update"
 import { getUserById } from "../database/user"
-import { captureMessage } from "@sentry/core"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
@@ -44,9 +43,28 @@ async function sendConfirmationEmail({ email, orderId }) {
 
 async function checkOrderStatus(req: Request, res: Response) {
   const { paymentIntentId } = req.body
-  const order = await getOrderByPaymentIntentId(paymentIntentId)
 
-  captureMessage("Checking order with intent " + paymentIntentId + `(${order.fulfilled})`)
+  const getOrder = async () => {
+    return new Promise((resolve, reject) => {
+      getOrderByPaymentIntentId(paymentIntentId).then(order => {
+        if (order.fulfilled) {
+          return resolve(order)
+        }
+        return reject("Order is not fulfilled")
+      })
+    })
+  }
+
+  const pause = (duration: number) => new Promise(res => setTimeout(res, duration))
+
+  const backoff = (retries: number, fn: Function, delay = 500): Promise<Order> =>
+    fn().catch((err: string) =>
+      retries > 1
+        ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2))
+        : Promise.reject(err)
+    )
+
+  const order = await backoff(30, getOrder, 1000)
 
   if (!order.fulfilled) {
     return res.status(500).json(<ClientResponse<string>>{
@@ -63,8 +81,6 @@ async function checkOrderStatus(req: Request, res: Response) {
 
 async function paymentIntentCompleted(intent: Stripe.paymentIntents.IPaymentIntent) {
   const order = await fulfillOrder(intent.id)
-
-  captureMessage("Fulfilled order with intent " + intent.id)
 
   if (intent.receipt_email) {
     await sendConfirmationEmail({
@@ -91,8 +107,6 @@ async function paymentIntent(req: Request, res: Response) {
         destination: photographer.stripeData.userId
       }
     })
-
-    captureMessage("Creating order with intent " + paymentIntent.id)
 
     await createOrder(<Order>{
       moments: moments.map(moment => moment._id.toString()),
