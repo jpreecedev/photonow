@@ -24,6 +24,7 @@ import { getCollection } from "../database/collection"
 import { createOrder, getOrderByPaymentIntentId } from "../database/order"
 import { fulfillOrder } from "../database/order/update"
 import { getUserById } from "../database/user"
+import { captureMessage } from "@sentry/core"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
@@ -31,7 +32,7 @@ async function sendConfirmationEmail({ email, orderId }) {
   const confirmationEmail = <Email>{
     to: email,
     from: "no-reply@photonow.io",
-    subject: `Order confirmation ${orderId}`,
+    subject: `PhotoNow.io Order confirmation`,
     message: `<p>Hello, thank you for your order!</p>
 <p>You can review your order and download your pictures any time by clicking this link; <a href="${process.env.SERVER_URL}order-confirmation/${orderId}">${process.env.SERVER_URL}order-confirmation/${orderId}</a></p>
 <p>Thank you for your order.</p>
@@ -45,7 +46,9 @@ async function checkOrderStatus(req: Request, res: Response) {
   const { paymentIntentId } = req.body
   const order = await getOrderByPaymentIntentId(paymentIntentId)
 
-  if (!order.fulfilled && process.env.NODE_ENV !== "development") {
+  captureMessage("Checking order with intent " + paymentIntentId + `(${order.fulfilled})`)
+
+  if (!order.fulfilled) {
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
       data: "The order was not fulfilled"
@@ -60,6 +63,8 @@ async function checkOrderStatus(req: Request, res: Response) {
 
 async function paymentIntentCompleted(intent: Stripe.paymentIntents.IPaymentIntent) {
   const order = await fulfillOrder(intent.id)
+
+  captureMessage("Fulfilled order with intent " + intent.id)
 
   if (intent.receipt_email) {
     await sendConfirmationEmail({
@@ -86,6 +91,8 @@ async function paymentIntent(req: Request, res: Response) {
         destination: photographer.stripeData.userId
       }
     })
+
+    captureMessage("Creating order with intent " + paymentIntent.id)
 
     await createOrder(<Order>{
       moments: moments.map(moment => moment._id.toString()),
