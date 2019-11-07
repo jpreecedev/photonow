@@ -78,4 +78,8 @@ const putAsync = <T>(url: string, body: any): Promise<ClientResponse<T>> => {
   return callFetchAsync<T>(url, "PUT", body)
 }
 
-export { getAsync, postAsync, putAsync, uploadPhotoAsync, getServerApiUrl }
+const deleteAsync = <T>(url: string, body: any): Promise<ClientResponse<T>> => {
+  return callFetchAsync<T>(url, "DELETE", body)
+}
+
+export { getAsync, postAsync, putAsync, deleteAsync, uploadPhotoAsync, getServerApiUrl }

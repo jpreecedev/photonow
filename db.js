@@ -32,16 +32,16 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   .exec()
 //   .then((err, res) => console.log(err))
 
-UserModel.find({}).exec((err, users) => {
-  users.forEach(u => console.log(u))
-  process.exit(0)
-})
+// UserModel.find({}).exec((err, users) => {
+//   users.forEach(u => console.log(u))
+//   process.exit(0)
+// })
 
 // CollectionModel.updateMany({
 //   price: 799
 // }).exec()
 
-// UserModel.updateOne({ _id: "5dac1cabb837afb595f1440d" }, { role: "Photographer" }).exec()
+// UserModel.updateOne({ _id: "5da8bc05990b274744e81e66" }, { role: "Admin" }).exec()
 
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 // CollectionModel.deleteMany({}).then((err, res) => console.log(err))

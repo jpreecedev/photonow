@@ -97,6 +97,10 @@ export interface OrderRequest extends Request {
   params: OrderParams
 }
 
+export interface DeleteFaceRequest extends Request {
+  collectionId: string
+}
+
 export interface BillingDetails {
   name: string
   email: string
