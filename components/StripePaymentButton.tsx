@@ -38,7 +38,7 @@ const StripePaymentButton: FunctionComponent<
       // @ts-ignore
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
-        { payment_method: paymentMethod.id },
+        { payment_method: paymentMethod.id, receipt_email: paymentMethod.billing_details.email },
         { handleActions: false }
       )
 
