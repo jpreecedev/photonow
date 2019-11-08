@@ -6,7 +6,6 @@ import { useTheme } from "@material-ui/core/styles"
 
 import { Country } from "../global"
 import { renderSelectField, renderTextField } from "./ReduxForm"
-import { AddressLookup } from "./AddressLookup"
 
 interface AddressFormProps {}
 

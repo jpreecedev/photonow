@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { FilePond, registerPlugin } from "react-filepond"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 

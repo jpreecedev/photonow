@@ -2,8 +2,6 @@ import React, { FunctionComponent } from "react"
 import { ReactStripeElements, PaymentRequestButtonElement } from "react-stripe-elements"
 import { useRouter } from "next/router"
 
-import { BillingDetails } from "../global"
-
 interface StripePaymentButtonProps {
   loaded: (success: boolean) => void
   handleOrder: (paymentIntent: stripe.paymentIntents.PaymentIntent, error: stripe.Error) => void
@@ -38,31 +36,20 @@ const StripePaymentButton: FunctionComponent<
 
     paymentRequestRef.current.on("paymentmethod", async ({ paymentMethod, complete }) => {
       // @ts-ignore
-      const { error: confirmError } = await stripe.confirmCardPayment(
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
         { payment_method: paymentMethod.id },
         { handleActions: false }
       )
 
-      if (confirmError) {
+      if (error) {
         // Report to the browser that the payment failed, prompting it to
         // re-show the payment interface, or show an error message and close
         // the payment interface.
         complete("fail")
       } else {
-        // Report to the browser that the confirmation was successful, prompting
-        // it to close the browser payment method collection interface.
         complete("success")
-        // Let Stripe.js handle the rest of the payment flow.
-        // @ts-ignore
-        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret)
-        if (error) {
-          debugger
-          // TODO
-          // The payment failed -- ask your customer for a new payment method.
-        } else {
-          handleOrder(paymentIntent, error)
-        }
+        handleOrder(paymentIntent, error)
       }
     })
 

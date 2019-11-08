@@ -1,5 +1,4 @@
 import AWS from "aws-sdk"
-import { Types } from "mongoose"
 import { PictureItem, CollectionWithMoments, Moment } from "../../global"
 import { formatCollectionName } from "./collection"
 import { FaceMatch } from "aws-sdk/clients/rekognition"

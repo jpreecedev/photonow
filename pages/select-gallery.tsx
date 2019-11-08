@@ -1,6 +1,5 @@
 import React from "react"
 import { NextPage } from "next"
-import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Grid } from "@material-ui/core"
 import Router from "next/router"
 
