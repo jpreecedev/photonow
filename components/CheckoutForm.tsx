@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 import { AddressForm } from "./AddressForm"
 import { PaymentForm } from "./PaymentForm"
 import { Review } from "./Review"
-import { PictureItem, BillingDetails, AppState } from "../global"
+import { PictureItem, AppState } from "../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttons: {

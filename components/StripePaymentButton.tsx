@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from "react"
 import { ReactStripeElements, PaymentRequestButtonElement } from "react-stripe-elements"
+import { useRouter } from "next/router"
 
 import { BillingDetails } from "../global"
 
 interface StripePaymentButtonProps {
   loaded: (success: boolean) => void
-  handleOrder: (token: stripe.Token, billingDetails: BillingDetails) => void
+  handleOrder: (paymentIntent: stripe.paymentIntents.PaymentIntent, error: stripe.Error) => void
   orderTotal: number
 }
 
@@ -13,6 +14,8 @@ const StripePaymentButton: FunctionComponent<
   ReactStripeElements.InjectedStripeProps & StripePaymentButtonProps
 > = ({ stripe, handleOrder, loaded, orderTotal }) => {
   const paymentRequestRef = React.useRef(null)
+  const router = useRouter()
+  const clientSecret = router.query.token as string
 
   const [canMakePayment, setCanMakePayment] = React.useState<boolean>(false)
 
@@ -29,25 +32,38 @@ const StripePaymentButton: FunctionComponent<
         amount: orderTotal
       },
       requestPayerName: true,
-      requestPayerEmail: true
+      requestPayerEmail: true,
+      requestPayerPhone: true
     })
 
-    paymentRequestRef.current.on("token", async ({ token, complete }) => {
-      const { card } = token
+    paymentRequestRef.current.on("paymentmethod", async ({ paymentMethod, complete }) => {
+      // @ts-ignore
+      const { error: confirmError } = await stripe.confirmCardPayment(
+        clientSecret,
+        { payment_method: paymentMethod.id },
+        { handleActions: false }
+      )
 
-      const billingDetails = {
-        name: card.name,
-        email: card.email,
-        addressLine1: card.address_line1,
-        addressLine2: card.address_line2,
-        city: card.address_city,
-        postalCode: card.address_zip,
-        state: card.address_state,
-        country: card.country
+      if (confirmError) {
+        // Report to the browser that the payment failed, prompting it to
+        // re-show the payment interface, or show an error message and close
+        // the payment interface.
+        complete("fail")
+      } else {
+        // Report to the browser that the confirmation was successful, prompting
+        // it to close the browser payment method collection interface.
+        complete("success")
+        // Let Stripe.js handle the rest of the payment flow.
+        // @ts-ignore
+        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret)
+        if (error) {
+          debugger
+          // TODO
+          // The payment failed -- ask your customer for a new payment method.
+        } else {
+          handleOrder(paymentIntent, error)
+        }
       }
-
-      handleOrder(token, billingDetails)
-      complete("success")
     })
 
     paymentRequestRef.current.canMakePayment().then(result => {

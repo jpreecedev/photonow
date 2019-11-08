@@ -2,7 +2,7 @@ import express, { Response } from "express"
 import passport from "passport"
 import { Types } from "mongoose"
 import multer from "multer"
-import { faceRecognition } from "../utils"
+import { faceRecognition, errorHandler } from "../utils"
 import { ClientResponse, PictureItem, FileRequest } from "../../global"
 import { getCollection } from "../database/collection"
 
@@ -27,6 +27,7 @@ router.get(
         data: collections.CollectionIds
       })
     } catch (err) {
+      errorHandler.handle(err)
       return res.status(500).json(<ClientResponse<String>>{
         success: false,
         data: "No faces were recognised"
@@ -100,6 +101,7 @@ const verifyFace = async (req: FileRequest, res: Response) => {
         data: recogniseFromBuffer
       })
     } catch (error) {
+      errorHandler.handle(error)
       return res.status(500).json(<ClientResponse<String>>{
         success: false,
         data: "No faces were recognised"
