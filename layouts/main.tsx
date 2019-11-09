@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
+import CookieConsent from "react-cookie-consent"
 import {
   Drawer,
   Container,
@@ -158,34 +159,51 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
   )
 
   return (
-    <Box display={showNavigation ? "flex" : "block"}>
-      <MainAppToolbar
-        fixed={showNavigation}
-        handleDrawerToggle={() => handleDrawerToggle()}
-        showDrawerToggle={showNavigation}
-      />
-      {showNavigation && (
-        <nav className={classes.drawer} aria-label="Navigation">
-          {drawer}
-        </nav>
-      )}
-      <Container maxWidth={maxWidth}>
-        <Box mt={5} mb={5} flexGrow={1}>
-          {showNavigation && <div className={classes.toolbar} />}
-          {title && (
-            <Typography variant="h4" component="h1" gutterBottom>
-              {title}
-            </Typography>
-          )}
-          {title && subtitle && (
-            <Typography component="p" gutterBottom>
-              {subtitle}
-            </Typography>
-          )}
-          <main>{children}</main>
-        </Box>
-      </Container>
-    </Box>
+    <>
+      <Box display={showNavigation ? "flex" : "block"}>
+        <MainAppToolbar
+          fixed={showNavigation}
+          handleDrawerToggle={() => handleDrawerToggle()}
+          showDrawerToggle={showNavigation}
+        />
+        {showNavigation && (
+          <nav className={classes.drawer} aria-label="Navigation">
+            {drawer}
+          </nav>
+        )}
+        <Container maxWidth={maxWidth}>
+          <Box mt={5} mb={5} flexGrow={1}>
+            {showNavigation && <div className={classes.toolbar} />}
+            {title && (
+              <Typography variant="h4" component="h1" gutterBottom>
+                {title}
+              </Typography>
+            )}
+            {title && subtitle && (
+              <Typography component="p" gutterBottom>
+                {subtitle}
+              </Typography>
+            )}
+            <main>{children}</main>
+          </Box>
+        </Container>
+      </Box>
+      <CookieConsent>
+        This website uses cookies to enhance the user experience. Read our{" "}
+        <a href="/legal/cookie-policy" style={{ color: "white" }}>
+          Cookie Policy
+        </a>
+        ,{" "}
+        <a href="/legal/privacy-policy" style={{ color: "white" }}>
+          Privacy Policy
+        </a>
+        , and{" "}
+        <a href="/legal/terms-of-service" style={{ color: "white" }}>
+          Terms of Service
+        </a>
+        .
+      </CookieConsent>
+    </>
   )
 }
 

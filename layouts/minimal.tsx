@@ -4,6 +4,7 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Box, Hidden } from 
 import HomeIcon from "@material-ui/icons/Home"
 import FacesIcon from "@material-ui/icons/TagFaces"
 import { MainAppToolbar } from "../components/MainAppToolbar"
+import CookieConsent from "react-cookie-consent"
 
 const drawerWidth = 240
 
@@ -119,19 +120,37 @@ const MinimalLayout: FunctionComponent<MinimalLayoutProps> = ({
   )
 
   return (
-    <Box display={showNavigation ? "flex" : "block"}>
-      <MainAppToolbar
-        fixed={showNavigation}
-        handleDrawerToggle={() => handleDrawerToggle()}
-        showDrawerToggle={showNavigation}
-      />
-      {showNavigation && (
-        <nav className={classes.drawer} aria-label="Navigation">
-          {drawer}
-        </nav>
-      )}
-      {children}
-    </Box>
+    <>
+      <Box display={showNavigation ? "flex" : "block"}>
+        <MainAppToolbar
+          fixed={showNavigation}
+          handleDrawerToggle={() => handleDrawerToggle()}
+          showDrawerToggle={showNavigation}
+        />
+        {showNavigation && (
+          <nav className={classes.drawer} aria-label="Navigation">
+            {drawer}
+          </nav>
+        )}
+        {children}
+      </Box>
+
+      <CookieConsent>
+        This website uses cookies to enhance the user experience. Read our{" "}
+        <a href="/legal/cookie-policy" style={{ color: "white" }}>
+          Cookie Policy
+        </a>
+        ,{" "}
+        <a href="/legal/privacy-policy" style={{ color: "white" }}>
+          Privacy Policy
+        </a>
+        , and{" "}
+        <a href="/legal/terms-of-service" style={{ color: "white" }}>
+          Terms of Service
+        </a>
+        .
+      </CookieConsent>
+    </>
   )
 }
 
