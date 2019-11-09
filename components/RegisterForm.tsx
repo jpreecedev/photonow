@@ -3,8 +3,14 @@ import { Field, reduxForm, InjectedFormProps } from "redux-form"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Button, Box, CircularProgress } from "@material-ui/core"
 
-import { RegisterFormProps } from "../global"
 import { renderTextField } from "./ReduxForm"
+
+interface RegisterFormProps {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   submit: {

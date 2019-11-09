@@ -208,13 +208,6 @@ export interface LoginFormProps {
   password: string
 }
 
-export interface RegisterFormProps {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-}
-
 export interface GoogleProfile extends Profile {
   id: string
   displayName: string

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react"
-import { DispatchProp, connect } from "react-redux"
-import { FormState } from "redux-form"
+import { connect } from "react-redux"
+import { reduxForm, InjectedFormProps } from "redux-form"
 import { ReactStripeElements } from "react-stripe-elements"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Button, CircularProgress } from "@material-ui/core"
@@ -30,70 +30,98 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 interface CheckoutFormProps {
-  addressForm: FormState
-  paymentForm: FormState
   pictures: PictureItem[]
-  processing: boolean
-  handleOrder: (paymentIntent: stripe.paymentIntents.PaymentIntent, error: stripe.Error) => void
+  firstName: string
+  lastName: string
+  emailAddress: string
+  address1: string
+  address2: string
+  city: string
+  state: string
+  postalCode: string
+  cardName: string
+}
+
+const validate = (values: CheckoutFormProps) => {
+  const errors = {
+    firstName: null,
+    lastName: null,
+    emailAddress: null,
+    address1: null,
+    address2: null,
+    city: null,
+    state: null,
+    postalCode: null,
+    cardName: null
+  }
+  const requiredFields = [
+    "firstName",
+    "lastName",
+    "emailAddress",
+    "address1",
+    "address2",
+    "city",
+    "state",
+    "postalCode",
+    "cardName"
+  ]
+  requiredFields.forEach(field => {
+    if (!values[field] || values[field].length <= 2) {
+      errors[field] = "Required"
+    }
+  })
+  if (
+    values.emailAddress &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailAddress)
+  ) {
+    errors.emailAddress = "Invalid email address"
+  }
+  return errors
 }
 
 const CheckoutForm: FunctionComponent<
-  ReactStripeElements.InjectedStripeProps & CheckoutFormProps & DispatchProp<any>
-> = ({ stripe, addressForm, paymentForm, processing, handleOrder }) => {
+  ReactStripeElements.InjectedStripeProps & InjectedFormProps<CheckoutFormProps>
+> = ({ submitting, valid, handleSubmit }) => {
   const classes = useStyles({})
   const router = useRouter()
 
-  const getOrderDetails = async (): Promise<stripe.PaymentIntentResponse> => {
-    return await stripe.handleCardPayment(router.query.token as string, {
-      receipt_email: addressForm.values.emailAddress,
-      payment_method_data: {
-        billing_details: {
-          email: addressForm.values.emailAddress,
-          name: paymentForm.values.cardName,
-          address: {
-            line1: addressForm.values.address1,
-            line2: addressForm.values.address2,
-            city: addressForm.values.city,
-            state: addressForm.values.state,
-            postal_code: addressForm.values.postalCode,
-            country: addressForm.values.country
-          }
-        }
-      }
-    })
-  }
-
   return (
-    <>
+    <form onSubmit={handleSubmit} noValidate>
       <AddressForm />
       <PaymentForm />
       <Review />
       <div className={classes.buttons}>
-        <Button variant="outlined" color="primary" className={classes.button}>
+        <Button
+          disabled={submitting}
+          variant="outlined"
+          color="primary"
+          className={classes.button}
+          onClick={() => router.push("/select-your-pictures")}
+        >
           Cancel
         </Button>
         <Button
-          disabled={processing}
+          disabled={submitting || !valid}
           variant="contained"
           color="primary"
-          onClick={async () => {
-            const { paymentIntent, error } = await getOrderDetails()
-            await handleOrder(paymentIntent, error)
-          }}
+          type="submit"
           className={classes.button}
         >
-          {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
+          {submitting && <CircularProgress size={24} className={classes.buttonProgress} />}
           Place order
         </Button>
       </div>
-    </>
+    </form>
   )
 }
 
+const ReduxCheckoutForm = reduxForm<CheckoutFormProps>({
+  form: "checkoutForm",
+  validate
+})(CheckoutForm)
+
 const ConnectedCheckoutForm = connect((state: AppState) => ({
-  pictures: state.pictures,
-  addressForm: state.form.addressForm,
-  paymentForm: state.form.paymentForm
-}))(CheckoutForm)
+  pictures: state.pictures
+}))(ReduxCheckoutForm)
 
 export { ConnectedCheckoutForm as CheckoutForm }

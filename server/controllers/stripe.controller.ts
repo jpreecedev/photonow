@@ -27,6 +27,23 @@ import { getUserById } from "../database/user"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
 
+const wait = ms => new Promise(r => setTimeout(r, ms))
+
+const retryOperation = (operation, delay, times): Promise<Order> =>
+  new Promise((resolve, reject) => {
+    return operation()
+      .then(resolve)
+      .catch(reason => {
+        if (times - 1 > 0) {
+          return wait(delay)
+            .then(retryOperation.bind(null, operation, delay, times - 1))
+            .then(resolve)
+            .catch(reject)
+        }
+        return reject(reason)
+      })
+  })
+
 async function sendConfirmationEmail({ email, orderId }) {
   const confirmationEmail = <Email>{
     to: email,
@@ -47,7 +64,7 @@ async function checkOrderStatus(req: Request, res: Response) {
   const getOrder = async () => {
     return new Promise((resolve, reject) => {
       getOrderByPaymentIntentId(paymentIntentId).then(order => {
-        if (order.fulfilled) {
+        if (order.fulfilled || process.env.NODE_ENV === "development") {
           return resolve(order)
         }
         return reject("Order is not fulfilled")
@@ -55,28 +72,19 @@ async function checkOrderStatus(req: Request, res: Response) {
     })
   }
 
-  const pause = (duration: number) => new Promise(res => setTimeout(res, duration))
+  try {
+    const order = await retryOperation(getOrder, 1000, 30)
 
-  const backoff = (retries: number, fn: Function, delay = 500): Promise<Order> =>
-    fn().catch((err: string) =>
-      retries > 1
-        ? pause(delay).then(() => backoff(retries - 1, fn, delay * 2))
-        : Promise.reject(err)
-    )
-
-  const order = await backoff(30, getOrder, 1000)
-
-  if (!order.fulfilled) {
+    return res.status(200).json(<ClientResponse<string>>{
+      success: true,
+      data: `/order-confirmation/${order._id}`
+    })
+  } catch (err) {
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
-      data: "The order was not fulfilled"
+      data: err
     })
   }
-
-  return res.status(200).json(<ClientResponse<string>>{
-    success: true,
-    data: `/order-confirmation/${order._id}`
-  })
 }
 
 async function paymentIntentCompleted(intent: Stripe.paymentIntents.IPaymentIntent) {

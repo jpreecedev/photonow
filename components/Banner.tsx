@@ -4,7 +4,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import clsx from "clsx"
 
 interface BannerProps {
-  message: string
+  message: React.ReactElement
   icon: React.ReactElement
   theme?: "error"
 }
@@ -37,9 +37,7 @@ const Banner: FunctionComponent<BannerProps> = ({ message, icon, theme }) => {
         <Grid item>
           <Box className={classes.icon}>{icon}</Box>
         </Grid>
-        <Grid item>
-          <Typography>{message}</Typography>
-        </Grid>
+        <Grid item>{message}</Grid>
       </Grid>
     </Paper>
   )

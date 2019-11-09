@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { Field, reduxForm } from "redux-form"
+import { Field } from "redux-form"
 import { Typography, Grid, TextField, Box } from "@material-ui/core"
 import { CardExpiryElement, CardCVCElement, CardNumberElement } from "react-stripe-elements"
 
@@ -82,8 +82,4 @@ const PaymentForm: FunctionComponent<PaymentFormProps> = () => (
   </>
 )
 
-const ReduxPaymentForm = reduxForm({
-  form: "paymentForm"
-})(PaymentForm)
-
-export { ReduxPaymentForm as PaymentForm }
+export { PaymentForm }

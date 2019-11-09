@@ -115,7 +115,11 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
 
   const renderPostError = (error: string) => {
     return (
-      <Banner theme="error" icon={<ErrorIcon />} message={"Unable to start a checkout session"} />
+      <Banner
+        theme="error"
+        icon={<ErrorIcon />}
+        message={<Typography>Unable to start a checkout session</Typography>}
+      />
     )
   }
 
