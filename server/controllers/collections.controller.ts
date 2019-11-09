@@ -5,10 +5,28 @@ import { faceRecognition } from "../utils"
 
 import {
   getCollections,
+  getMyCollections,
   createCollection,
   addCoverPhoto,
   updatePrice
 } from "../database/collection"
+
+async function getMine(req: UserRequest, res: Response) {
+  try {
+    const data = await getMyCollections(req.user._id)
+
+    return res.status(200).json(<ClientResponse<Collection[]>>{
+      success: true,
+      data
+    })
+  } catch (e) {
+    errorHandler.handle(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
+  }
+}
 
 async function get(req: UserRequest, res: Response) {
   try {
@@ -105,4 +123,4 @@ async function post(req: CreateCollectionRequest, res: Response) {
   }
 }
 
-export default { get, post, put, putPrice }
+export default { get, getMine, post, put, putPrice }

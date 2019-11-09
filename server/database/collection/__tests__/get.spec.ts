@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
 import TestDbHelper from "../../../../setup/mongo"
-import { getCollections, getCollection } from "../get"
+import { getCollections, getCollection, getMyCollections } from "../get"
 
 const dbHelper = TestDbHelper()
 
@@ -57,5 +57,17 @@ describe("Get collection tests", () => {
     expect(collection.moments[0].photographerId.toString()).toEqual(
       testData.moments[1].photographerId.toString()
     )
+  })
+
+  test("should get my collection", async () => {
+    const userId = Types.ObjectId(testData.users[1]._id)
+
+    const collections = await getMyCollections(userId)
+
+    expect(collections).toBeDefined()
+    expect(collections).toHaveLength(2)
+
+    expect(collections[0]._id.toString()).toEqual(testData.collections[0]._id.toString())
+    expect(collections[1]._id.toString()).toEqual(testData.collections[1]._id.toString())
   })
 })

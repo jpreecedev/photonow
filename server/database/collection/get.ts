@@ -25,4 +25,8 @@ async function getCollections(populate: boolean = false) {
   return await CollectionModel.find({}).exec()
 }
 
-export { getCollections, getCollection }
+async function getMyCollections(userId: Types.ObjectId) {
+  return await CollectionModel.find({ userId }).exec()
+}
+
+export { getCollections, getCollection, getMyCollections }

@@ -7,6 +7,12 @@ import { ROLES } from "../../utils/roles"
 const router = express.Router()
 
 router.get("/", CollectionsController.get)
+router.get(
+  "/mine",
+  passport.authenticate("jwt", { failureRedirect: "/login" }),
+  utils.checkIsInRole(ROLES.Admin, ROLES.Photographer),
+  CollectionsController.getMine
+)
 
 router.post(
   "/",

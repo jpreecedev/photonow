@@ -44,7 +44,7 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
   const [notification, setNotification] = React.useState({ open: false, message: "" })
 
   const fetchData = async () => {
-    const { success, data } = await getAsync<Collection[]>("/collections")
+    const { success, data } = await getAsync<Collection[]>("/collections/mine")
     if (success) {
       setCollections(data)
       setSelectedCollection(data[0])
