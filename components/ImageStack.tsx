@@ -2,9 +2,9 @@ import React, { FunctionComponent } from "react"
 
 interface ImageStackProps {
   imgSrc: string
-  caption: string
+  caption?: string
   onClick?: Function
-  size?: 250 | 150
+  size?: 225 | 150
   selected?: boolean
 }
 
@@ -18,7 +18,7 @@ const ImageStack: FunctionComponent<ImageStackProps> = ({
   return (
     <div className="stack" onClick={() => onClick && onClick()}>
       <div className="image"></div>
-      <span>{caption}</span>
+      {caption && <span>{caption}</span>}
       <style jsx>{`
         .image {
           background-image: url("${imgSrc}");
@@ -28,7 +28,7 @@ const ImageStack: FunctionComponent<ImageStackProps> = ({
           height: 100%;
         }
         .stack {
-          margin: 50px auto;
+          margin: ${caption ? "50px" : "20px"} auto;
           position: relative;
           cursor: ${onClick ? "pointer" : "default"};
         }

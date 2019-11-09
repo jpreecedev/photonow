@@ -59,9 +59,7 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
 
   return res
     .status(200)
-    .cookie("jwt", token, {
-      httpOnly: true
-    })
+    .cookie("jwt", token)
     .json(<ClientResponse<string>>{
       success: true,
       data: utils.getRedirectUrl(user)
@@ -109,9 +107,7 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
 
   return res
     .status(200)
-    .cookie("jwt", token, {
-      httpOnly: true
-    })
+    .cookie("jwt", token)
     .json(<ClientResponse<string>>{
       success: true,
       data: utils.getRedirectUrl(user)

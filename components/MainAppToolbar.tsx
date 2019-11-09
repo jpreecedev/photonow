@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { connect } from "react-redux"
+import { connect, DispatchProp } from "react-redux"
 import Router from "next/router"
 import Link from "next/link"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
@@ -11,6 +11,7 @@ import Camera from "@material-ui/icons/Camera"
 import MenuIcon from "@material-ui/icons/Menu"
 
 import { AppState, PictureItem } from "../global"
+import { actions } from "../store"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,12 +49,9 @@ interface MainAppToolbarProps {
   showDrawerToggle: boolean
 }
 
-export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = ({
-  pictures,
-  fixed = false,
-  handleDrawerToggle,
-  showDrawerToggle = false
-}) => {
+export const MainAppToolbarComponent: FunctionComponent<
+  MainAppToolbarProps & DispatchProp<any>
+> = ({ pictures, fixed = false, handleDrawerToggle, showDrawerToggle = false, dispatch }) => {
   const classes = useStyles({})
 
   let addedToBasket = 0
@@ -116,6 +114,7 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
             edge="end"
             aria-label="logout"
             onClick={() => {
+              dispatch(actions.pictures.clearBasket())
               Router.push("/api/auth/logout")
             }}
             color="inherit"

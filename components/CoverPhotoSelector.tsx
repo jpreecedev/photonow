@@ -61,8 +61,7 @@ const CoverPhotoSelector: FunctionComponent<CoverPhotoSelectorProps> = ({
         <Grid item xs={12} md={3} key={moment._id}>
           <ImageStack
             imgSrc={moment.resizedLocation}
-            caption={moment.filename}
-            size={150}
+            size={225}
             onClick={() => handleSetCover(moment)}
             selected={selectedCoverPhoto && moment._id === selectedCoverPhoto._id}
           />

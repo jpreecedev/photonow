@@ -16,7 +16,7 @@ import FacesIcon from "@material-ui/icons/TagFaces"
 import SupervisorIcon from "@material-ui/icons/SupervisorAccount"
 import { MainAppToolbar } from "../components/MainAppToolbar"
 import { ROLES } from "../utils/roles"
-import { getAsync } from "../utils/server"
+import { getUserFromJwt } from "../utils/cookies"
 
 const drawerWidth = 240
 
@@ -69,17 +69,8 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
 }) => {
   const classes = useStyles({})
   const [mobileOpen, setMobileOpen] = React.useState(false)
-  const [role, setRole] = React.useState<string>(ROLES.Customer)
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const { success, data } = await getAsync<string>("/users/role")
-      if (success) {
-        setRole(data)
-      }
-    }
-    fetchData()
-  }, [])
+  const user = getUserFromJwt()
 
   const handleDrawerToggle = (event = null) => {
     if (
@@ -108,7 +99,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
         </ListItemIcon>
         <ListItemText primary="Collections" />
       </ListItem>
-      {role === ROLES.Admin && (
+      {user && user.role === ROLES.Admin && (
         <ListItem button component="a" href="/dashboard/users">
           <ListItemIcon className={classes.icon}>
             <SupervisorIcon />

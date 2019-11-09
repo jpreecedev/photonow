@@ -32,6 +32,14 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   .exec()
 //   .then((err, res) => console.log(err))
 
+// _id: 5dc682c91620d30ea92caa90,
+// providerId: '2508116415941264',
+// provider: 'facebook',
+// email: 'jonpreece@hotmail.co.uk',
+// password: null,
+// role: 'Photographer',
+// __v: 0
+
 // UserModel.find({}).exec((err, users) => {
 //   users.forEach(u => console.log(u))
 //   process.exit(0)
@@ -46,6 +54,7 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 // CollectionModel.deleteMany({}).then((err, res) => console.log(err))
 // OrderModel.deleteMany({}).then((err, res) => console.log(err))
+// UserModel.deleteOne({ _id: "5dc1db8eab248e420280abf7" }, console.log)
 
 // MomentModel.find({}).exec((err, moments) => {
 //   moments.forEach(u => console.log(u))

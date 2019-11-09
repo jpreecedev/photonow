@@ -85,9 +85,7 @@ const strategy = (app: Express) => {
     (req: UserRequest, res: Response) => {
       return res
         .status(200)
-        .cookie("jwt", signToken(req.user), {
-          httpOnly: true
-        })
+        .cookie("jwt", signToken(req.user))
         .redirect(getRedirectUrl(req.user))
     }
   )

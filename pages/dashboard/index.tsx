@@ -3,21 +3,25 @@ import { NextPage } from "next"
 import { Typography } from "@material-ui/core"
 
 import { MainLayout } from "../../layouts/main"
+import { User } from "../../global"
+import { getUserFromJwt } from "../../utils/cookies"
 
-interface DashboardProps {}
+interface DashboardProps {
+  user: User
+}
 
 const Dashboard: NextPage<DashboardProps> = () => {
-  React.useEffect(() => {
-    window.location.href = "/dashboard/collections"
-  }, [])
+  const user = getUserFromJwt()
 
   return (
     <MainLayout showNavigation={true} title="Dashboard" maxWidth={false}>
+      {user && (
+        <Typography component="p" gutterBottom>
+          Welcome, {user.email} ({user.role})
+        </Typography>
+      )}
       <Typography component="p" gutterBottom>
-        Nothing to show, see navigation menu.
-      </Typography>
-      <Typography component="p" gutterBottom>
-        If you are not redirected, <a href="/dashboard/collections">click here</a>.
+        There is nothing here at the minute, please use the menu to decide what to do next.
       </Typography>
     </MainLayout>
   )

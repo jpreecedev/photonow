@@ -80,8 +80,6 @@ const CheckoutFormContainer: FunctionComponent<
       paymentIntentId: paymentIntent.id
     })
 
-    debugger
-
     setPaymentStatus({ paymentAttemptMade: true, success, message: "" })
 
     if (success) {

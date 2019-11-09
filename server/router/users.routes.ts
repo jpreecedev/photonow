@@ -14,12 +14,6 @@ router.get(
   UsersController.get
 )
 
-router.get(
-  "/role",
-  //@ts-ignore
-  UsersController.getRole
-)
-
 router.post(
   "/role",
   passport.authenticate("jwt", { failureRedirect: "/login" }),

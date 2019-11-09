@@ -3,7 +3,7 @@ import { Response, Request } from "express"
 import { getAllUsers, updateRole } from "../database/user"
 import { errorHandler } from "../utils"
 import { utils } from "../auth"
-import { ClientResponse, DatabaseUser, UpdateRoleRequest } from "../../global"
+import { ClientResponse, DatabaseUser, UpdateRoleRequest, User } from "../../global"
 
 async function get(req: Request, res: Response) {
   try {
@@ -15,22 +15,6 @@ async function get(req: Request, res: Response) {
     })
   } catch (e) {
     errorHandler.handle(e)
-    return res.status(500).json(<ClientResponse<string>>{
-      success: false,
-      data: e
-    })
-  }
-}
-
-async function getRole(req: Request, res: Response) {
-  try {
-    const role = await utils.getUserRole(req)
-
-    return res.status(200).json(<ClientResponse<string>>{
-      success: true,
-      data: role
-    })
-  } catch (e) {
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
       data: e
@@ -63,4 +47,4 @@ async function post(req: UpdateRoleRequest, res: Response) {
   }
 }
 
-export default { get, getRole, post }
+export default { get, post }
