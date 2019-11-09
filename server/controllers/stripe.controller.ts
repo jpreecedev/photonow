@@ -107,14 +107,22 @@ async function paymentIntent(req: Request, res: Response) {
 
     const amount = pictures.filter(picture => picture.addedToBasket).length * collection.price
 
-    const paymentIntent = await stripe.paymentIntents.create({
+    let intentData: any = {
       amount,
-      currency: "gbp",
-      application_fee_amount: 100,
-      transfer_data: {
-        destination: photographer.stripeData.userId
+      currency: "gbp"
+    }
+
+    if (process.env.NODE_ENV !== "development") {
+      intentData = {
+        ...intentData,
+        application_fee_amount: 100,
+        transfer_data: {
+          destination: photographer.stripeData.userId
+        }
       }
-    })
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create(intentData)
 
     await createOrder(<Order>{
       moments: moments.map(moment => moment._id.toString()),
