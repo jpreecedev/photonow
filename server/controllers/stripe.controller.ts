@@ -115,7 +115,7 @@ async function paymentIntent(req: Request, res: Response) {
     if (process.env.NODE_ENV !== "development") {
       intentData = {
         ...intentData,
-        application_fee_amount: 100,
+        application_fee_amount: 50,
         transfer_data: {
           destination: photographer.stripeData.userId
         }

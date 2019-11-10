@@ -20,8 +20,8 @@ const validate = (values: CollectionPriceFormProps) => {
       errors[field] = "Required"
     } else if (Number.parseInt(values[field]) === Number.NaN) {
       errors[field] = "Required"
-    } else if (Number.parseInt(values[field]) < 100) {
-      errors[field] = "Must be at least 100"
+    } else if (Number.parseInt(values[field]) < 500) {
+      errors[field] = "Must be at least 500"
     }
   })
 
