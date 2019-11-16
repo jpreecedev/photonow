@@ -166,23 +166,6 @@ export interface PictureItem {
   matched: boolean
 }
 
-export interface AddPictureAction {
-  type: string
-  payload: PictureItem
-}
-
-export interface RemovePictureAction {
-  type: string
-  payload: PictureItem
-}
-
-export interface AddPictureAction {
-  type: string
-  payload: PictureItem
-}
-
-export type PicturesActionTypes = AddPictureAction | RemovePictureAction
-
 export type AppState = ReturnType<
   Reducer<
     {

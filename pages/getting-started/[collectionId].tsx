@@ -1,13 +1,13 @@
 import React from "react"
 import { NextPage } from "next"
-import { connect, DispatchProp } from "react-redux"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
 import { Typography, Box, Container } from "@material-ui/core"
 
 import * as server from "../../utils/server"
 import { MainLayout } from "../../layouts/main"
-import { actions } from "../../store"
+import { store } from "../../store"
+import { addPicture } from "../../store/basket"
 import { PictureItem } from "../../global"
 import { FileUpload } from "../../components/FileUpload"
 
@@ -15,13 +15,13 @@ const Webcam = dynamic(import("../../components/Webcam").then(instance => instan
   ssr: false
 })
 
-const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
+const GettingStarted: NextPage = () => {
   const router = useRouter()
   const [uploading, setUploading] = React.useState(false)
   const [webcamUnavailable, setWebcamUnavailable] = React.useState(false)
 
   const processResponse = (pictures: PictureItem[]) => {
-    pictures.forEach(picture => dispatch(actions.pictures.addPicture(picture)))
+    pictures.forEach(picture => store.dispatch(addPicture(picture)))
   }
 
   const processImage = async (blob: Blob) => {
@@ -76,4 +76,4 @@ const GettingStarted: NextPage<DispatchProp<any>> = ({ dispatch }) => {
   )
 }
 
-export default connect()(GettingStarted)
+export default GettingStarted

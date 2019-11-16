@@ -1,12 +1,10 @@
 import React from "react"
-import { connect } from "react-redux"
 import { NextPage } from "next"
 import { Box, Paper, Typography } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
 import { MainLayout } from "../layouts/main"
 import { SocialLoginProviders } from "../components/SocialLoginProviders"
-import { AppState } from "../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   layout: {
@@ -31,9 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-interface LoginProps {}
-
-const Login: NextPage<LoginProps> = () => {
+const Login: NextPage = () => {
   const classes = useStyles({})
 
   return (
@@ -59,6 +55,4 @@ const Login: NextPage<LoginProps> = () => {
   )
 }
 
-export default connect((state: AppState) => ({
-  loginForm: state.form.loginForm
-}))(Login)
+export default Login

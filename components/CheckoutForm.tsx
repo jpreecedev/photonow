@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from "react"
-import { connect } from "react-redux"
 import { reduxForm, InjectedFormProps } from "redux-form"
 import { ReactStripeElements } from "react-stripe-elements"
 import { makeStyles, Theme } from "@material-ui/core/styles"
@@ -9,7 +8,7 @@ import { useRouter } from "next/router"
 import { AddressForm } from "./AddressForm"
 import { PaymentForm } from "./PaymentForm"
 import { Review } from "./Review"
-import { PictureItem, AppState } from "../global"
+import { PictureItem } from "../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttons: {
@@ -120,8 +119,4 @@ const ReduxCheckoutForm = reduxForm<CheckoutFormProps>({
   validate
 })(CheckoutForm)
 
-const ConnectedCheckoutForm = connect((state: AppState) => ({
-  pictures: state.pictures
-}))(ReduxCheckoutForm)
-
-export { ConnectedCheckoutForm as CheckoutForm }
+export { ReduxCheckoutForm as CheckoutForm }

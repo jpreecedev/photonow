@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { connect, DispatchProp } from "react-redux"
+import { useSelector } from "react-redux"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import {
   Typography,
@@ -14,8 +14,9 @@ import {
 } from "@material-ui/core"
 import DeleteIcon from "@material-ui/icons/Delete"
 
-import { AppState, PictureItem } from "../global"
-import { actions } from "../store"
+import { AppState } from "../global"
+import { store } from "../store"
+import { remove } from "../store/basket"
 
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
@@ -34,13 +35,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-interface ReviewProps {
-  pictures: PictureItem[]
-}
-
-const Review: FunctionComponent<DispatchProp<any> & ReviewProps> = ({ pictures, dispatch }) => {
+const Review: FunctionComponent = () => {
   const classes = useStyles({})
+  const pictures = useSelector((state: AppState) => state.pictures)
   const picturesInBasket = pictures.filter(picture => picture.addedToBasket)
+
   return (
     <>
       <Typography component="h2" variant="h5" gutterBottom>
@@ -60,7 +59,7 @@ const Review: FunctionComponent<DispatchProp<any> & ReviewProps> = ({ pictures, 
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
+                onClick={() => store.dispatch(remove(picture))}
               >
                 <DeleteIcon />
               </IconButton>
@@ -83,6 +82,4 @@ const Review: FunctionComponent<DispatchProp<any> & ReviewProps> = ({ pictures, 
   )
 }
 
-const ConnectedReview = connect((state: AppState) => ({ pictures: state.pictures }))(Review)
-
-export { ConnectedReview as Review }
+export { Review }

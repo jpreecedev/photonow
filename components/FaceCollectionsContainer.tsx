@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { connect } from "react-redux"
-import { FormState } from "redux-form"
+import { useSelector } from "react-redux"
 import { Typography, Button, CircularProgress, Box } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
@@ -15,10 +14,6 @@ import { CollectionPriceFormContainer } from "../components/CollectionPriceFormC
 import { Notification } from "../components/Notification"
 import { FileUpload } from "../components/FileUpload"
 
-interface FaceCollectionsContainerProps {
-  newCollectionForm: FormState
-}
-
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     marginTop: theme.spacing(1)
@@ -32,9 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps> = ({
-  newCollectionForm
-}) => {
+const FaceCollectionsContainer: FunctionComponent = () => {
   const classes = useStyles({})
 
   const [collections, setCollections] = React.useState<Collection[]>([])
@@ -42,6 +35,7 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
   const [processing, setProcessing] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const [notification, setNotification] = React.useState({ open: false, message: "" })
+  const newCollectionForm = useSelector((state: AppState) => state.form.newCollectionForm)
 
   const fetchData = async () => {
     const { success, data } = await getAsync<Collection[]>("/collections/mine")
@@ -154,9 +148,4 @@ const FaceCollectionsContainer: FunctionComponent<FaceCollectionsContainerProps>
   )
 }
 
-const ConnectedFaceCollectionsContainer = connect((state: AppState) => ({
-  newCollectionForm: state.form.newCollectionForm,
-  faceCollectionsForm: state.form.faceCollectionsForm
-}))(FaceCollectionsContainer)
-
-export { ConnectedFaceCollectionsContainer as FaceCollectionsContainer }
+export { FaceCollectionsContainer }

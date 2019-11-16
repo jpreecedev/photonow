@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { connect, DispatchProp } from "react-redux"
+import { useSelector } from "react-redux"
 import Router from "next/router"
 import Link from "next/link"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
@@ -10,8 +10,9 @@ import ExitToApp from "@material-ui/icons/ExitToApp"
 import Camera from "@material-ui/icons/Camera"
 import MenuIcon from "@material-ui/icons/Menu"
 
-import { AppState, PictureItem } from "../global"
-import { actions } from "../store"
+import { AppState } from "../global"
+import { store } from "../store"
+import { clear } from "../store/basket"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,18 +44,20 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 interface MainAppToolbarProps {
-  pictures?: PictureItem[]
   fixed: boolean
   handleDrawerToggle: Function
   showDrawerToggle: boolean
 }
 
-export const MainAppToolbarComponent: FunctionComponent<
-  MainAppToolbarProps & DispatchProp<any>
-> = ({ pictures, fixed = false, handleDrawerToggle, showDrawerToggle = false, dispatch }) => {
+export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = ({
+  fixed = false,
+  handleDrawerToggle,
+  showDrawerToggle = false
+}) => {
   const classes = useStyles({})
 
   let addedToBasket = 0
+  const pictures = useSelector((state: AppState) => state.pictures)
   if (pictures && pictures.length) {
     addedToBasket = pictures.reduce((acc, current) => (current.addedToBasket ? (acc += 1) : acc), 0)
   }
@@ -114,7 +117,7 @@ export const MainAppToolbarComponent: FunctionComponent<
             edge="end"
             aria-label="logout"
             onClick={() => {
-              dispatch(actions.pictures.clearBasket())
+              store.dispatch(clear())
               Router.push("/api/auth/logout")
             }}
             color="inherit"
@@ -127,8 +130,4 @@ export const MainAppToolbarComponent: FunctionComponent<
   )
 }
 
-const ConnectedMainAppToolbar = connect((state: AppState) => ({ pictures: state.pictures }))(
-  MainAppToolbarComponent
-)
-
-export { ConnectedMainAppToolbar as MainAppToolbar }
+export { MainAppToolbarComponent as MainAppToolbar }

@@ -4,15 +4,15 @@ import { useRouter } from "next/router"
 import { Grid, Box, CircularProgress, Typography } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import { injectStripe, ReactStripeElements } from "react-stripe-elements"
-import { connect, DispatchProp } from "react-redux"
-import { FormState } from "redux-form"
-import { AppState, PictureItem } from "../global"
+import { useSelector } from "react-redux"
+import { AppState } from "../global"
 import ErrorIcon from "@material-ui/icons/Error"
 
 import { CheckoutForm } from "../components/CheckoutForm"
 import { Banner } from "../components/Banner"
 import * as server from "../utils/server"
-import { actions } from "../store"
+import { store } from "../store"
+import { clear } from "../store/basket"
 
 const StripePaymentButton = dynamic(
   import("./StripePaymentButton").then(instance => instance.StripePaymentButton),
@@ -27,14 +27,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-interface CheckoutFormContainerProps {
-  checkoutForm: FormState
-  pictures: PictureItem[]
-}
-
-const CheckoutFormContainer: FunctionComponent<
-  ReactStripeElements.InjectedStripeProps & CheckoutFormContainerProps & DispatchProp<any>
-> = ({ stripe, checkoutForm, pictures, dispatch }) => {
+const CheckoutFormContainer: FunctionComponent<ReactStripeElements.InjectedStripeProps> = ({
+  stripe
+}) => {
   const [loaded, setLoaded] = React.useState(false)
   const [paymentStatus, setPaymentStatus] = React.useState({
     paymentAttemptMade: false,
@@ -45,6 +40,8 @@ const CheckoutFormContainer: FunctionComponent<
 
   const classes = useStyles({})
   const router = useRouter()
+  const pictures = useSelector((state: AppState) => state.pictures)
+  const checkoutForm = useSelector((state: AppState) => state.form.checkoutForm)
 
   const getOrderDetails = async (): Promise<stripe.PaymentIntentResponse> => {
     return await stripe.handleCardPayment(router.query.token as string, {
@@ -83,7 +80,7 @@ const CheckoutFormContainer: FunctionComponent<
     setPaymentStatus({ paymentAttemptMade: true, success, message: "" })
 
     if (success) {
-      dispatch(actions.pictures.clearBasket())
+      store.dispatch(clear())
       router.push(data)
       return
     } else {
@@ -138,11 +135,6 @@ const CheckoutFormContainer: FunctionComponent<
   )
 }
 
-const ConnectedCheckoutFormContainer = connect((state: AppState) => ({
-  pictures: state.pictures,
-  checkoutForm: state.form.checkoutForm
-}))(CheckoutFormContainer)
-
-const InjectedCheckoutFormContainer = injectStripe(ConnectedCheckoutFormContainer)
+const InjectedCheckoutFormContainer = injectStripe(CheckoutFormContainer)
 
 export { InjectedCheckoutFormContainer as CheckoutFormContainer }

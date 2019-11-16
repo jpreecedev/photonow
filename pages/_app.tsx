@@ -5,7 +5,7 @@ import App from "next/app"
 import { CssBaseline } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/styles"
 
-import { initialiseStore } from "../store"
+import { store } from "../store"
 import { theme } from "../components/Theme"
 
 interface PhotoNowProps {
@@ -13,13 +13,6 @@ interface PhotoNowProps {
 }
 
 class PhotoNow extends App<PhotoNowProps> {
-  reduxStore: any
-
-  constructor(props) {
-    super(props)
-    this.reduxStore = initialiseStore()
-  }
-
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side")
@@ -35,12 +28,12 @@ class PhotoNow extends App<PhotoNowProps> {
         <Head>
           <title>PhotoNow</title>
         </Head>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Provider store={this.reduxStore}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Component {...pageProps} />
-          </Provider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </Provider>
       </>
     )
   }

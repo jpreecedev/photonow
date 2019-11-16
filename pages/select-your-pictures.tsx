@@ -1,5 +1,5 @@
 import React from "react"
-import { connect, DispatchProp } from "react-redux"
+import { useSelector } from "react-redux"
 import { NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link"
@@ -21,7 +21,8 @@ import ErrorIcon from "@material-ui/icons/Error"
 import * as server from "../utils/server"
 import { AppState, PictureItem } from "../global"
 import { MainLayout } from "../layouts/main"
-import { actions } from "../store"
+import { store } from "../store"
+import { add, remove } from "../store/basket"
 import { Banner } from "../components/Banner"
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -67,14 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-interface SelectYourPicturesProps {
-  pictures: PictureItem[]
-}
-
-const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> = ({
-  pictures,
-  dispatch
-}) => {
+const SelectYourPictures: NextPage = ({}) => {
   const classes = useStyles({})
   const [error, setError] = React.useState("")
 
@@ -93,6 +87,7 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
     }
   }, [])
 
+  const pictures = useSelector((state: AppState) => state.pictures)
   const addedToBasket = pictures.reduce(
     (acc, current) => (current.addedToBasket ? (acc += 1) : acc),
     0
@@ -135,20 +130,12 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
         </CardContent>
         <CardActions>
           {!picture.addedToBasket && (
-            <Button
-              size="small"
-              color="primary"
-              onClick={() => dispatch(actions.pictures.addToBasket(picture))}
-            >
+            <Button size="small" color="primary" onClick={() => store.dispatch(add(picture))}>
               Add to basket
             </Button>
           )}
           {picture.addedToBasket && (
-            <Button
-              size="small"
-              color="primary"
-              onClick={() => dispatch(actions.pictures.removeFromBasket(picture))}
-            >
+            <Button size="small" color="primary" onClick={() => store.dispatch(remove(picture))}>
               Remove from basket
             </Button>
           )}
@@ -249,4 +236,4 @@ const SelectYourPictures: NextPage<DispatchProp<any> & SelectYourPicturesProps> 
   )
 }
 
-export default connect((state: AppState) => ({ pictures: state.pictures }))(SelectYourPictures)
+export default SelectYourPictures

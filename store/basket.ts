@@ -1,22 +1,20 @@
-import * as Actions from "../actions"
-import { PicturesActionTypes, PictureItem } from "../../global"
+import { createSlice } from "@reduxjs/toolkit"
 
-const DEFAULT_STATE = []
+const initialState = []
 
-const picturesReducer = (state: PictureItem[], action: PicturesActionTypes) => {
-  if (typeof state === "undefined") {
-    return DEFAULT_STATE
-  }
-
-  switch (action.type) {
-    case Actions.pictures.ADD_PICTURE:
+export const basketSlice = createSlice({
+  name: "basket",
+  initialState,
+  reducers: {
+    addPicture(state, action) {
       const exists = state.some(item => item.momentId === action.payload.momentId)
       if (exists) {
         return state
       }
 
       return [...state, action.payload]
-    case Actions.pictures.ADD_TO_BASKET:
+    },
+    add(state, action) {
       return state.map(item => {
         if (item.momentId === action.payload.momentId) {
           return {
@@ -26,7 +24,8 @@ const picturesReducer = (state: PictureItem[], action: PicturesActionTypes) => {
         }
         return item
       })
-    case Actions.pictures.REMOVE_FROM_BASKET:
+    },
+    remove(state, action) {
       return state.map(item => {
         if (item.momentId === action.payload.momentId) {
           return {
@@ -36,11 +35,11 @@ const picturesReducer = (state: PictureItem[], action: PicturesActionTypes) => {
         }
         return item
       })
-    case Actions.pictures.CLEAR_BASKET:
-      return DEFAULT_STATE
-    default:
-      return state
+    },
+    clear() {
+      return initialState
+    }
   }
-}
+})
 
-export { picturesReducer }
+export const { addPicture, add, remove, clear } = basketSlice.actions

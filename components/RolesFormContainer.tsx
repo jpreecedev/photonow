@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react"
-import { connect } from "react-redux"
-import { FormState } from "redux-form"
+import { useSelector } from "react-redux"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Typography, Button, CircularProgress } from "@material-ui/core"
 
@@ -8,10 +7,6 @@ import { DatabaseUser, AppState } from "../global"
 import { getAsync, postAsync } from "../utils/server"
 import { RolesForm } from "./RolesForm"
 import { Notification } from "../components/Notification"
-
-interface RolesFormContainerProps {
-  rolesForm: FormState
-}
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -51,8 +46,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const RolesFormContainer: FunctionComponent<RolesFormContainerProps> = ({ rolesForm }) => {
+const RolesFormContainer: FunctionComponent = () => {
   const classes = useStyles({})
+  const rolesForm = useSelector((state: AppState) => state.form.rolesForm)
 
   const [users, setUsers] = React.useState<DatabaseUser[]>([])
   const [processing, setProcessing] = React.useState(false)
@@ -116,8 +112,4 @@ const RolesFormContainer: FunctionComponent<RolesFormContainerProps> = ({ rolesF
   )
 }
 
-const ConnectedRolesFormContainer = connect((state: AppState) => ({
-  rolesForm: state.form.rolesForm
-}))(RolesFormContainer)
-
-export { ConnectedRolesFormContainer as RolesFormContainer }
+export { RolesFormContainer }

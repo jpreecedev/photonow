@@ -1,16 +1,9 @@
-import { createStore, combineReducers, applyMiddleware } from "redux"
-import thunk from "redux-thunk"
+import { combineReducers } from "redux"
 import { reducer as formReducer } from "redux-form"
-import { composeWithDevTools } from "redux-devtools-extension"
+import { configureStore } from "@reduxjs/toolkit"
 
-import * as actions from "./actions"
-import { picturesReducer } from "./reducers"
 import { AppState } from "../global"
-
-const rootReducer = combineReducers({
-  pictures: picturesReducer,
-  form: formReducer
-})
+import { basketSlice } from "./basket"
 
 const loadState = () => {
   try {
@@ -32,16 +25,18 @@ const saveState = (state: AppState) => {
   }
 }
 
-const initialiseStore = (initialState: AppState = loadState()) => {
-  const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk)))
+const store = configureStore({
+  reducer: combineReducers({
+    pictures: basketSlice.reducer,
+    form: formReducer
+  }),
+  preloadedState: loadState()
+})
 
-  store.subscribe(() => {
-    saveState(<AppState>{
-      pictures: store.getState().pictures
-    })
+store.subscribe(() => {
+  saveState(<AppState>{
+    pictures: store.getState().pictures
   })
+})
 
-  return store
-}
-
-export { initialiseStore, actions, rootReducer }
+export { store }

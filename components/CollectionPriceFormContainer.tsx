@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { Types } from "mongoose"
-import { FormState } from "redux-form"
-import { connect, DispatchProp } from "react-redux"
+import { useSelector } from "react-redux"
 
 import { AppState } from "../global"
 import { CollectionPriceForm } from "./CollectionPriceForm"
@@ -11,14 +10,15 @@ import { Notification } from "./Notification"
 interface CollectionPriceFormContainerProps {
   price: number
   collectionId: Types.ObjectId
-  collectionPriceForm: FormState
 }
 
-const CollectionPriceFormContainer: FunctionComponent<
-  CollectionPriceFormContainerProps & DispatchProp<any>
-> = ({ collectionId, price, collectionPriceForm }) => {
+const CollectionPriceFormContainer: FunctionComponent<CollectionPriceFormContainerProps> = ({
+  collectionId,
+  price
+}) => {
   const [processing, setProcessing] = React.useState(false)
   const [notification, setNotification] = React.useState({ open: false, message: "" })
+  const collectionPriceForm = useSelector((state: AppState) => state.form.collectionPriceForm)
 
   const handleSubmit = async () => {
     setProcessing(true)
@@ -51,8 +51,4 @@ const CollectionPriceFormContainer: FunctionComponent<
   )
 }
 
-const ConnectedCollectionPriceFormContainer = connect((state: AppState) => ({
-  collectionPriceForm: state.form.collectionPriceForm
-}))(CollectionPriceFormContainer)
-
-export { ConnectedCollectionPriceFormContainer as CollectionPriceFormContainer }
+export { CollectionPriceFormContainer }
