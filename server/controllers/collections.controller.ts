@@ -2,6 +2,7 @@ import { Response } from "express"
 import { errorHandler } from "../utils"
 import { ClientResponse, UserRequest, CreateCollectionRequest, Collection } from "../../global"
 import { faceRecognition } from "../utils"
+import { deleteCollection } from "../database/collection"
 
 import {
   getCollections,
@@ -123,4 +124,36 @@ async function post(req: CreateCollectionRequest, res: Response) {
   }
 }
 
-export default { get, getMine, post, put, putPrice }
+async function deleteUserCollection(req: UserRequest, res: Response) {
+  try {
+    const { _id: userId } = req.user
+    const { name } = req.body
+
+    const collections = await getMyCollections(userId)
+    const collection = collections.find(c => c.name === name)
+
+    if (!collection) {
+      return res.status(404).json(<ClientResponse<string>>{
+        success: false,
+        data: "Collection not found"
+      })
+    }
+
+    await deleteCollection(userId, collection._id)
+
+    await faceRecognition.deleteCollection(name)
+
+    return res.status(200).json(<ClientResponse<Collection>>{
+      success: true,
+      data: null
+    })
+  } catch (e) {
+    errorHandler.handle(e)
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: e
+    })
+  }
+}
+
+export default { get, getMine, post, put, putPrice, deleteUserCollection }

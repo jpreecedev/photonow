@@ -22,6 +22,14 @@ router.post(
   CollectionsController.post
 )
 
+router.delete(
+  "/",
+  passport.authenticate("jwt", { failureRedirect: "/login" }),
+  utils.checkIsInRole(ROLES.Admin, ROLES.Photographer),
+  // @ts-ignore
+  CollectionsController.deleteUserCollection
+)
+
 router.put(
   "/cover",
   passport.authenticate("jwt", { failureRedirect: "/login" }),

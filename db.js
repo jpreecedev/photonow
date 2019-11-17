@@ -49,7 +49,7 @@ mongoose.connect("mongodb://root:example@localhost:27017/test?authSource=admin&w
 //   price: 799
 // }).exec()
 
-// UserModel.updateOne({ _id: "5da8bc05990b274744e81e66" }, { role: "Admin" }).exec()
+// UserModel.updateOne({ _id: "5da8bc05990b274744e81e66" }, { role: "Photographer" }).exec()
 
 // MomentModel.deleteMany({}).then((err, res) => console.log(err))
 // CollectionModel.deleteMany({}).then((err, res) => console.log(err))

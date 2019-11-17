@@ -6,7 +6,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Collection, AppState } from "../global"
 import { CoverPhotoSelector } from "./CoverPhotoSelector"
 
-import { getAsync, postAsync } from "../utils/server"
+import { getAsync, postAsync, deleteAsync } from "../utils/server"
 import { Dialog } from "../components/Dialog"
 import { NewCollectionForm } from "../components/NewCollectionForm"
 import { FaceCollectionsForm } from "../components/FaceCollectionsForm"
@@ -16,7 +16,10 @@ import { FileUpload } from "../components/FileUpload"
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
-    marginTop: theme.spacing(1)
+    margin: theme.spacing(1)
+  },
+  buttonFirst: {
+    marginLeft: 0
   },
   buttonProgress: {
     position: "absolute",
@@ -34,6 +37,7 @@ const FaceCollectionsContainer: FunctionComponent = () => {
   const [selectedCollection, setSelectedCollection] = React.useState<Collection>(null)
   const [processing, setProcessing] = React.useState(false)
   const [open, setOpen] = React.useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = React.useState(false)
   const [notification, setNotification] = React.useState({
     open: false,
     message: ""
@@ -52,6 +56,34 @@ const FaceCollectionsContainer: FunctionComponent = () => {
 
   const updateSelectedCollection = (collection: Collection) => {
     setSelectedCollection(collection)
+  }
+
+  const handleDeleteCollection = async (confirmed: boolean, collection: Collection) => {
+    setIsDeleteDialogOpen(false)
+    if (!confirmed) {
+      return
+    }
+    setProcessing(true)
+
+    try {
+      const formData = {
+        name: collection.name
+      }
+
+      const { success, data } = await deleteAsync<string>("/collections", formData)
+      if (success) {
+        setNotification({
+          open: true,
+          message: "Collection was deleted successfully"
+        })
+      } else {
+        setNotification({ open: true, message: `There was an error: ${data}` })
+      }
+    } catch (error) {
+    } finally {
+      setProcessing(false)
+      await fetchData()
+    }
   }
 
   const handleCreateCollection = async (confirm: boolean) => {
@@ -109,12 +141,32 @@ const FaceCollectionsContainer: FunctionComponent = () => {
       <Button
         disabled={processing}
         variant="contained"
-        className={classes.button}
+        className={`${classes.buttonFirst} ${classes.button}`}
         onClick={() => setOpen(true)}
       >
         {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
         Create new collection
       </Button>
+      {selectedCollection && (
+        <>
+          <Button
+            disabled={processing}
+            variant="contained"
+            className={classes.button}
+            onClick={() => setIsDeleteDialogOpen(true)}
+          >
+            {processing && <CircularProgress size={24} className={classes.buttonProgress} />}
+            Delete collection
+          </Button>
+          <Dialog
+            isOpen={isDeleteDialogOpen}
+            title="Delete Collection"
+            text="Are you sure you want to delete this collection?"
+            submitText="Delete"
+            onClose={confirm => handleDeleteCollection(confirm, selectedCollection)}
+          />
+        </>
+      )}
       {selectedCollection && (
         <>
           <Box mt={5}>
