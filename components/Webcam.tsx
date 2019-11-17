@@ -93,6 +93,8 @@ const Webcam: FunctionComponent<WebcamProps> = ({
     if (webcamRef && webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot()
       if (imageSrc) {
+        ;(webcamRef.current as any).video.pause()
+
         const split = imageSrc.split(",")
         const contentType = "image/jpeg"
         const blob = b64toBlob(split[1], contentType)
