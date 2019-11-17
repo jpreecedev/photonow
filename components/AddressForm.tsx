@@ -19,7 +19,7 @@ const AddressForm: FunctionComponent<AddressFormProps> = () => {
   const theme = useTheme()
 
   return (
-    <>
+    <Box mt={5}>
       <Typography component="h2" variant="h5" gutterBottom>
         Shipping address
       </Typography>
@@ -129,7 +129,7 @@ const AddressForm: FunctionComponent<AddressFormProps> = () => {
           </Grid>
         </Grid>
       </Box>
-    </>
+    </Box>
   )
 }
 

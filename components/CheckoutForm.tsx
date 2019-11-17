@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 
 import { AddressForm } from "./AddressForm"
 import { PaymentForm } from "./PaymentForm"
+import { OrderTotal } from "./OrderTotal"
 import { Review } from "./Review"
 import { PictureItem } from "../global"
 
@@ -84,9 +85,10 @@ const CheckoutForm: FunctionComponent<ReactStripeElements.InjectedStripeProps &
 
   return (
     <form onSubmit={handleSubmit} noValidate>
+      <Review />
       <AddressForm />
       <PaymentForm />
-      <Review />
+      <OrderTotal />
       <div className={classes.buttons}>
         <Button
           disabled={submitting}

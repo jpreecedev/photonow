@@ -3,7 +3,6 @@ import { useSelector } from "react-redux"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import {
   Typography,
-  Divider,
   List,
   ListItem,
   ListItemText,
@@ -22,12 +21,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
     padding: theme.spacing(1, 0)
   },
-  total: {
-    fontWeight: theme.typography.fontWeightBold
-  },
-  title: {
-    marginTop: theme.spacing(2)
-  },
   avatar: {
     margin: 10,
     width: 60,
@@ -42,7 +35,7 @@ const Review: FunctionComponent = () => {
 
   return (
     <>
-      <Typography component="h2" variant="h5" gutterBottom>
+      <Typography component="h2" variant="h5">
         Your order
       </Typography>
       <List disablePadding>
@@ -66,17 +59,6 @@ const Review: FunctionComponent = () => {
             </ListItemSecondaryAction>
           </ListItem>
         ))}
-        <Divider component="li" />
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            &pound;
-            {(picturesInBasket.reduce((acc, current) => (acc += current.price), 0) / 100).toFixed(
-              2
-            )}
-          </Typography>
-        </ListItem>
-        <Divider component="li" />
       </List>
     </>
   )
