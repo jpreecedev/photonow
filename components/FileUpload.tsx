@@ -44,8 +44,14 @@ const FileUpload = <T extends object>({
         allowMultiple={allowMultiple}
         server={server}
         onprocessfile={(error, response) => {
-          if (onUploaded && !error) {
+          if (!onUploaded) {
+            return
+          }
+
+          if (!error) {
             onUploaded(JSON.parse((response as any).serverId).data)
+          } else {
+            onUploaded([] as any)
           }
         }}
         name="filepond"
