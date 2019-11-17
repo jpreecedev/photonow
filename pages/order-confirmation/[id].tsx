@@ -37,7 +37,9 @@ interface OrderConfirmationProps {}
 const OrderConfirmation: NextPage<OrderConfirmationProps> = () => {
   const classes = useStyles({})
   const router = useRouter()
-  const [state, setState] = React.useState<{ moments: Moment[] }>({ moments: [] })
+  const [state, setState] = React.useState<{ moments: Moment[] }>({
+    moments: []
+  })
 
   React.useEffect(() => {
     const fetchData = async () => {

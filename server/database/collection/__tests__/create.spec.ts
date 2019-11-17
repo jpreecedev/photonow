@@ -55,7 +55,11 @@ describe("Create collection tests", () => {
     const coverPhoto = Types.ObjectId("5d73d6d317fde1fec95d6d1f")
     const userId = Types.ObjectId("5dac1640a44770f0715f0fac")
 
-    const updatedCollection = await addCoverPhoto({ collectionId, coverPhoto, userId })
+    const updatedCollection = await addCoverPhoto({
+      collectionId,
+      coverPhoto,
+      userId
+    })
 
     expect(updatedCollection).toEqual(true)
   })
@@ -65,7 +69,11 @@ describe("Create collection tests", () => {
     const userId = Types.ObjectId("5dac1640a44770f0715f0fac")
     const price = 999
 
-    const updatedCollection = await updatePrice({ collectionId, price, userId })
+    const updatedCollection = await updatePrice({
+      collectionId,
+      price,
+      userId
+    })
 
     expect(updatedCollection).toEqual(updatedCollection)
   })
@@ -75,7 +83,11 @@ describe("Create collection tests", () => {
     const userId = Types.ObjectId("5dac1640a44770f2715f0fac")
     const price = 999
 
-    const updatedCollection = await updatePrice({ collectionId, price, userId })
+    const updatedCollection = await updatePrice({
+      collectionId,
+      price,
+      userId
+    })
 
     expect(updatedCollection).toBeFalsy()
   })

@@ -68,7 +68,11 @@ const CheckoutFormContainer: FunctionComponent<ReactStripeElements.InjectedStrip
     error?: stripe.Error
   ) => {
     if (error) {
-      setPaymentStatus({ paymentAttemptMade: true, success: false, message: error.message })
+      setPaymentStatus({
+        paymentAttemptMade: true,
+        success: false,
+        message: error.message
+      })
       window.scrollTo(0, 0)
       return
     }

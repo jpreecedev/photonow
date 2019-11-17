@@ -71,12 +71,12 @@ const PrivacyPolicy = () => {
         </Typography>
 
         <Typography component="p" gutterBottom>
-          <strong>Information from your use of the site and Services: </strong>When you visit the
-          website or use the Services, we collect information of your activity and usage from your
-          interaction with the site. These may include your IP address, browser and device
-          information, timestamps of your interactions on the site. This information is mainly
-          collected automatically using cookies or other similar technology. You can read more about
-          our Cookie Policy here.
+          <strong>Information from your use of the site and Services: </strong>
+          When you visit the website or use the Services, we collect information of your activity
+          and usage from your interaction with the site. These may include your IP address, browser
+          and device information, timestamps of your interactions on the site. This information is
+          mainly collected automatically using cookies or other similar technology. You can read
+          more about our Cookie Policy here.
         </Typography>
 
         <Typography component="p" gutterBottom>
@@ -94,13 +94,13 @@ const PrivacyPolicy = () => {
         </Typography>
 
         <Typography component="p" gutterBottom>
-          <strong>To provide you with the services you signed up for: </strong>We will use the
-          information you provided to enable you to access your account, create galleries, upload
-          images, to facilitate payment and order processing and any other services requested by
-          you. This also includes sharing this information with third-party service providers in
-          order to provide the services. When we need to share information, we take the steps to
-          ensure that only the necessary information is shared, and the information is protected and
-          being used in accordance with this policy.
+          <strong>To provide you with the services you signed up for: </strong>
+          We will use the information you provided to enable you to access your account, create
+          galleries, upload images, to facilitate payment and order processing and any other
+          services requested by you. This also includes sharing this information with third-party
+          service providers in order to provide the services. When we need to share information, we
+          take the steps to ensure that only the necessary information is shared, and the
+          information is protected and being used in accordance with this policy.
         </Typography>
 
         <Typography component="p" gutterBottom>

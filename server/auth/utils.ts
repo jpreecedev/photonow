@@ -27,9 +27,10 @@ const setup = () => {
 
 const checkIfLoggedIn = (req: UserRequest, res: Response, next: NextFunction) => {
   if (req.user) {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "You are already signed in!" })
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "You are already signed in!"
+    })
   }
   return next()
 }
@@ -119,7 +120,8 @@ const getRedirectUrl = (user: User) => {
 
   if (
     user.role === ROLES.Photographer &&
-    (!user.stripeData.authCode && !user.stripeData.accessToken)
+    !user.stripeData.authCode &&
+    !user.stripeData.accessToken
   ) {
     return "/api/stripe/start"
   }

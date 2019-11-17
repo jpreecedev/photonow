@@ -44,7 +44,10 @@ const Rekognition: NextPage<RekognitionProps> = () => {
         if (success) {
           setState(prevState => {
             const data = [...prevState.data]
-            data.splice(data.findIndex(x => x.collectionId === oldData.collectionId), 1)
+            data.splice(
+              data.findIndex(x => x.collectionId === oldData.collectionId),
+              1
+            )
             return { ...prevState, data }
           })
         }

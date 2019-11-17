@@ -19,9 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const RolesForm: FunctionComponent<
-  RolesDispatchProps & InjectedFormProps<RolesFormProps, RolesDispatchProps>
-> = ({ handleSubmit, users }) => {
+const RolesForm: FunctionComponent<RolesDispatchProps &
+  InjectedFormProps<RolesFormProps, RolesDispatchProps>> = ({ handleSubmit, users }) => {
   const classes = useStyles({})
 
   return (

@@ -17,7 +17,10 @@ const CollectionPriceFormContainer: FunctionComponent<CollectionPriceFormContain
   price
 }) => {
   const [processing, setProcessing] = React.useState(false)
-  const [notification, setNotification] = React.useState({ open: false, message: "" })
+  const [notification, setNotification] = React.useState({
+    open: false,
+    message: ""
+  })
   const collectionPriceForm = useSelector((state: AppState) => state.form.collectionPriceForm)
 
   const handleSubmit = async () => {
@@ -30,9 +33,15 @@ const CollectionPriceFormContainer: FunctionComponent<CollectionPriceFormContain
       })
 
       if (success) {
-        return setNotification({ open: true, message: "Successfully updated price for collection" })
+        return setNotification({
+          open: true,
+          message: "Successfully updated price for collection"
+        })
       } else {
-        return setNotification({ open: true, message: `Unable to update price: ${data}` })
+        return setNotification({
+          open: true,
+          message: `Unable to update price: ${data}`
+        })
       }
     } finally {
       setProcessing(false)

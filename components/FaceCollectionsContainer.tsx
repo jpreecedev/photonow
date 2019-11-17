@@ -34,7 +34,10 @@ const FaceCollectionsContainer: FunctionComponent = () => {
   const [selectedCollection, setSelectedCollection] = React.useState<Collection>(null)
   const [processing, setProcessing] = React.useState(false)
   const [open, setOpen] = React.useState(false)
-  const [notification, setNotification] = React.useState({ open: false, message: "" })
+  const [notification, setNotification] = React.useState({
+    open: false,
+    message: ""
+  })
   const newCollectionForm = useSelector((state: AppState) => state.form.newCollectionForm)
 
   const fetchData = async () => {
@@ -65,7 +68,10 @@ const FaceCollectionsContainer: FunctionComponent = () => {
       }
       const { success, data } = await postAsync<string>("/collections", formData)
       if (success) {
-        setNotification({ open: true, message: "Collection was created successfully" })
+        setNotification({
+          open: true,
+          message: "Collection was created successfully"
+        })
       } else {
         setNotification({ open: true, message: `There was an error: ${data}` })
       }

@@ -8,9 +8,8 @@ interface StripePaymentButtonProps {
   orderTotal: number
 }
 
-const StripePaymentButton: FunctionComponent<
-  ReactStripeElements.InjectedStripeProps & StripePaymentButtonProps
-> = ({ stripe, handleOrder, loaded, orderTotal }) => {
+const StripePaymentButton: FunctionComponent<ReactStripeElements.InjectedStripeProps &
+  StripePaymentButtonProps> = ({ stripe, handleOrder, loaded, orderTotal }) => {
   const paymentRequestRef = React.useRef(null)
   const router = useRouter()
   const clientSecret = router.query.token as string
@@ -38,7 +37,10 @@ const StripePaymentButton: FunctionComponent<
       // @ts-ignore
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
-        { payment_method: paymentMethod.id, receipt_email: paymentMethod.billing_details.email },
+        {
+          payment_method: paymentMethod.id,
+          receipt_email: paymentMethod.billing_details.email
+        },
         { handleActions: false }
       )
 

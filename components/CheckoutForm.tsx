@@ -78,9 +78,8 @@ const validate = (values: CheckoutFormProps) => {
   return errors
 }
 
-const CheckoutForm: FunctionComponent<
-  ReactStripeElements.InjectedStripeProps & InjectedFormProps<CheckoutFormProps>
-> = ({ submitting, valid, handleSubmit }) => {
+const CheckoutForm: FunctionComponent<ReactStripeElements.InjectedStripeProps &
+  InjectedFormProps<CheckoutFormProps>> = ({ submitting, valid, handleSubmit }) => {
   const classes = useStyles({})
   const router = useRouter()
 

@@ -30,9 +30,10 @@ router.post("/login", utils.checkIfLoggedIn, async (req: LogInRequest, res: Resp
   const [err, user] = await to(getUserByEmail(email))
 
   const authenticationError = () => {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "Authentication error!"
+    })
   }
 
   if (err || !user) {
@@ -70,9 +71,10 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
   const { firstName, lastName, email, password } = req.body
 
   if (!/\b\w+\@\w+\.\w+(?:\.\w+)?\b/.test(email)) {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Enter a valid email address." })
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "Enter a valid email address."
+    })
   } else if (password.length < 5 || password.length > 20) {
     return res.status(500).json(<ClientResponse<string>>{
       success: false,
@@ -91,18 +93,20 @@ router.post("/register", utils.checkIfLoggedIn, async (req: RegisterRequest, res
   )
 
   if (err) {
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Email is already taken" })
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "Email is already taken"
+    })
   }
 
   const [loginErr, token] = await to(login(<LogInRequest>req, user))
 
   if (loginErr) {
     log(loginErr, "error")
-    return res
-      .status(500)
-      .json(<ClientResponse<string>>{ success: false, data: "Authentication error!" })
+    return res.status(500).json(<ClientResponse<string>>{
+      success: false,
+      data: "Authentication error!"
+    })
   }
 
   return res
