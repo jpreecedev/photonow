@@ -58,7 +58,6 @@ const validate = (values: CheckoutFormProps) => {
     "lastName",
     "emailAddress",
     "address1",
-    "address2",
     "city",
     "state",
     "postalCode",
