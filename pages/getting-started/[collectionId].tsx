@@ -11,9 +11,12 @@ import { addPicture } from "../../store/basket"
 import { PictureItem } from "../../global"
 import { FileUpload } from "../../components/FileUpload"
 
-const Webcam = dynamic(import("../../components/Webcam").then(instance => instance.Webcam), {
-  ssr: false
-})
+const Webcam = dynamic(
+  import("../../components/Webcam").then(instance => instance.Webcam),
+  {
+    ssr: false
+  }
+)
 
 const GettingStarted: NextPage = () => {
   const router = useRouter()
@@ -22,6 +25,7 @@ const GettingStarted: NextPage = () => {
 
   const processResponse = (pictures: PictureItem[]) => {
     pictures.forEach(picture => store.dispatch(addPicture(picture)))
+    router.push("/select-your-pictures")
   }
 
   const processImage = async (blob: Blob) => {
@@ -36,7 +40,6 @@ const GettingStarted: NextPage = () => {
       processResponse(data)
     }
 
-    router.push("/select-your-pictures")
     setUploading(false)
   }
 
