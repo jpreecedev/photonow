@@ -39,6 +39,7 @@ const FileUpload = <T extends object>({
   return (
     <section id="upload" className={classes.container}>
       <FilePond
+        acceptedFileTypes={["image/*"]}
         files={state}
         allowMultiple={allowMultiple}
         server={server}
