@@ -186,11 +186,6 @@ export interface ClientResponse<T> {
   data: T
 }
 
-export interface LoginFormProps {
-  email: string
-  password: string
-}
-
 export interface GoogleProfile extends Profile {
   id: string
   displayName: string
