@@ -25,18 +25,24 @@ const saveState = (state: AppState) => {
   }
 }
 
-const store = configureStore({
-  reducer: combineReducers({
-    pictures: basketSlice.reducer,
-    form: formReducer
-  }),
-  preloadedState: loadState()
-})
+let store
 
-store.subscribe(() => {
-  saveState(<AppState>{
-    pictures: store.getState().pictures
+const initialise = (state: AppState = loadState()) => {
+  store = configureStore({
+    reducer: combineReducers({
+      pictures: basketSlice.reducer,
+      form: formReducer
+    }),
+    preloadedState: state
   })
-})
 
-export { store }
+  store.subscribe(() => {
+    saveState(<AppState>{
+      pictures: store.getState().pictures
+    })
+  })
+
+  return store
+}
+
+export { initialise, store }

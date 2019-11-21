@@ -13,9 +13,9 @@ import {
 } from "@material-ui/core"
 import DeleteIcon from "@material-ui/icons/Delete"
 
-import { AppState } from "../global"
-import { store } from "../store"
-import { remove } from "../store/basket"
+import { AppState } from "../../global"
+import { store } from "../../store"
+import { remove } from "../../store/basket"
 
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {

@@ -5,7 +5,7 @@ import App from "next/app"
 import { CssBaseline } from "@material-ui/core"
 import { ThemeProvider } from "@material-ui/styles"
 
-import { store } from "../store"
+import { initialise } from "../store"
 import { theme } from "../components/Theme"
 
 interface PhotoNowProps {
@@ -23,6 +23,7 @@ class PhotoNow extends App<PhotoNowProps> {
 
   render() {
     const { Component, pageProps } = this.props
+    const store = initialise()
     return (
       <>
         <Head>

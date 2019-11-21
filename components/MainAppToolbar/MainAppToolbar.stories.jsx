@@ -4,7 +4,9 @@ import { action } from "@storybook/addon-actions"
 import { Provider } from "react-redux"
 
 import { MainAppToolbar } from "./MainAppToolbar"
-import { store } from "../../store"
+import { initialise, store } from "../../store"
+
+initialise()
 
 export const Default = () => {
   return (
