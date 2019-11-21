@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from "react"
-import { Typography, Box, Paper, Grid } from "@material-ui/core"
+import { Box, Paper, Grid } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import clsx from "clsx"
 
 interface BannerProps {
   message: React.ReactElement
   icon: React.ReactElement
-  theme?: "error"
+  theme?: "error" | "info"
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -18,17 +18,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.error.light,
     color: theme.palette.error.contrastText
   },
+  info: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText
+  },
   icon: {
     marginRight: theme.spacing(2.5),
     marginBottom: theme.spacing(2)
   }
 }))
 
-const Banner: FunctionComponent<BannerProps> = ({ message, icon, theme }) => {
+const Banner: FunctionComponent<BannerProps> = ({ message, icon, theme = "error" }) => {
   const classes = useStyles({})
 
   const themeClasses = clsx(classes.paper, {
-    [classes.error]: theme === "error"
+    [classes.error]: theme === "error",
+    [classes.info]: theme === "info"
   })
 
   return (

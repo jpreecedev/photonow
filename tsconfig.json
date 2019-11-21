@@ -20,6 +20,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/index.tsx",
-    "components/ListItemLink.jsx"
+    "components/ListItemLink.jsx",
+    "components/Banner/Banner.stories.jsx"
   ]
 }

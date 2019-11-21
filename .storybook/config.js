@@ -1,4 +1,9 @@
 import { configure } from "@storybook/react"
+import { addDecorator } from "@storybook/react"
+import { muiTheme } from "storybook-addon-material-ui"
 
-// automatically import all files ending in *.stories.js
-configure(require.context("../stories", true, /\.stories\.(t|j)sx?$/), module)
+import theme from "../components/Theme"
+
+addDecorator(muiTheme(theme))
+
+configure(require.context("../components", true, /\.stories\.(t|j)sx?$/), module)
