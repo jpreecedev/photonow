@@ -1,12 +1,8 @@
 import React, { FunctionComponent } from "react"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
-import { useRouter } from "next/router"
 
 interface GoogleLoginButtonProps {
-  variant?: "text" | "outlined" | "contained"
-  color?: "primary" | "secondary" | "default"
-  size?: "small" | "medium" | "large"
-  [x: string]: any
+  type?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -56,11 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const GoogleLoginButton: FunctionComponent<GoogleLoginButtonProps> = () => {
+const GoogleLoginButton: FunctionComponent<GoogleLoginButtonProps> = ({ type }) => {
   const classes = useStyles({})
-  const router = useRouter()
-
-  const type = router.query.type || undefined
 
   return (
     <a

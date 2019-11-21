@@ -14,7 +14,7 @@ const SocialLoginProviders = () => {
       <Typography variant="overline" display="block" gutterBottom>
         Social Login Providers
       </Typography>
-      <GoogleLoginButton />
+      <GoogleLoginButton type={type} />
       <FacebookLoginButton type={type} />
     </>
   )
