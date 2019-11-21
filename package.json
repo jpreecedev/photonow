@@ -11,9 +11,8 @@
     "build": "cross-env NODE_OPTIONS=--max_old_space_size=4096 next build && cross-env NODE_ENV=production tsc --project tsconfig.server.json",
     "start:server": "cross-env NODE_ENV=production node dist/server/index.js",
     "start": "npm run build && npm run start:server",
-    "test": "npm run test:server && npm run test:client",
+    "test": "npm run test:server",
     "test:server": "jest --config ./jest.server.config.js",
-    "test:client": "jest --config ./jest.client.config.js",
     "lint:prettier": "prettier --write '{components,layouts,pages,server,utils}/**/*.{js,jsx,ts,tsx}'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
