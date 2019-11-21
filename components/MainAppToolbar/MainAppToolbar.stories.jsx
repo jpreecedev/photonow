@@ -21,6 +21,6 @@ export const Default = () => {
 }
 
 export default {
-  title: "MainAppToolbar",
+  title: "Main App Toolbar",
   decorators: [withKnobs]
 }
