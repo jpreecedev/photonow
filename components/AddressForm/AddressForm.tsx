@@ -4,8 +4,8 @@ import { Grid, Typography, FormControl, InputLabel, Box } from "@material-ui/cor
 import countryList from "react-select-country-list"
 import { useTheme } from "@material-ui/core/styles"
 
-import { Country } from "../global"
-import { renderSelectField, renderTextField } from "./ReduxForm"
+import { Country } from "../../global"
+import { renderSelectField, renderTextField } from "../ReduxForm"
 
 interface AddressFormProps {}
 
