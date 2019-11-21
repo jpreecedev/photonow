@@ -12,7 +12,7 @@ export const Default = () => {
   return (
     <Provider store={store}>
       <MainAppToolbar
-        fixed={boolean("fixed", false)}
+        fixed={boolean("fixed", true)}
         showDrawerToggle={boolean("showDrawerToggle", false)}
         handleDrawerToggle={action("toggled drawer")}
       />
