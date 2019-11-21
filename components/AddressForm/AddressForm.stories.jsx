@@ -20,6 +20,6 @@ export const Default = () => {
 }
 
 export default {
-  title: "AddressForm",
+  title: "Address Form",
   decorators: [withReduxForm]
 }
