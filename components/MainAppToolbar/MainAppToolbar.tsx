@@ -10,9 +10,9 @@ import ExitToApp from "@material-ui/icons/ExitToApp"
 import Camera from "@material-ui/icons/Camera"
 import MenuIcon from "@material-ui/icons/Menu"
 
-import { AppState } from "../global"
-import { store } from "../store"
-import { clear } from "../store/basket"
+import { AppState } from "../../global"
+import { store } from "../../store"
+import { clear } from "../../store/basket"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
