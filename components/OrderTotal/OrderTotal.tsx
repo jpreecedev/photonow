@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core"
 
-import { AppState } from "../global"
+import { AppState } from "../../global"
 
 const useStyles = makeStyles((theme: Theme) => ({
   total: {
