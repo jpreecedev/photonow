@@ -23,6 +23,7 @@
     "components/ListItemLink.jsx",
     "components/Banner/Banner.stories.jsx",
     "components/FacebookLoginButton/FacebookLoginButton.stories.jsx",
-    "components/AddressForm/AddressForm.stories.jsx"
+    "components/AddressForm/AddressForm.stories.jsx",
+    "components/FileUpload/FileUpload.stories.jsx"
   ]
 }
