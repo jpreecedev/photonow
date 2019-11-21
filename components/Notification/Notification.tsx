@@ -2,12 +2,20 @@ import React, { FunctionComponent } from "react"
 import { Snackbar } from "@material-ui/core"
 
 interface NotificationProps {
+  vertical?: "bottom" | "top"
+  horizontal?: "left" | "center" | "right"
   message: string
   open: boolean
   onClose: Function
 }
 
-const Notification: FunctionComponent<NotificationProps> = ({ open, message, onClose }) => {
+const Notification: FunctionComponent<NotificationProps> = ({
+  open,
+  message,
+  onClose,
+  vertical = "bottom",
+  horizontal = "left"
+}) => {
   const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
     if (reason === "clickaway") {
       return
@@ -19,8 +27,8 @@ const Notification: FunctionComponent<NotificationProps> = ({ open, message, onC
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "left"
+        vertical,
+        horizontal
       }}
       open={open}
       autoHideDuration={6000}
