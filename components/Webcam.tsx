@@ -1,11 +1,9 @@
 import React, { FunctionComponent } from "react"
 import ReactWebcam from "react-webcam"
 import throttle from "lodash.throttle"
-import { CircularProgress } from "@material-ui/core"
+import { CircularProgress, Button } from "@material-ui/core"
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
 import { useTheme } from "@material-ui/styles"
-
-import { DefaultButton } from "./DefaultButton"
 
 interface WebcamProps {
   onCapture: (blob: Blob) => void
@@ -118,7 +116,7 @@ const Webcam: FunctionComponent<WebcamProps> = ({
         onUserMediaError={onWebcamUnavailable}
       />
       <div className={classes.wrapper}>
-        <DefaultButton
+        <Button
           disabled={state.uploading}
           className={classes.button}
           onClick={capture}
@@ -126,7 +124,7 @@ const Webcam: FunctionComponent<WebcamProps> = ({
         >
           {state.uploading && <CircularProgress size={24} className={classes.buttonProgress} />}
           Capture Photo
-        </DefaultButton>
+        </Button>
       </div>
     </>
   )

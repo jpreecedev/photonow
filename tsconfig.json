@@ -21,6 +21,7 @@
     "**/*.tsx",
     "pages/index.tsx",
     "components/ListItemLink.jsx",
-    "components/Banner/Banner.stories.jsx"
+    "components/Banner/Banner.stories.jsx",
+    "components/FacebookLoginButton/FacebookLoginButton.stories.jsx"
   ]
 }
