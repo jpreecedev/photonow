@@ -3,7 +3,7 @@ import { Field, reduxForm, InjectedFormProps } from "redux-form"
 import { Grid, InputAdornment, CircularProgress, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
-import { renderTextField } from "./ReduxForm"
+import { renderTextField } from "../ReduxForm"
 
 interface CollectionPriceFormProps {
   price: Number

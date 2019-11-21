@@ -1,0 +1,1 @@
+export { CollectionPriceForm } from "./CollectionPriceForm"
