@@ -12,7 +12,7 @@ const ImageStack: FunctionComponent<ImageStackProps> = ({
   imgSrc,
   caption,
   onClick,
-  size = 250,
+  size = 225,
   selected = false
 }) => {
   return (
