@@ -1,5 +1,5 @@
 import { createCsrfToken } from "../create"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { StripeCsrfToken } from "../../../../global"
 
 const dbHelper = TestDbHelper()

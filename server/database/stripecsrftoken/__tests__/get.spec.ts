@@ -1,5 +1,5 @@
 import { sanitizeData } from "../../test-utils"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { verifyCsrfToken } from "../get"
 
 const dbHelper = TestDbHelper()

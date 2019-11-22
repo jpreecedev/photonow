@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { deleteCollection } from "../delete"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { sanitizeData } from "../../test-utils"
 import { getCollections } from "../get"
 

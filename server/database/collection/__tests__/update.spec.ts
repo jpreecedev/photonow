@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { addMomentToCollection } from "../update"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { sanitizeData } from "../../test-utils"
 
 const dbHelper = TestDbHelper()

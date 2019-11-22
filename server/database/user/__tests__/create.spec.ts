@@ -1,5 +1,5 @@
 import { createUser } from "../create"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { User } from "../../../../global"
 import { ROLES } from "../../../../utils/roles"
 

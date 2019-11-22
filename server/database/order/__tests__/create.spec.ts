@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { createOrder } from "../create"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { Order } from "../../../../global"
 
 const dbHelper = TestDbHelper()

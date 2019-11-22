@@ -1,7 +1,7 @@
 import { Types } from "mongoose"
 import { createCollection, addCoverPhoto, updatePrice } from "../create"
 import { sanitizeData } from "../../test-utils"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { Collection } from "../../../../global"
 
 const dbHelper = TestDbHelper()

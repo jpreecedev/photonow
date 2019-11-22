@@ -1,4 +1,4 @@
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { sanitizeData } from "../../test-utils"
 import { fulfillOrder } from "../update"
 

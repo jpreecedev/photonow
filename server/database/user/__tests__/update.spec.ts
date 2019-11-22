@@ -1,5 +1,5 @@
 import { updateRole, updateStripeData } from "../update"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { sanitizeData } from "../../test-utils"
 import { StripeExpressConnect } from "../../../../global"
 

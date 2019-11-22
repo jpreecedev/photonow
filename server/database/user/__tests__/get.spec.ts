@@ -1,6 +1,6 @@
 import { Types } from "mongoose"
 import { sanitizeData } from "../../test-utils"
-import TestDbHelper from "../../../../setup/mongo"
+import TestDbHelper from "../../../../utils/mongo"
 import { getUserByEmail, getUserById, getUserByProviderId, getAllUsers } from "../get"
 import { User, DatabaseUser } from "../../../../global"
 
