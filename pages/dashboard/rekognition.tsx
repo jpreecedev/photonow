@@ -2,7 +2,7 @@ import React from "react"
 import { NextPage } from "next"
 import { Grid } from "@material-ui/core"
 
-import { Table, TableState } from "../../components/Table"
+import { Table, TableState } from "../../components/Table/Table"
 import { MainLayout } from "../../layouts/main"
 import { Rekognition as AWSRekognition } from "aws-sdk"
 import * as server from "../../utils/server"
