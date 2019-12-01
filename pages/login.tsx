@@ -46,6 +46,13 @@ const Login: NextPage = () => {
           <Box mt={3} mb={5} display="block" maxWidth="75%" width="100%" textAlign="center">
             <SocialLoginProviders />
           </Box>
+          <Typography component="p" align="center" variant="body2">
+            By using our website, you agree to our
+            <br /> <a href="/legal/cookie-policy">Cookie Policy</a>,{" "}
+            <a href="/legal/privacy-policy">Privacy Policy</a>, and{" "}
+            <a href="/legal/terms-of-service">Terms of Service</a>.
+          </Typography>
+          <br />
           <Typography component="small" align="center" variant="body2">
             If you do not already have an account, we will create one for you automatically.
           </Typography>
