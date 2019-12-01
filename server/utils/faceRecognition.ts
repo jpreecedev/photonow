@@ -14,9 +14,8 @@ function getUniqueMoments(moments: Moment[], faces: FaceMatch[]) {
   })
 
   const matches = moments.filter(moment => matchSet.has(moment._id.toString()))
-  const unmatched = moments.filter(moment => !matchSet.has(moment._id.toString()))
 
-  return { matches, unmatched }
+  return { matches }
 }
 
 function mapMoments(moments: Moment[], matched: boolean, price: number) {
@@ -89,12 +88,11 @@ async function recogniseFromBuffer(
 
         if (data.FaceMatches && data.FaceMatches.length > 0 && data.FaceMatches[0].Face) {
           const sorted = data.FaceMatches.sort((a, b) => b.Face.Confidence - a.Face.Confidence)
-          const { matches, unmatched } = getUniqueMoments(collection.moments, sorted)
+          const { matches } = getUniqueMoments(collection.moments, sorted)
 
           const matchesMapped = mapMoments(matches, true, collection.price)
-          const unmatchedMapped = mapMoments(unmatched, false, collection.price)
 
-          return resolve(matchesMapped.concat(unmatchedMapped))
+          return resolve(matchesMapped)
         }
         return reject("Not recognized")
       }

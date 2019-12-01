@@ -106,8 +106,6 @@ const SelectYourPictures: NextPage = ({}) => {
     }
   }
 
-  const hasUnmatchedPictures = pictures.some(picture => !picture.matched)
-
   const renderPostError = (error: string) => {
     return (
       <Banner
@@ -196,28 +194,6 @@ const SelectYourPictures: NextPage = ({}) => {
             Proceed to checkout
           </Button>
         </Box>
-        {hasUnmatchedPictures && (
-          <>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flexDirection="column"
-              mt={5}
-              mb={3}
-            >
-              <Typography component="h1" variant="h4" align="center">
-                Other pictures are available
-              </Typography>
-              <Typography component="p" gutterBottom>
-                Here are the rest of the pictures from the gallery
-              </Typography>
-            </Box>
-            <Grid container spacing={4}>
-              {pictures.filter(picture => !picture.matched).map(renderPicture)}
-            </Grid>
-          </>
-        )}
       </>
     )
   }
