@@ -5,7 +5,6 @@ import Link from "next/link"
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import { AppBar, Toolbar, IconButton, Typography, Badge, Hidden } from "@material-ui/core"
 import AccountCircle from "@material-ui/icons/AccountCircle"
-import ShoppingBasket from "@material-ui/icons/ShoppingBasket"
 import ExitToApp from "@material-ui/icons/ExitToApp"
 import Camera from "@material-ui/icons/Camera"
 import MenuIcon from "@material-ui/icons/Menu"
@@ -86,22 +85,6 @@ export const MainAppToolbarComponent: FunctionComponent<MainAppToolbarProps> = (
         </Link>
         <div className={classes.grow} />
         <div className={classes.section}>
-          <IconButton
-            data-testid="appbar-basket-button"
-            aria-label="Basket"
-            color="inherit"
-            onClick={() => {
-              if (addedToBasket === 0) {
-                Router.push("/select-gallery")
-                return
-              }
-              Router.push("/select-your-pictures")
-            }}
-          >
-            <Badge data-testid="appbar-basket-badge" badgeContent={addedToBasket} color="secondary">
-              <ShoppingBasket />
-            </Badge>
-          </IconButton>
           <IconButton
             data-testid="appbar-account-button"
             aria-label="account of current user"

@@ -63,7 +63,7 @@ const Splash = () => {
         Use our face scanning tool to find pictures of yourself in a crowd
       </Typography>
       <Box mb={3}>
-        <Link href="/select-gallery">
+        <Link href="/getting-started/5de3361b401d663d772185d0">
           <Button variant="contained" color="primary" size="large">
             Get Started
           </Button>

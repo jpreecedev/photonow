@@ -94,20 +94,6 @@ const MainLayout: FunctionComponent<MainLayoutProps> = ({
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button component="a" href="/dashboard/collections">
-        <ListItemIcon className={classes.icon}>
-          <FacesIcon />
-        </ListItemIcon>
-        <ListItemText primary="Collections" />
-      </ListItem>
-      {user && user.role === ROLES.Admin && (
-        <ListItem button component="a" href="/dashboard/users">
-          <ListItemIcon className={classes.icon}>
-            <SupervisorIcon />
-          </ListItemIcon>
-          <ListItemText primary="Users" />
-        </ListItem>
-      )}
     </List>
   )
 

@@ -115,7 +115,7 @@ const getUserRole = async (req: Request): Promise<string> => {
 
 const getRedirectUrl = (user: User) => {
   if (!user || !user.role || user.role === ROLES.Customer) {
-    return "/select-gallery"
+    return "/getting-started/5de3361b401d663d772185d0"
   }
 
   if (
@@ -139,7 +139,7 @@ const getRedirectUrl = (user: User) => {
     user.role === ROLES.Admin ||
     (user.role === ROLES.Photographer && user.stripeData && user.stripeData.accessToken)
   ) {
-    return "/dashboard/collections"
+    return "/dashboard"
   }
 
   return "/"

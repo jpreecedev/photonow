@@ -155,7 +155,7 @@ const SelectYourPictures: NextPage = ({}) => {
         </Typography>
       </Box>
       <Box display="flex" justifyContent="center" mt={3}>
-        <Link href="/select-gallery">
+        <Link href="/getting-started/5de3361b401d663d772185d0">
           <Button size="large" color="primary" variant="contained">
             Try again
           </Button>

@@ -63,12 +63,6 @@ const MinimalLayout: FunctionComponent<MinimalLayoutProps> = ({
         </ListItemIcon>
         <ListItemText primary="Overview" />
       </ListItem>
-      <ListItem button>
-        <ListItemIcon className={classes.icon}>
-          <FacesIcon />
-        </ListItemIcon>
-        <ListItemText primary="Collections" />
-      </ListItem>
     </List>
   )
 
