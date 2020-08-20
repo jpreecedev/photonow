@@ -31,7 +31,7 @@
     "autosuggest-highlight": "^3.1.1",
     "await-to-js": "^2.1.1",
     "aws-sdk": "^2.573.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "clsx": "^1.0.4",
     "compression": "^1.7.4",
