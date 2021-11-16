@@ -30,7 +30,7 @@
     "@zeit/next-css": "^1.0.1",
     "autosuggest-highlight": "^3.1.1",
     "await-to-js": "^2.1.1",
-    "aws-sdk": "^2.573.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "clsx": "^1.0.4",
