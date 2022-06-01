@@ -72,7 +72,7 @@
     "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
     "saslprep": "^1.0.3",
-    "sharp": "^0.23.2",
+    "sharp": "^0.30.5",
     "stripe": "^7.13.0",
     "uuid": "^3.3.3"
   },
